@@ -1,0 +1,10 @@
+{
+    "agents": [
+        "antigravity"
+    ],
+    "cloud": true,
+    "skills": [
+        "laravel-best-practices",
+        "tailwindcss-development"
+    ]
+}
