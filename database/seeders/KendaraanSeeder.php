@@ -23,6 +23,12 @@ class KendaraanSeeder extends Seeder
                 'rating' => 4.8,
                 'deskripsi' => 'Mobil SUV premium dengan performa tangguh untuk perjalanan dalam dan luar kota.',
                 'gambar_utama' => 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'spesifikasi' => [
+                    'seats' => 7,
+                    'transmisi' => 'Otomatis',
+                    'bahan_bakar' => 'Diesel',
+                    'bagasi' => '4 Koper'
+                ]
             ],
             [
                 'nama_kendaraan' => 'Toyota Innova Zenix',
@@ -33,6 +39,12 @@ class KendaraanSeeder extends Seeder
                 'rating' => 4.9,
                 'deskripsi' => 'MPV hybrid yang sangat nyaman untuk keluarga dengan efisiensi bahan bakar yang baik.',
                 'gambar_utama' => 'https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'spesifikasi' => [
+                    'seats' => 7,
+                    'transmisi' => 'Otomatis',
+                    'bahan_bakar' => 'Bensin',
+                    'bagasi' => '4 Koper'
+                ]
             ],
             [
                 'nama_kendaraan' => 'Mitsubishi Xpander Cross',
@@ -43,6 +55,12 @@ class KendaraanSeeder extends Seeder
                 'rating' => 4.7,
                 'deskripsi' => 'Kombinasi MPV dan SUV, lega dan nyaman.',
                 'gambar_utama' => 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'spesifikasi' => [
+                    'seats' => 7,
+                    'transmisi' => 'Otomatis',
+                    'bahan_bakar' => 'Bensin',
+                    'bagasi' => '3 Koper'
+                ]
             ],
             [
                 'nama_kendaraan' => 'Honda Brio Satya',
@@ -53,6 +71,12 @@ class KendaraanSeeder extends Seeder
                 'rating' => 4.5,
                 'deskripsi' => 'Mobil mungil lincah untuk mobilitas perkotaan.',
                 'gambar_utama' => 'https://images.unsplash.com/photo-1590362891991-f766f5f76b5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'spesifikasi' => [
+                    'seats' => 4,
+                    'transmisi' => 'Manual',
+                    'bahan_bakar' => 'Bensin',
+                    'bagasi' => '2 Koper'
+                ]
             ],
             [
                 'nama_kendaraan' => 'Honda CR-V',
@@ -63,6 +87,12 @@ class KendaraanSeeder extends Seeder
                 'rating' => 4.8,
                 'deskripsi' => 'SUV elegan dengan fitur keselamatan canggih Honda Sensing.',
                 'gambar_utama' => 'https://images.unsplash.com/photo-1506057213367-028a17ec52e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'spesifikasi' => [
+                    'seats' => 6,
+                    'transmisi' => 'Otomatis',
+                    'bahan_bakar' => 'Bensin',
+                    'bagasi' => '3 Koper'
+                ]
             ],
             [
                 'nama_kendaraan' => 'Toyota Avanza Veloz',
@@ -73,6 +103,12 @@ class KendaraanSeeder extends Seeder
                 'rating' => 4.6,
                 'deskripsi' => 'Mobil sejuta umat dengan tampilan lebih sporty.',
                 'gambar_utama' => 'https://images.unsplash.com/photo-1609521263047-f8f205293f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'spesifikasi' => [
+                    'seats' => 7,
+                    'transmisi' => 'Otomatis',
+                    'bahan_bakar' => 'Bensin',
+                    'bagasi' => '3 Koper'
+                ]
             ],
             [
                 'nama_kendaraan' => 'Yamaha NMAX 155',
@@ -83,6 +119,11 @@ class KendaraanSeeder extends Seeder
                 'rating' => 4.8,
                 'deskripsi' => 'Skuter matik premium yang nyaman untuk jarak jauh dan dekat.',
                 'gambar_utama' => 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'spesifikasi' => [
+                    'cc' => 150,
+                    'transmisi' => 'Otomatis',
+                    'bahan_bakar' => 'Bensin'
+                ]
             ],
             [
                 'nama_kendaraan' => 'Honda PCX 160',
@@ -93,6 +134,11 @@ class KendaraanSeeder extends Seeder
                 'rating' => 4.7,
                 'deskripsi' => 'Skuter matik elegan dengan performa bertenaga.',
                 'gambar_utama' => 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'spesifikasi' => [
+                    'cc' => 150,
+                    'transmisi' => 'Otomatis',
+                    'bahan_bakar' => 'Bensin'
+                ]
             ],
             [
                 'nama_kendaraan' => 'Honda Africa Twin',
@@ -103,6 +149,11 @@ class KendaraanSeeder extends Seeder
                 'rating' => 4.9,
                 'deskripsi' => 'Motor petualang kelas berat untuk touring jarak jauh.',
                 'gambar_utama' => 'https://images.unsplash.com/photo-1558980394-0a06c4631733?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'spesifikasi' => [
+                    'cc' => 250,
+                    'transmisi' => 'Manual',
+                    'bahan_bakar' => 'Bensin'
+                ]
             ],
             [
                 'nama_kendaraan' => 'Honda Vario 125',
@@ -113,6 +164,11 @@ class KendaraanSeeder extends Seeder
                 'rating' => 4.5,
                 'deskripsi' => 'Skuter matik harian yang lincah dan irit bahan bakar.',
                 'gambar_utama' => 'https://images.unsplash.com/photo-1625068221840-08d1f2b1d310?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'spesifikasi' => [
+                    'cc' => 125,
+                    'transmisi' => 'Otomatis',
+                    'bahan_bakar' => 'Bensin'
+                ]
             ]
         ];
 
