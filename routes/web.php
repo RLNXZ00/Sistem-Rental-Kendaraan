@@ -2,11 +2,11 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KendaraanController;
+use App\Http\Controllers\BerandaController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [BerandaController::class, 'index'])->name('beranda');
+Route::post('/umpan-balik', [BerandaController::class, 'storeFeedback'])->name('umpan-balik.store')->middleware('auth');
 
 Route::get('/kendaraan', [KendaraanController::class, 'index'])->name('kendaraan.index');
 Route::get('/kendaraan/rating', [KendaraanController::class, 'rating'])->name('kendaraan.rating');
