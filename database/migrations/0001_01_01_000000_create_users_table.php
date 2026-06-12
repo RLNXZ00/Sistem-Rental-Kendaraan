@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('nik', 16)->nullable()->unique();
             $table->string('no_hp', 20)->nullable();
             $table->text('alamat')->nullable();
+            $table->boolean('is_admin')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
