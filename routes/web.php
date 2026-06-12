@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BerandaController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [BerandaController::class, 'index'])->name('beranda');
+Route::post('/umpan-balik', [BerandaController::class, 'storeFeedback'])->name('umpan-balik.store')->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
