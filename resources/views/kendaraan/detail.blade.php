@@ -15,7 +15,7 @@
                 <li aria-current="page">
                     <div class="flex items-center">
                         <span class="material-symbols-outlined text-sm mx-1">chevron_right</span>
-                        <span class="text-on-surface font-semibold">{{ $kendaraan->nama }}</span>
+                        <span class="text-on-surface font-semibold">{{ $kendaraan->nama_kendaraan }}</span>
                     </div>
                 </li>
             </ol>
@@ -27,7 +27,7 @@
             <div class="md:col-span-7 space-y-gutter">
                 <div class="bg-surface rounded-3xl overflow-hidden shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)]">
                     <img src="{{ $kendaraan->gambar_url ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuCAq_hivCr6iqSl5x-TT9a6xKFrQQY7M10X4fxFXWY91VsXpre2G1guCfburjmIPWM0UYlwFeZD-r0CQpZgQiuhksaqtLuNvre1_Tp3puMYx-3dIDt11CGXmt_KWEGOSOOlj7RZuuthtMqLYBbpaObqhAbKsGWCgAOs4sFE9rmi6u429rpgjND5jgI41P4ZHbvJhzyrOqxv614SDhtseQXL_6pBw33r4-8DafiLc5afD1MN_guLSU-PUjB905H3KWsQ_Aa_KnGth10' }}" 
-                         alt="{{ $kendaraan->nama }} Front View" id="main-image" class="w-full aspect-video object-cover transition-all duration-200">
+                         alt="{{ $kendaraan->nama_kendaraan }} Front View" id="main-image" class="w-full aspect-video object-cover transition-all duration-200">
                 </div>
                 <div class="grid grid-cols-3 gap-4">
                     <div class="bg-surface rounded-xl overflow-hidden shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] cursor-pointer hover:ring-2 ring-secondary-container transition-all">
@@ -53,8 +53,8 @@
                         </div>
                     </div>
                     
-                    <h1 class="font-headline-lg text-on-surface mb-2">{{ $kendaraan->nama }}</h1>
-                    <p class="font-body-md text-on-surface-variant mb-6">Nikmati kemewahan dan kenyamanan maksimal untuk perjalanan keluarga atau bisnis Anda dengan {{ $kendaraan->nama }} terbaru. Efisien dan tangguh.</p>
+                    <h1 class="font-headline-lg text-on-surface mb-2">{{ $kendaraan->nama_kendaraan }}</h1>
+                    <p class="font-body-md text-on-surface-variant mb-6">Nikmati kemewahan dan kenyamanan maksimal untuk perjalanan keluarga atau bisnis Anda dengan {{ $kendaraan->nama_kendaraan }} terbaru. Efisien dan tangguh.</p>
                     
                     <div class="flex items-baseline gap-2 mb-8">
                         <span class="text-headline-md text-secondary-container font-bold">Rp {{ number_format($kendaraan->harga_sewa, 0, ',', '.') }}</span>

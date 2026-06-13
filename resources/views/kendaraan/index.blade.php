@@ -48,10 +48,10 @@
                         @foreach($topRated as $top)
                         <a href="{{ route('kendaraan.show', $top->id) }}" class="flex items-center gap-stack-sm p-2 hover:bg-slate-50 rounded-lg cursor-pointer transition-colors">
                             <div class="w-12 h-12 rounded-lg bg-slate-200 overflow-hidden flex-shrink-0">
-                                <img src="{{ $top->gambar_url ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuAc3-_XnM82PvN0CmdsdoMoS85Y3gBULHn82FilfGgKQcRALpkEPLm4ODVC13gW31c0nFjY0rBxJDs3sf-cD5dNEYFVu1ex-U6uAwV1DoDsqvKunosBp36bw1cfjhea5Si8J7ZbHk5HwUGWDkzHBR7pLJPxWL56s4RPcTaQhiuKQF3WIeVBkOFkyEeLV11eIPGdRVFKhg-NWKKnF92S70ltDNqOYaYBp8y0nkqyImcRCrF0Fk19pVNcCU0ERG9pqzdHmTrXDwB8LGY' }}" alt="{{ $top->nama }}" class="w-full h-full object-cover">
+                                <img src="{{ $top->gambar_url ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuAc3-_XnM82PvN0CmdsdoMoS85Y3gBULHn82FilfGgKQcRALpkEPLm4ODVC13gW31c0nFjY0rBxJDs3sf-cD5dNEYFVu1ex-U6uAwV1DoDsqvKunosBp36bw1cfjhea5Si8J7ZbHk5HwUGWDkzHBR7pLJPxWL56s4RPcTaQhiuKQF3WIeVBkOFkyEeLV11eIPGdRVFKhg-NWKKnF92S70ltDNqOYaYBp8y0nkqyImcRCrF0Fk19pVNcCU0ERG9pqzdHmTrXDwB8LGY' }}" alt="{{ $top->nama_kendaraan }}" class="w-full h-full object-cover">
                             </div>
                             <div class="flex flex-col flex-grow">
-                                <span class="font-label-md text-label-md text-on-surface truncate">{{ $top->nama }}</span>
+                                <span class="font-label-md text-label-md text-on-surface truncate">{{ $top->nama_kendaraan }}</span>
                                 <div class="flex items-center text-secondary-container">
                                     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 14px;">star</span>
                                     <span class="font-label-sm text-label-sm ml-1 text-on-surface-variant">{{ number_format($top->rating, 1) }}</span>
@@ -75,12 +75,12 @@
                     @forelse($kendaraans as $kendaraan)
                     <div class="bg-surface rounded-xl border border-slate-200 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] hover:-translate-y-1 hover:shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1)] transition-all duration-300 flex flex-col overflow-hidden group">
                         <div class="aspect-video w-full bg-slate-100 relative overflow-hidden">
-                            <img src="{{ $kendaraan->gambar_url ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuBDcvLSYJJkALKIQ-cJMOtZzxuInVk4XJt-7G7zVXIjmxE-ePUvbsVd-4LNvPc4P1T4RTvlcK_BkWQZJW6ZbOiOxrfcJpQz7KDrueO-VjkhZwvHqu34OWK45MoW5lAckYYlpxlFo2x8vQMG0JTm738erimGl8jeiYNCr8QxiJ_DzUDGkK5HhjimpFENmQots5iqBaqUS4JQYVpTXUk6kxaTP1BLR8-dOB9bxxhsyxyGCavinQUxEzSfgumbRKapGFRo7pXkIHP9TPo' }}" alt="{{ $kendaraan->nama }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="{{ $kendaraan->gambar_url ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuBDcvLSYJJkALKIQ-cJMOtZzxuInVk4XJt-7G7zVXIjmxE-ePUvbsVd-4LNvPc4P1T4RTvlcK_BkWQZJW6ZbOiOxrfcJpQz7KDrueO-VjkhZwvHqu34OWK45MoW5lAckYYlpxlFo2x8vQMG0JTm738erimGl8jeiYNCr8QxiJ_DzUDGkK5HhjimpFENmQots5iqBaqUS4JQYVpTXUk6kxaTP1BLR8-dOB9bxxhsyxyGCavinQUxEzSfgumbRKapGFRo7pXkIHP9TPo' }}" alt="{{ $kendaraan->nama_kendaraan }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <div class="absolute top-2 left-2 bg-inverse-on-surface text-primary font-label-sm text-label-sm px-2 py-1 rounded-full shadow-sm">{{ $kendaraan->tipe }}</div>
                         </div>
                         <div class="p-stack-md flex flex-col flex-grow gap-stack-sm">
                             <div class="flex justify-between items-start">
-                                <h3 class="font-headline-sm text-headline-sm text-on-surface">{{ $kendaraan->nama }}</h3>
+                                <h3 class="font-headline-sm text-headline-sm text-on-surface">{{ $kendaraan->nama_kendaraan }}</h3>
                                 <div class="flex items-center text-secondary-container bg-secondary-fixed/30 px-2 py-0.5 rounded-full">
                                     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 16px;">star</span>
                                     <span class="font-label-sm text-label-sm ml-1 text-on-surface">{{ number_format($kendaraan->rating, 1) }}</span>
@@ -103,8 +103,8 @@
                                 </div>
                             </div>
                             
-                            <a href="{{ route('kendaraan.show', $kendaraan->id) }}" class="mt-stack-sm w-full bg-secondary-container text-on-secondary-container font-label-md text-label-md py-3 rounded-lg hover:-translate-y-1 shadow-sm hover:shadow-md transition-all duration-200 text-center inline-block">
-                                Lihat Detail
+                            <a href="{{ route('kendaraan.show', $kendaraan->id) }}" class="mt-stack-sm w-full bg-secondary-container text-on-primary font-label-md text-label-md py-3 rounded-lg hover:-translate-y-1 shadow-sm hover:shadow-md transition-all duration-200 text-center inline-block">
+                                Pesan Sekarang
                             </a>
                         </div>
                     </div>
