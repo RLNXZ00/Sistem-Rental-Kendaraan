@@ -28,7 +28,7 @@
             @forelse($vehicles as $vehicle)
             <article class="group flex flex-col md:flex-row bg-surface rounded-xl border border-slate-200 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] hover:-translate-y-1 hover:shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1)] transition-all duration-300 overflow-hidden cursor-pointer" onclick="openModal({{ $vehicle->id }})">
                 <div class="w-full md:w-64 h-48 md:h-auto shrink-0 relative bg-slate-100">
-                    <img src="{{ $vehicle->gambar_url ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuDZQ8QjaDzY0hoBkw6iw1Sp-SR0UFnCUwr8B4WHSegr2R0_MqQicaF2U4KjIsyDMjOb5bCs459g3KTe7fi97TCbb7v1DVi495-2vTatV8sPbZJp8j4KtCRkhWPJqzv5UqgxosNlQ313BFA_SmomMjWMc5_RkFnIPuZuAW3n_aMOMmUzeBgDVVVWR-0jHSj4QG7wwB9OTlVkaRl1muFxdqOVKgPvXsC51dKtuT3srTpI9shBGZ2v_A8LpV36ZHMb0wFJYV7aDOwJ7Ig' }}" alt="{{ $vehicle->nama }}" class="w-full h-full object-cover">
+                    <img src="{{ $vehicle->gambar_url ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuDZQ8QjaDzY0hoBkw6iw1Sp-SR0UFnCUwr8B4WHSegr2R0_MqQicaF2U4KjIsyDMjOb5bCs459g3KTe7fi97TCbb7v1DVi495-2vTatV8sPbZJp8j4KtCRkhWPJqzv5UqgxosNlQ313BFA_SmomMjWMc5_RkFnIPuZuAW3n_aMOMmUzeBgDVVVWR-0jHSj4QG7wwB9OTlVkaRl1muFxdqOVKgPvXsC51dKtuT3srTpI9shBGZ2v_A8LpV36ZHMb0wFJYV7aDOwJ7Ig' }}" alt="{{ $vehicle->nama_kendaraan }}" class="w-full h-full object-cover">
                     <div class="absolute top-3 left-3 bg-inverse-primary text-primary-container px-2 py-1 rounded-full font-label-sm text-label-sm shadow-sm">
                         {{ $vehicle->tipe }}
                     </div>
@@ -36,9 +36,9 @@
                 
                 <div class="p-4 md:p-6 flex flex-col flex-grow justify-center">
                     <div class="flex justify-between items-start mb-2">
-                        <h2 class="font-headline-sm text-headline-sm text-primary-container" id="vehicle-title-{{ $vehicle->id }}">{{ $vehicle->nama }}</h2>
+                        <h2 class="font-headline-sm text-headline-sm text-primary-container" id="vehicle-title-{{ $vehicle->id }}">{{ $vehicle->nama_kendaraan }}</h2>
                         <div class="flex items-center gap-1 bg-surface-container-low px-2 py-1 rounded-md border border-slate-200">
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" class="text-secondary-container text-[18px]">star</span>
+                            <span class="material-symbols-outlined text-secondary-container text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
                             <span class="font-label-md text-label-md text-on-background">{{ number_format($vehicle->rating, 1) }}<span class="text-on-surface-variant font-normal">/5.0</span></span>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                         <div class="flex text-secondary-container">
                             @for($i = 1; $i <= 5; $i++)
                                 @if($i <= round($vehicle->rating))
-                                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" class="text-[16px]">star</span>
+                                    <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
                                 @else
                                     <span class="material-symbols-outlined text-[16px]">star</span>
                                 @endif
@@ -113,6 +113,13 @@
                     
                     <div class="grid grid-cols-1 gap-3 mb-6">
                         <div class="flex items-center gap-3 p-2 bg-surface-container-low rounded-xl">
+                            <span class="material-symbols-outlined text-secondary-container">event_seat</span>
+                            <div>
+                                <p class="text-label-sm text-on-surface-variant">Kursi</p>
+                                <p id="modal-seats" class="font-label-md text-on-surface">5 Kursi</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 p-2 bg-surface-container-low rounded-xl">
                             <span class="material-symbols-outlined text-secondary-container">settings_input_component</span>
                             <div>
                                 <p class="text-label-sm text-on-surface-variant">Transmisi</p>
@@ -124,6 +131,13 @@
                             <div>
                                 <p class="text-label-sm text-on-surface-variant">Bahan Bakar</p>
                                 <p id="modal-fuel" class="font-label-md text-on-surface">Bensin</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 p-2 bg-surface-container-low rounded-xl">
+                            <span class="material-symbols-outlined text-secondary-container">work</span>
+                            <div>
+                                <p class="text-label-sm text-on-surface-variant">Maks. Bagasi</p>
+                                <p id="modal-baggage" class="font-label-md text-on-surface">2 Koper</p>
                             </div>
                         </div>
                     </div>
