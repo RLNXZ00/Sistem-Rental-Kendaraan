@@ -11,7 +11,7 @@
             <li><a class="text-on-primary {{ request()->routeIs('beranda') ? 'border-b-2 border-secondary-container pb-1' : 'opacity-80' }} hover:text-secondary-container transition-colors duration-200" href="{{ route('beranda') }}">Beranda</a></li>
             <li><a class="text-on-primary {{ request()->routeIs('kendaraan.*') ? 'border-b-2 border-secondary-container pb-1' : 'opacity-80' }} hover:text-secondary-container transition-colors duration-200" href="{{ route('kendaraan.index') }}">Daftar Kendaraan</a></li>
             <li><a class="text-on-primary {{ request()->routeIs('pemesanan.*') ? 'border-b-2 border-secondary-container pb-1' : 'opacity-80' }} hover:text-secondary-container transition-colors duration-200" href="{{ route('pemesanan.riwayat') }}">Pemesanan</a></li>
-            <li><a class="text-on-primary opacity-80 hover:text-secondary-container transition-colors duration-200" href="#">Tentang Kami</a></li>
+            <li><a class="text-on-primary {{ request()->routeIs('tentang-kami') ? 'border-b-2 border-secondary-container pb-1' : 'opacity-80' }} hover:text-secondary-container transition-colors duration-200" href="{{ route('tentang-kami') }}">Tentang Kami</a></li>
         </ul>
 
         <!-- Right Side: Notification & Auth -->
@@ -94,7 +94,7 @@
             <x-responsive-nav-link :href="route('pemesanan.riwayat')" :active="request()->routeIs('pemesanan.*')" class="text-on-primary hover:bg-primary-container">
                 Pemesanan
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="#" class="text-on-primary hover:bg-primary-container">
+            <x-responsive-nav-link :href="route('tentang-kami')" :active="request()->routeIs('tentang-kami')" class="text-on-primary hover:bg-primary-container">
                 Tentang Kami
             </x-responsive-nav-link>
         </div>

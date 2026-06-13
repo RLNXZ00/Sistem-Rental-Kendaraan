@@ -6,6 +6,9 @@ use App\Http\Controllers\BerandaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [BerandaController::class, 'index'])->name('beranda');
+Route::get('/tentang-kami', function () {
+    return view('tentang-kami');
+})->name('tentang-kami');
 Route::post('/umpan-balik', [BerandaController::class, 'storeFeedback'])->name('umpan-balik.store')->middleware('auth');
 
 Route::get('/kendaraan', [KendaraanController::class, 'index'])->name('kendaraan.index');
