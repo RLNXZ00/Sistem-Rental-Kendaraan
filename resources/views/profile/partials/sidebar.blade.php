@@ -36,12 +36,12 @@
                 </div>
                 <span class="material-symbols-outlined {{ request()->routeIs('profile.edit') ? 'text-primary' : 'text-on-surface-variant' }} text-[20px]" data-icon="chevron_right">chevron_right</span>
             </a>
-            <a href="#" class="w-full flex items-center justify-between p-3 rounded-xl hover:bg-surface-container-low transition-colors group">
+            <a href="{{ route('profile.password') }}" class="w-full flex items-center justify-between p-3 rounded-xl hover:bg-surface-container-low transition-colors group {{ request()->routeIs('profile.password') ? 'bg-surface-container-low' : '' }}">
                 <div class="flex items-center gap-3">
-                    <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary" data-icon="lock">lock</span>
+                    <span class="material-symbols-outlined {{ request()->routeIs('profile.password') ? 'text-primary' : 'text-on-surface-variant group-hover:text-primary' }}" data-icon="lock">lock</span>
                     <span class="text-body-md text-on-surface">Ganti Kata Sandi</span>
                 </div>
-                <span class="material-symbols-outlined text-on-surface-variant text-[20px]" data-icon="chevron_right">chevron_right</span>
+                <span class="material-symbols-outlined {{ request()->routeIs('profile.password') ? 'text-primary' : 'text-on-surface-variant' }} text-[20px]" data-icon="chevron_right">chevron_right</span>
             </a>
             <a href="{{ route('profile.notifikasi') }}" class="w-full flex items-center justify-between p-3 rounded-xl hover:bg-surface-container-low transition-colors group {{ request()->routeIs('profile.notifikasi') ? 'bg-surface-container-low' : '' }}">
                 <div class="flex items-center gap-3">
