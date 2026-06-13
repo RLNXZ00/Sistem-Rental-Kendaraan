@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/profile/notifikasi', [ProfileController::class, 'notifikasi'])->name('profile.notifikasi');
     Route::get('/profile/bahasa', [ProfileController::class, 'bahasa'])->name('profile.bahasa');
+    Route::get('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
 
     // Rute Pemesanan
     Route::get('/pemesanan/riwayat', [App\Http\Controllers\PemesananController::class, 'riwayat'])->name('pemesanan.riwayat');

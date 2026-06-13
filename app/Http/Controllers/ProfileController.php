@@ -20,6 +20,17 @@ class ProfileController extends Controller
             'user' => $request->user(),
         ]);
     }
+
+    /**
+     * Display the user's password update form.
+     */
+    public function password(Request $request): View
+    {
+        return view('profile.password', [
+            'user' => $request->user(),
+        ]);
+    }
+
     /**
      * Display the user's notification preferences.
      */
