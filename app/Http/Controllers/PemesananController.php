@@ -121,24 +121,24 @@ class PemesananController extends Controller
     }
 
     /**
-     * Menampilkan halaman pembayaran denda keterlambatan.
-     */
-    public function pembayaranDenda($id)
-    {
-        $pesanan = Pemesanan::with('kendaraan')
-            ->where('user_id', Auth::id())
-            ->where('status', 'Denda Terlambat')
-            ->findOrFail($id);
-
-        // Hitung ulang variabel denda untuk ditampilkan di view
-        $hargaSewa    = $pesanan->kendaraan->harga_sewa;
-        $dendaPerHari = $hargaSewa + ($hargaSewa * 0.10);
-        $terlambatHari = $pesanan->denda > 0
-            ? (int) round($pesanan->denda / $dendaPerHari)
-            : 0;
-
-        return view('pemesanan.pembayaran_denda', compact('pesanan', 'terlambatHari', 'dendaPerHari'));
-    }
+    //  * Menampilkan halaman pembayaran denda keterlambatan.
+    //  */
+    // public function pembayaranDenda($id)
+    // {
+    //     $pesanan = Pemesanan::with('kendaraan')
+    //         ->where('user_id', Auth::id())
+    //         ->where('status', 'Denda Terlambat')
+    //         ->findOrFail($id);
+    //
+    //     // Hitung ulang variabel denda untuk ditampilkan di view
+    //     $hargaSewa    = $pesanan->kendaraan->harga_sewa;
+    //     $dendaPerHari = $hargaSewa + ($hargaSewa * 0.10);
+    //     $terlambatHari = $pesanan->denda > 0
+    //         ? (int) round($pesanan->denda / $dendaPerHari)
+    //         : 0;
+    //
+    //     return view('pemesanan.pembayaran_denda', compact('pesanan', 'terlambatHari', 'dendaPerHari'));
+    // }
 
     /**
      * Memproses pembayaran denda keterlambatan.
