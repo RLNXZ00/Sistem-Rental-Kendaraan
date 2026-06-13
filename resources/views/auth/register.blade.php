@@ -28,21 +28,21 @@
             </div>
 
             <!-- Right Side: Registration Form -->
-            <div class="w-full md:w-7/12 p-8 sm:p-12 md:p-16 flex flex-col justify-center bg-surface relative z-10">
+            <div class="w-full md:w-7/12 p-8 md:p-10 lg:p-12 flex flex-col justify-center bg-surface relative z-10">
                 <!-- Mobile Logo Header (Visible only on mobile) -->
-                <div class="md:hidden flex items-center justify-center gap-2 mb-8 text-primary">
+                <div class="md:hidden flex items-center justify-center gap-2 mb-6 text-primary">
                     <span class="material-symbols-outlined fill text-3xl">directions_car</span>
                     <span class="font-headline-md text-headline-md tracking-tight">AutoRide</span>
                 </div>
                 
-                <div class="mb-8">
+                <div class="mb-6">
                     <h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-2">Buat Akun</h1>
                     <p class="font-body-md text-body-md text-on-surface-variant">Masukkan detail Anda di bawah ini untuk memulai dengan AutoRide.</p>
                 </div>
 
                 <!-- Validation Errors -->
                 @if ($errors->any())
-                    <div class="mb-6 p-4 rounded-lg bg-error-container border border-error/20 flex items-start gap-3">
+                    <div class="mb-5 p-4 rounded-lg bg-error-container border border-error/20 flex items-start gap-3">
                         <span class="material-symbols-outlined text-error text-[20px] mt-0.5">error</span>
                         <div class="text-sm text-error">
                             <ul class="list-disc list-inside">
@@ -54,10 +54,10 @@
                     </div>
                 @endif
 
-                <form action="{{ route('register') }}" class="space-y-6" method="POST">
+                <form action="{{ route('register') }}" class="space-y-5" method="POST">
                     @csrf
                     <!-- Grid layout for form fields to maximize space -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <!-- Name -->
                         <div class="space-y-stack-sm col-span-1 md:col-span-2">
                             <label class="block font-label-md text-label-md text-on-surface" for="name">Nama Pengguna (Username)</label>
@@ -65,7 +65,7 @@
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-outline">
                                     <span class="material-symbols-outlined text-[20px]">person</span>
                                 </span>
-                                <input class="w-full pl-10 pr-4 py-3 bg-surface border border-slate-200 rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline-variant transition-all duration-200 input-glow" id="name" name="name" value="{{ old('name') }}" placeholder="nama lengkap" required type="text" autofocus autocomplete="name" />
+                                <input class="w-full pl-10 pr-4 py-3 bg-surface border border-slate-200 rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline-variant transition-all duration-200 input-glow" id="name" name="name" value="{{ old('name') }}" placeholder="e.g. johndoe" required type="text" autofocus autocomplete="name" />
                             </div>
                         </div>
 
@@ -127,7 +127,7 @@
                     </div>
 
                     <!-- Register Button -->
-                    <div class="pt-4">
+                    <div class="pt-2">
                         <button class="w-full flex justify-center items-center gap-2 py-3.5 px-4 border border-transparent rounded-lg font-label-md text-label-md text-on-secondary bg-secondary-container hover:bg-[#ff8533] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-container transition-all duration-200 hover:-translate-y-0.5 shadow-sm hover:shadow-md" type="submit">
                             <span>Daftar</span>
                             <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
@@ -136,10 +136,17 @@
                 </form>
 
                 <!-- Login Link -->
-                <div class="mt-8 text-center">
+                <div class="mt-6 text-center">
                     <p class="font-body-sm text-body-sm text-on-surface-variant">
                         Sudah punya akun? 
                         <a class="font-label-md text-primary hover:text-primary-container transition-colors duration-200 hover:underline" href="{{ route('login') }}">Masuk</a>
+                    </p>
+                </div>
+
+                <!-- Minimal Footer Text -->
+                <div class="mt-6 pt-6 text-center border-t border-slate-100">
+                    <p class="font-body-sm text-body-sm text-outline">
+                        &copy; {{ date('Y') }} AutoRide. All rights reserved.
                     </p>
                 </div>
             </div>

@@ -5,7 +5,7 @@
         <div class="absolute bottom-[-10%] right-[-5%] w-96 h-96 bg-primary-fixed rounded-full blur-3xl opacity-40 z-0 pointer-events-none"></div>
         
         <!-- Login Card Container -->
-        <main class="w-full max-w-[440px] bg-surface rounded-xl shadow-md border border-slate-200 p-8 md:p-10 relative z-10 flex flex-col gap-stack-lg transition-transform hover:-translate-y-1 hover:shadow-lg duration-300">
+        <main class="w-full max-w-[440px] bg-surface rounded-xl shadow-md border border-slate-200 p-8 md:p-10 mb-[6px] relative z-10 flex flex-col gap-stack-lg transition-transform hover:-translate-y-1 hover:shadow-lg duration-300">
             <!-- Header / Brand -->
             <div class="flex flex-col items-center text-center gap-stack-sm">
                 <div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-2 shadow-sm">
@@ -83,5 +83,12 @@
                 </p>
             </div>
         </main>
+
+        <!-- Copyright Footer -->
+        <div class="absolute bottom-8 left-0 w-full text-center z-10 pointer-events-none">
+            <p class="font-body-sm text-body-sm text-outline">
+                &copy; {{ date('Y') }} AutoRide. All rights reserved.
+            </p>
+        </div>
     </div>
 </x-guest-layout>

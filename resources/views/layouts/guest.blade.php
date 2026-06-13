@@ -32,8 +32,8 @@
                 font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
             }
             /* Custom styles for input focus glow */
-            .input-glow:focus {
-                box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); /* Soft navy-light glow */
+            .input-glow:focus, .input-glow:focus-within {
+                box-shadow: 0 0 0 2px rgba(0, 35, 111, 0.2);
                 border-color: #00236f; /* primary color */
                 outline: none;
             }
