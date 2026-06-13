@@ -27,4 +27,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/pemesanan/{id}/bayar-denda', [App\Http\Controllers\PemesananController::class, 'bayarDenda'])->name('pemesanan.bayarDenda');
 });
 
+// Rute Admin
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', function () {
+        return "Ini adalah halaman Dashboard Admin (Akses Terlindungi)";
+    })->name('dashboard');
+});
+
 require __DIR__.'/auth.php';
