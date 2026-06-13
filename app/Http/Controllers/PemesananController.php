@@ -106,11 +106,13 @@ class PemesananController extends Controller
             'denda' => 0
         ]);
 
+        $pesanan = Pemesanan::where('user_id', Auth::id())->latest()->first();
+
         return redirect()->route('pemesanan.pembayaran', $pesanan->id)->with('success', 'Pemesanan berhasil dibuat. Silakan selesaikan pembayaran.');
     }
 
     /**
-     * Menampilkan halaman pembayaran.
+     * Menampilkan halaman pembayaran (sewa biasa).
      */
     public function pembayaran($id)
     {
@@ -119,20 +121,48 @@ class PemesananController extends Controller
     }
 
     /**
-     * Simulasi pembayaran denda keterlambatan.
+     * Menampilkan halaman pembayaran denda keterlambatan.
+     */
+    public function pembayaranDenda($id)
+    {
+        $pesanan = Pemesanan::with('kendaraan')
+            ->where('user_id', Auth::id())
+            ->where('status', 'Denda Terlambat')
+            ->findOrFail($id);
+
+        // Hitung ulang variabel denda untuk ditampilkan di view
+        $hargaSewa    = $pesanan->kendaraan->harga_sewa;
+        $dendaPerHari = $hargaSewa + ($hargaSewa * 0.10);
+        $terlambatHari = $pesanan->denda > 0
+            ? (int) round($pesanan->denda / $dendaPerHari)
+            : 0;
+
+        return view('pemesanan.pembayaran_denda', compact('pesanan', 'terlambatHari', 'dendaPerHari'));
+    }
+
+    /**
+     * Memproses pembayaran denda keterlambatan.
      */
     public function bayarDenda(Request $request, $id)
     {
+        $request->validate([
+            'metode_pembayaran' => 'required|string',
+        ]);
+
         $pesanan = Pemesanan::where('user_id', Auth::id())->findOrFail($id);
 
         if ($pesanan->status === 'Denda Terlambat') {
-            // Anggap denda dibayar
+            // Tandai denda sebagai sudah dibayar → status Selesai
             $pesanan->status = 'Selesai';
             $pesanan->save();
 
-            return redirect()->back()->with('success', 'Denda berhasil dibayarkan. Pemesanan telah Selesai.');
+            return redirect()
+                ->route('pemesanan.riwayat')
+                ->with('success', 'Denda sebesar Rp ' . number_format($pesanan->denda, 0, ',', '.') . ' berhasil dibayarkan via ' . $request->metode_pembayaran . '. Pemesanan telah selesai.');
         }
 
-        return redirect()->back()->with('error', 'Status pesanan tidak valid untuk pembayaran denda.');
+        return redirect()
+            ->back()
+            ->with('error', 'Status pesanan tidak valid untuk pembayaran denda.');
     }
 }

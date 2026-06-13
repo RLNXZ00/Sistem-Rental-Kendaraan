@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/pemesanan/create/{id}', [App\Http\Controllers\PemesananController::class, 'create'])->name('pemesanan.create');
     Route::post('/pemesanan', [App\Http\Controllers\PemesananController::class, 'store'])->name('pemesanan.store');
     Route::get('/pemesanan/{id}/pembayaran', [App\Http\Controllers\PemesananController::class, 'pembayaran'])->name('pemesanan.pembayaran');
+    Route::get('/pemesanan/{id}/bayar-denda', [App\Http\Controllers\PemesananController::class, 'pembayaranDenda'])->name('pemesanan.pembayaranDenda');
     Route::post('/pemesanan/{id}/bayar-denda', [App\Http\Controllers\PemesananController::class, 'bayarDenda'])->name('pemesanan.bayarDenda');
 });
 
@@ -36,4 +37,4 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     })->name('dashboard');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
