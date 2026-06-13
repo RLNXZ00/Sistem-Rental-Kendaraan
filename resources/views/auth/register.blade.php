@@ -1,181 +1,148 @@
 <x-guest-layout>
-    <main class="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
-        <!-- Kolom Kiri: Branding & Image (Hanya tampil di desktop) -->
-        <div class="hidden lg:flex flex-col justify-between bg-primary relative overflow-hidden text-on-primary">
-            <!-- Background Image with Overlay -->
-            <div class="absolute inset-0 z-0">
-                <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" 
-                     alt="Rental Mobil Mewah" 
-                     class="w-full h-full object-cover object-center opacity-40">
-                <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-transparent"></div>
-            </div>
+    <div class="min-h-screen flex items-center justify-center p-margin-mobile md:p-margin-desktop">
+        <!-- Main Registration Container -->
+        <div class="w-full max-w-5xl bg-surface rounded-[20px] shadow-sm border border-slate-200 overflow-hidden flex flex-col md:flex-row relative z-10 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
             
-            <div class="relative z-10 p-12 flex flex-col h-full justify-between">
-                <div>
-                    <div class="flex items-center gap-2 mb-12">
-                        <span class="material-symbols-outlined text-[32px] text-secondary-container">directions_car</span>
-                        <span class="font-label-md text-2xl font-bold tracking-tight">AutoRide</span>
-                    </div>
-                    
-                    <h1 class="font-label-md text-4xl lg:text-5xl font-bold leading-tight mb-6">
-                        Mulai Perjalanan<br>Luar Biasa Anda<br>Hari Ini.
-                    </h1>
-                    
-                    <p class="font-body-lg text-lg text-inverse-primary max-w-md">
-                        Bergabunglah dengan ribuan pelanggan yang telah mempercayakan perjalanan mereka kepada AutoRide. Nikmati akses ke ratusan armada kendaraan premium.
-                    </p>
-                </div>
-                
-                <div class="bg-surface/10 backdrop-blur-md border border-surface/20 rounded-2xl p-6 max-w-md mt-12">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="flex -space-x-3">
-                            <img class="w-10 h-10 rounded-full border-2 border-primary object-cover" src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
-                            <img class="w-10 h-10 rounded-full border-2 border-primary object-cover" src="https://randomuser.me/api/portraits/women/44.jpg" alt="User">
-                            <img class="w-10 h-10 rounded-full border-2 border-primary object-cover" src="https://randomuser.me/api/portraits/men/68.jpg" alt="User">
-                        </div>
-                        <div class="text-sm font-medium">
-                            Dipercaya oleh <span class="font-bold text-secondary-fixed">10,000+</span> Pengguna
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-1 text-secondary-container">
-                        <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
-                        <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
-                        <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
-                        <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
-                        <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
-                        <span class="ml-2 text-sm text-inverse-primary">4.9/5 Rating rata-rata</span>
+            <!-- Left Side: Image/Branding Panel (Hidden on smaller mobile) -->
+            <div class="hidden md:flex md:w-5/12 bg-primary text-on-primary p-10 flex-col justify-between relative overflow-hidden">
+                <!-- Background Image overlay -->
+                <div class="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay" data-alt="A sleek modern vehicle interior" style="background-image: url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');"></div>
+                <div class="relative z-10">
+                    <a class="inline-flex items-center gap-2 mb-12 group" href="/">
+                        <span class="material-symbols-outlined fill text-3xl group-hover:scale-110 transition-transform duration-300">directions_car</span>
+                        <span class="font-headline-md text-headline-md tracking-tight">AutoRide</span>
+                    </a>
+                    <div class="space-y-6">
+                        <h2 class="font-headline-lg text-headline-lg">Bergabunglah dalam perjalanan.</h2>
+                        <p class="font-body-lg text-body-lg opacity-90">Rasakan penyewaan kendaraan yang lancar. Melajulah lebih cepat dengan armada premium dan andal kami.</p>
                     </div>
                 </div>
+                <div class="relative z-10">
+                    <div class="flex items-center gap-4 text-sm font-label-md text-on-primary/80">
+                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">verified</span> Aman</span>
+                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">support_agent</span> Layanan 24/7</span>
+                    </div>
+                </div>
+                <!-- Decorative gradient element -->
+                <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-primary-fixed rounded-full blur-3xl opacity-20 pointer-events-none"></div>
             </div>
-        </div>
-        
-        <!-- Kolom Kanan: Form Register -->
-        <div class="flex flex-col justify-center px-6 py-12 lg:px-16 xl:px-24 bg-surface relative">
-            <div class="w-full max-w-md mx-auto">
-                
-                <!-- Mobile Header -->
-                <div class="flex items-center gap-2 mb-8 lg:hidden">
-                    <span class="material-symbols-outlined text-[28px] text-primary">directions_car</span>
-                    <span class="font-label-md text-xl font-bold tracking-tight text-on-surface">AutoRide</span>
+
+            <!-- Right Side: Registration Form -->
+            <div class="w-full md:w-7/12 p-8 sm:p-12 md:p-16 flex flex-col justify-center bg-surface relative z-10">
+                <!-- Mobile Logo Header (Visible only on mobile) -->
+                <div class="md:hidden flex items-center justify-center gap-2 mb-8 text-primary">
+                    <span class="material-symbols-outlined fill text-3xl">directions_car</span>
+                    <span class="font-headline-md text-headline-md tracking-tight">AutoRide</span>
                 </div>
                 
                 <div class="mb-8">
-                    <h2 class="font-label-md text-3xl font-bold text-on-surface tracking-tight mb-2">Buat Akun Baru</h2>
-                    <p class="font-body-md text-on-surface-variant">Lengkapi data diri Anda untuk mulai menyewa kendaraan impian.</p>
+                    <h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-2">Buat Akun</h1>
+                    <p class="font-body-md text-body-md text-on-surface-variant">Masukkan detail Anda di bawah ini untuk memulai dengan AutoRide.</p>
                 </div>
 
                 <!-- Validation Errors -->
-                <div class="mb-6">
-                    @if ($errors->any())
-                        <div class="p-4 rounded-lg bg-error/10 border border-error/20 flex items-start gap-3">
-                            <span class="material-symbols-outlined text-error text-[20px] mt-0.5">error</span>
-                            <div class="text-sm text-error">
-                                <ul class="list-disc list-inside">
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                @if ($errors->any())
+                    <div class="mb-6 p-4 rounded-lg bg-error-container border border-error/20 flex items-start gap-3">
+                        <span class="material-symbols-outlined text-error text-[20px] mt-0.5">error</span>
+                        <div class="text-sm text-error">
+                            <ul class="list-disc list-inside">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         </div>
-                    @endif
-                </div>
+                    </div>
+                @endif
 
-                <form method="POST" action="{{ route('register') }}" class="space-y-5">
+                <form action="{{ route('register') }}" class="space-y-6" method="POST">
                     @csrf
-                    
-                    <!-- Name -->
-                    <div>
-                        <label class="block font-label-sm text-sm font-semibold text-on-surface mb-1.5" for="name">
-                            Nama Lengkap <span class="text-error">*</span>
-                        </label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <span class="material-symbols-outlined text-outline text-[20px]">person</span>
-                            </div>
-                            <input class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-lg font-body-md text-on-surface focus:bg-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all shadow-sm" 
-                                   id="name" type="text" name="name" value="{{ old('name') }}" placeholder="John Doe" required autofocus autocomplete="name" />
-                        </div>
-                    </div>
-
-                    <!-- Email Address -->
-                    <div>
-                        <label class="block font-label-sm text-sm font-semibold text-on-surface mb-1.5" for="email">
-                            Alamat Email <span class="text-error">*</span>
-                        </label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <span class="material-symbols-outlined text-outline text-[20px]">mail</span>
-                            </div>
-                            <input class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-lg font-body-md text-on-surface focus:bg-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all shadow-sm" 
-                                   id="email" type="email" name="email" value="{{ old('email') }}" placeholder="nama@email.com" required autocomplete="username" />
-                        </div>
-                    </div>
-
-                    <!-- Password Group -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <!-- Password -->
-                        <div>
-                            <label class="block font-label-sm text-sm font-semibold text-on-surface mb-1.5" for="password">
-                                Kata Sandi <span class="text-error">*</span>
-                            </label>
+                    <!-- Grid layout for form fields to maximize space -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Name -->
+                        <div class="space-y-stack-sm col-span-1 md:col-span-2">
+                            <label class="block font-label-md text-label-md text-on-surface" for="name">Nama Pengguna (Username)</label>
                             <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <span class="material-symbols-outlined text-outline text-[20px]">lock</span>
-                                </div>
-                                <input class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-lg font-body-md text-on-surface focus:bg-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all shadow-sm" 
-                                       id="password" type="password" name="password" placeholder="••••••••" required autocomplete="new-password" />
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-outline">
+                                    <span class="material-symbols-outlined text-[20px]">person</span>
+                                </span>
+                                <input class="w-full pl-10 pr-4 py-3 bg-surface border border-slate-200 rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline-variant transition-all duration-200 input-glow" id="name" name="name" value="{{ old('name') }}" placeholder="nama lengkap" required type="text" autofocus autocomplete="name" />
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="space-y-stack-sm col-span-1 md:col-span-2">
+                            <label class="block font-label-md text-label-md text-on-surface" for="email">Email Aktif</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-outline">
+                                    <span class="material-symbols-outlined text-[20px]">mail</span>
+                                </span>
+                                <input class="w-full pl-10 pr-4 py-3 bg-surface border border-slate-200 rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline-variant transition-all duration-200 input-glow" id="email" name="email" value="{{ old('email') }}" placeholder="name@example.com" required type="email" autocomplete="username"/>
+                            </div>
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="space-y-stack-sm col-span-1 md:col-span-2">
+                            <label class="block font-label-md text-label-md text-on-surface" for="no_hp">Nomor HP</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-outline">
+                                    <span class="material-symbols-outlined text-[20px]">call</span>
+                                </span>
+                                <input class="w-full pl-10 pr-4 py-3 bg-surface border border-slate-200 rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline-variant transition-all duration-200 input-glow" id="no_hp" name="no_hp" value="{{ old('no_hp') }}" placeholder="+62 812 3456 7890" required type="tel" />
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="space-y-stack-sm col-span-1">
+                            <label class="block font-label-md text-label-md text-on-surface" for="password">Kata Sandi</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-outline">
+                                    <span class="material-symbols-outlined text-[20px]">lock</span>
+                                </span>
+                                <input class="w-full pl-10 pr-10 py-3 bg-surface border border-slate-200 rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline-variant transition-all duration-200 input-glow" id="password" name="password" placeholder="••••••••" required type="password" autocomplete="new-password"/>
                             </div>
                         </div>
 
                         <!-- Confirm Password -->
-                        <div>
-                            <label class="block font-label-sm text-sm font-semibold text-on-surface mb-1.5" for="password_confirmation">
-                                Ulangi Sandi <span class="text-error">*</span>
-                            </label>
+                        <div class="space-y-stack-sm col-span-1">
+                            <label class="block font-label-md text-label-md text-on-surface" for="password_confirmation">Konfirmasi Sandi</label>
                             <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <span class="material-symbols-outlined text-outline text-[20px]">lock_reset</span>
-                                </div>
-                                <input class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-lg font-body-md text-on-surface focus:bg-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all shadow-sm" 
-                                       id="password_confirmation" type="password" name="password_confirmation" placeholder="••••••••" required autocomplete="new-password" />
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-outline">
+                                    <span class="material-symbols-outlined text-[20px]">lock_reset</span>
+                                </span>
+                                <input class="w-full pl-10 pr-10 py-3 bg-surface border border-slate-200 rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline-variant transition-all duration-200 input-glow" id="password_confirmation" name="password_confirmation" placeholder="••••••••" required type="password" autocomplete="new-password"/>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Additional Details (Optional if required by your user migration) -->
-                    <!-- In standard Breeze, name, email, password are required. In your schema, NIK/HP are nullable so they can be added later in Profile. -->
-
                     <!-- Terms agreement -->
-                    <div class="flex items-start pt-2">
-                        <div class="flex items-center h-5 mt-0.5">
-                            <input class="w-4 h-4 rounded border-slate-300 text-secondary-container focus:ring-secondary-container focus:ring-offset-0 bg-surface cursor-pointer" 
-                                   id="terms" name="terms" type="checkbox" required />
+                    <div class="flex items-start mt-4">
+                        <div class="flex items-center h-5">
+                            <input class="w-4 h-4 rounded border-slate-200 text-secondary-container focus:ring-secondary-container focus:ring-offset-0 bg-surface cursor-pointer" id="terms" name="terms" required type="checkbox"/>
                         </div>
-                        <div class="ml-3 font-body-sm text-sm text-on-surface-variant">
-                            <label class="cursor-pointer" for="terms">
-                                Saya setuju dengan <a class="text-primary font-medium hover:underline" href="#">Ketentuan Layanan</a> dan <a class="text-primary font-medium hover:underline" href="#">Kebijakan Privasi</a>.
+                        <div class="ml-3 font-body-sm text-body-sm">
+                            <label class="text-on-surface-variant cursor-pointer" for="terms">
+                                Saya setuju dengan <a class="text-primary font-medium hover:underline focus:outline-none focus:underline" href="#">Ketentuan Layanan</a> dan <a class="text-primary font-medium hover:underline focus:outline-none focus:underline" href="#">Kebijakan Privasi</a>.
                             </label>
                         </div>
                     </div>
 
                     <!-- Register Button -->
                     <div class="pt-4">
-                        <button class="w-full flex justify-center items-center gap-2 py-3.5 px-4 border border-transparent rounded-lg font-label-md text-base font-semibold text-on-secondary bg-secondary-container hover:bg-[#eb6a11] shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-container" type="submit">
-                            <span>Daftar Sekarang</span>
+                        <button class="w-full flex justify-center items-center gap-2 py-3.5 px-4 border border-transparent rounded-lg font-label-md text-label-md text-on-secondary bg-secondary-container hover:bg-[#ff8533] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-container transition-all duration-200 hover:-translate-y-0.5 shadow-sm hover:shadow-md" type="submit">
+                            <span>Daftar</span>
                             <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
                         </button>
                     </div>
                 </form>
 
                 <!-- Login Link -->
-                <div class="mt-8 text-center border-t border-slate-100 pt-6">
-                    <p class="font-body-sm text-sm text-on-surface-variant">
+                <div class="mt-8 text-center">
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">
                         Sudah punya akun? 
-                        <a class="font-label-sm font-semibold text-primary hover:text-primary-container transition-colors hover:underline ml-1" href="{{ route('login') }}">Masuk di sini</a>
+                        <a class="font-label-md text-primary hover:text-primary-container transition-colors duration-200 hover:underline" href="{{ route('login') }}">Masuk</a>
                     </p>
                 </div>
-                
             </div>
         </div>
-    </main>
+    </div>
 </x-guest-layout>
