@@ -25,7 +25,7 @@
                 <div class="space-y-4">
                     <h2 class="font-headline-sm text-headline-sm text-on-background">Pilih Metode Pembayaran</h2>
                     
-                    <form action="#" method="POST" id="form-pembayaran">
+                    <form action="{{ route('pemesanan.prosesPembayaran', $pesanan->id ?? 1) }}" method="POST" id="form-pembayaran">
                         @csrf
                         
                         <!-- QRIS -->

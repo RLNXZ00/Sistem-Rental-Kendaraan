@@ -27,12 +27,12 @@
                                 </div>
                                 <div class="flex flex-col gap-stack-sm">
                                     <label for="nik" class="font-label-md text-label-md text-on-surface">Nomor Induk Kependudukan (NIK)</label>
-                                    <input type="text" id="nik" value="{{ auth()->user()->nik ?? '' }}" class="rounded-lg border-slate-200 bg-slate-50 text-on-surface focus:border-primary focus:ring focus:ring-primary-container focus:ring-opacity-20 font-body-md text-body-md h-[48px] px-4" placeholder="16 digit NIK" readonly>
+                                    <input type="text" id="nik" name="nik" value="{{ auth()->user()->nik ?? '' }}" class="rounded-lg border-slate-200 bg-white text-on-surface focus:border-primary focus:ring focus:ring-primary-container focus:ring-opacity-20 font-body-md text-body-md h-[48px] px-4" placeholder="16 digit NIK" required>
                                 </div>
                             </div>
                             <div class="flex flex-col gap-stack-sm">
                                 <label for="alamat" class="font-label-md text-label-md text-on-surface">Alamat Lengkap</label>
-                                <textarea id="alamat" rows="3" class="rounded-lg border-slate-200 bg-slate-50 text-on-surface focus:border-primary focus:ring focus:ring-primary-container focus:ring-opacity-20 font-body-md text-body-md p-4" placeholder="Masukkan alamat lengkap domisili saat ini" readonly>{{ auth()->user()->alamat ?? '' }}</textarea>
+                                <textarea id="alamat" name="alamat" rows="3" class="rounded-lg border-slate-200 bg-white text-on-surface focus:border-primary focus:ring focus:ring-primary-container focus:ring-opacity-20 font-body-md text-body-md p-4" placeholder="Masukkan alamat lengkap domisili saat ini" required>{{ auth()->user()->alamat ?? '' }}</textarea>
                             </div>
                             <div class="flex flex-col gap-stack-sm">
                                 <label for="email" class="font-label-md text-label-md text-on-surface">Alamat Email</label>
