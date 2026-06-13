@@ -20,6 +20,25 @@ class ProfileController extends Controller
             'user' => $request->user(),
         ]);
     }
+    /**
+     * Display the user's notification preferences.
+     */
+    public function notifikasi(Request $request): View
+    {
+        return view('profile.notifikasi', [
+            'user' => $request->user(),
+        ]);
+    }
+
+    /**
+     * Display the user's language and region preferences.
+     */
+    public function bahasa(Request $request): View
+    {
+        return view('profile.bahasa', [
+            'user' => $request->user(),
+        ]);
+    }
 
     /**
      * Update the user's profile information.
