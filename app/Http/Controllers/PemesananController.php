@@ -81,13 +81,24 @@ class PemesananController extends Controller
         $request->validate([
             'kendaraan_id' => 'required|exists:kendaraans,id',
             'tanggal_mulai' => 'required|date|after_or_equal:today',
-            'durasi_hari' => 'required|integer|min:1'
+            'durasi_hari' => 'required|integer|min:1',
+            'nik' => 'nullable|string|max:20',
+            'alamat' => 'nullable|string'
         ]);
+
+        $user = Auth::user();
+        
+        // Simpan NIK dan Alamat ke profil user jika sebelumnya kosong
+        if (empty($user->nik) || empty($user->alamat)) {
+            $user->nik = $request->nik ?? $user->nik;
+            $user->alamat = $request->alamat ?? $user->alamat;
+            $user->save();
+        }
 
         $kendaraan = Kendaraan::findOrFail($request->kendaraan_id);
         
         // Kalkulasi biaya otomatis: durasi * harga sewa
-        $durasiHari = $request->durasi_hari;
+        $durasiHari = (int) $request->durasi_hari;
         $totalBiaya = $durasiHari * $kendaraan->harga_sewa;
         
         // Kalkulasi tanggal selesai
@@ -95,7 +106,7 @@ class PemesananController extends Controller
         $tanggalSelesai = $tanggalMulai->copy()->addDays($durasiHari);
 
         // Buat pemesanan
-        Pemesanan::create([
+        $pesanan = Pemesanan::create([
             'user_id' => Auth::id(),
             'kendaraan_id' => $kendaraan->id,
             'tanggal_mulai' => $tanggalMulai,
@@ -121,24 +132,39 @@ class PemesananController extends Controller
     }
 
     /**
-    //  * Menampilkan halaman pembayaran denda keterlambatan.
-    //  */
-    // public function pembayaranDenda($id)
-    // {
-    //     $pesanan = Pemesanan::with('kendaraan')
-    //         ->where('user_id', Auth::id())
-    //         ->where('status', 'Denda Terlambat')
-    //         ->findOrFail($id);
-    //
-    //     // Hitung ulang variabel denda untuk ditampilkan di view
-    //     $hargaSewa    = $pesanan->kendaraan->harga_sewa;
-    //     $dendaPerHari = $hargaSewa + ($hargaSewa * 0.10);
-    //     $terlambatHari = $pesanan->denda > 0
-    //         ? (int) round($pesanan->denda / $dendaPerHari)
-    //         : 0;
-    //
-    //     return view('pemesanan.pembayaran_denda', compact('pesanan', 'terlambatHari', 'dendaPerHari'));
-    // }
+    /**
+     * Menampilkan halaman pembayaran denda keterlambatan.
+     */
+    public function pembayaranDenda($id)
+    {
+        $pesanan = Pemesanan::with('kendaraan')
+            ->where('user_id', Auth::id())
+            ->where('status', 'Denda Terlambat')
+            ->findOrFail($id);
+
+        // Hitung ulang variabel denda untuk ditampilkan di view
+        $hargaSewa    = $pesanan->kendaraan->harga_sewa;
+        $dendaPerHari = $hargaSewa + ($hargaSewa * 0.10);
+        $terlambatHari = $pesanan->denda > 0
+            ? (int) round($pesanan->denda / $dendaPerHari)
+            : 0;
+
+        return view('pemesanan.pembayaran_denda', compact('pesanan', 'terlambatHari', 'dendaPerHari'));
+    }
+
+    /**
+     * Proses pembayaran (Simulasi Uji Coba)
+     */
+    public function prosesPembayaran(Request $request, $id)
+    {
+        $pesanan = Pemesanan::where('user_id', Auth::id())->findOrFail($id);
+        
+        // Simulasi pembayaran selalu berhasil untuk uji coba
+        $pesanan->status = 'Akan Datang';
+        $pesanan->save();
+
+        return redirect()->route('pemesanan.riwayat')->with('success', 'Pembayaran berhasil dikonfirmasi! Pesanan Anda telah aktif.');
+    }
 
     /**
      * Memproses pembayaran denda keterlambatan.
