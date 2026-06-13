@@ -1,134 +1,218 @@
 <x-app-layout>
-    <!-- Main Content Canvas -->
-    <main class="flex-grow max-w-container-max mx-auto w-full px-margin-mobile md:px-margin-desktop py-stack-lg md:py-section-gap">
-        <!-- Breadcrumb -->
-        <nav class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm mb-stack-lg">
-            <a class="hover:text-primary transition-colors" href="{{ route('beranda') }}">Beranda</a>
-            <span class="material-symbols-outlined text-sm">chevron_right</span>
-            <a class="hover:text-primary transition-colors" href="{{ route('kendaraan.index') }}">Daftar Kendaraan</a>
-            <span class="material-symbols-outlined text-sm">chevron_right</span>
-            <span class="text-on-surface font-medium">Toyota Fortuner VRZ</span>
+    <main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-stack-md">
+        <!-- Breadcrumbs -->
+        <nav aria-label="Breadcrumb" class="flex py-stack-sm text-body-sm text-outline mb-6">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="{{ route('beranda') }}" class="hover:text-primary transition-colors">Beranda</a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <span class="material-symbols-outlined text-sm mx-1">chevron_right</span>
+                        <a href="{{ route('kendaraan.index') }}" class="hover:text-primary transition-colors">Daftar Kendaraan</a>
+                    </div>
+                </li>
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <span class="material-symbols-outlined text-sm mx-1">chevron_right</span>
+                        <span class="text-on-surface font-semibold">{{ $kendaraan->nama }}</span>
+                    </div>
+                </li>
+            </ol>
         </nav>
-        
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter lg:gap-8 items-start">
-            <!-- Left Column: Image Gallery (Bento Style) -->
-            <div class="lg:col-span-7 flex flex-col gap-stack-sm">
-                <!-- Main Hero Image -->
-                <div class="bg-surface rounded-xl overflow-hidden shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05)] aspect-[4/3] md:aspect-[16/9] relative group">
-                    <img alt="Toyota Fortuner VRZ" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="A sleek, modern Toyota Fortuner VRZ parked on a scenic coastal road during golden hour. The warm, bright sunlight reflects off its pristine white exterior, highlighting its bold, aerodynamic curves. The scene evokes a sense of premium travel and adventure, perfectly suited for a professional vehicle rental service. The overall aesthetic is bright, clean, and aspirational, matching a modern light-mode interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuArtp7esFaSE1SqzMnlRZkJPejDBKmPXKOVFt1oNL4_pebemdviVNhYTGz4hnMJKWWnMf7oZ_j-xZ9mbLB9zH4RnKHazqRWVkMY1ogmtKjYcv5PFlpsMHeiIkbRJwCaXotiq17JpW_o1MMpP3kPs4vUEJ746tzrFUuKKMRk_aXJ-nOOqjRbJTQMswBl48d2w36ZOlbJtt5eW4WutJIhbAncRsZn0f-4eHU57LKUQ_MIS5RcX_m7QeQNu1iu8pHEZgKJzXyoI7Gs3Ps">
-                    <!-- Floating Badge -->
-                    <div class="absolute top-4 left-4 bg-surface-container-high text-on-surface px-3 py-1 rounded-full font-label-sm text-label-sm shadow-sm flex items-center gap-1 backdrop-blur-md bg-opacity-80">
-                        <span class="material-symbols-outlined text-[16px] text-success" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-                        Tersedia Hari Ini
-                    </div>
+
+        <!-- Main Detail Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+            <!-- Left Column: Gallery -->
+            <div class="md:col-span-7 space-y-gutter">
+                <div class="bg-surface rounded-3xl overflow-hidden shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)]">
+                    <img src="{{ $kendaraan->gambar_url ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuCAq_hivCr6iqSl5x-TT9a6xKFrQQY7M10X4fxFXWY91VsXpre2G1guCfburjmIPWM0UYlwFeZD-r0CQpZgQiuhksaqtLuNvre1_Tp3puMYx-3dIDt11CGXmt_KWEGOSOOlj7RZuuthtMqLYBbpaObqhAbKsGWCgAOs4sFE9rmi6u429rpgjND5jgI41P4ZHbvJhzyrOqxv614SDhtseQXL_6pBw33r4-8DafiLc5afD1MN_guLSU-PUjB905H3KWsQ_Aa_KnGth10' }}" 
+                         alt="{{ $kendaraan->nama }} Front View" id="main-image" class="w-full aspect-video object-cover transition-all duration-200">
                 </div>
-                <!-- Secondary Images Grid (Bento) -->
-                <div class="grid grid-cols-3 gap-stack-sm">
-                    <div class="bg-surface rounded-xl overflow-hidden aspect-[4/3] shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-                        <img class="w-full h-full object-cover" data-alt="A close-up view of the premium leather interior of a modern SUV. The steering wheel and dashboard are visible, bathed in soft, natural daylight. The image conveys luxury, comfort, and a professional aesthetic suitable for a high-end rental service in a bright, clean design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxCJGPyHuA126xqbVLYiWZPkPqWHB04OvmvvgEqeaQTtTCCHFMskQB-dxRdEKtVtK5Mm02Fr_46TKsjZ6YijRUfHJqKvepHTrY91qHMBUjSOmMIZdeiin_eC66eIsvjFUsb0gUJnhSMgPfAZzfvmRwQRoZo9nBNLA6mjTh96U78JxAWecGnpTZ3MKcuxKIfFWa5R91Sr0vqQXVTkrlB9opMJ4aJ1Euuukuitpaw8uu8cJ4En2h1j3qi045TQcyeS-w_bJusLfJHn4">
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="bg-surface rounded-xl overflow-hidden shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] cursor-pointer hover:ring-2 ring-secondary-container transition-all">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXglxGybZor3kXqRrwlrGTDqLZjVt6WaLUCIDDWh9GIyLZnwy5m164i7eopucIh6Nl8S0lNocd4Vm3QnMiMFa-EDeCPqm0aggZrGNYrgsqgqdy0S4x81zJgHXVTp25Xgu7DOktmfCW6eCNwqGef01mLELr9tP3Yp3n5Pd70PSBS-Bc76-x0CKwBtMwmKCaOk793Kn7HgTe2rjysoP9s7gq-noQtBp7wTxSBNpEp95yghSB-dEKVwnVuIPaRPWwVfQWzrLs26RJuR0" alt="Interior Detail" class="gallery-img w-full aspect-[4/3] object-cover">
                     </div>
-                    <div class="bg-surface rounded-xl overflow-hidden aspect-[4/3] shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-                        <img class="w-full h-full object-cover" data-alt="A detailed shot of the sophisticated center console and infotainment system of a modern vehicle. The screen is glowing subtly in a well-lit cabin. The overall tone is technological, efficient, and clean, aligning perfectly with a modern corporate UI design style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCN4px-VqdePjUExFInStLxyZmzrOc7uP14Utm8DxaTvTC-N0Zkn1EndGwiqQFeCCdpAez2j48wcc31ZUo46CJZnn1o3jeD1GpRLDO4XHXjb_5wpJjrtfMjbJ0qv45IqMK0_4FvdVOcsX_LM0_TtoS_5SnKQ28DJOre7LYDlgYRMoN1xR1A_r1TXpkS6xLTbXNw9LMnFyS6tV7xfgOqxxas1lPHSWUK71SDaoRiGd8ou2B_n6j5O9ALFv6Y7xfAK4SOkJ1ASo50W8A">
+                    <div class="bg-surface rounded-xl overflow-hidden shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] cursor-pointer hover:ring-2 ring-secondary-container transition-all">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgGSVYhcB1rV-jWX5e-aa1vuM70CFOzFHU2BA7FW3b-drZcci4jbs1dAPWRHcqm9GVA12P3T7LouCyIxS8nex5ITy5MFs-C7tmmisKQJq7iA-qfDNSl7FiKHblsOP31aQ3cBLpX5s4yMsXkfUtbmkGu4Ldj5N0GkzXF8bzZxwG62HnWNNtB5Cx9vaXkl168ZROJiGJkH7WckoNRTNg2XU5lnMsclQ794RZxr_ydFM8CK2QH1oKVxxCD9lb67oUrLLUEg5cC9KVkXI" alt="Side Detail" class="gallery-img w-full aspect-[4/3] object-cover">
                     </div>
-                    <div class="bg-surface rounded-xl overflow-hidden aspect-[4/3] shadow-sm hover:shadow-md transition-shadow cursor-pointer relative">
-                        <img class="w-full h-full object-cover" data-alt="A view showing the spacious rear seating and ample legroom of a premium SUV. Soft light filters through the windows, emphasizing the comfortable, clean upholstery. The image perfectly supports a trustworthy and professional vehicle rental narrative within a bright, spacious layout." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkp-XoqgrCH9f_ntc2RD0xAIyzL7ZVbgDsJzT8qPrBnYzBSW4B0FgG9kDYnB5bkszs9Ujdh3-IY4yO0hk3gnYxguNtlgCF9WhZzOB_gJg9OU4ERe51Vd3JYgyjeCzTrzBRFSU2Z78wUzsVwk_XBQHb7HwTBz3GpvvvMzrF23D8kLPelTW882Gzc5G7WKj4kGdV7jgwf5QbO1HpjlrpoqX7Zme-FMaSSD3dGzolsStf59ZqtrFYsK1CFukUb_OE-BbW0kwikRRW6Ys">
-                        <div class="absolute inset-0 bg-primary/40 flex items-center justify-center">
-                            <span class="text-white font-label-md text-label-md flex items-center gap-1">
-                                <span class="material-symbols-outlined">photo_library</span>
-                                Lihat Semua
-                            </span>
-                        </div>
+                    <div class="bg-surface rounded-xl overflow-hidden shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] cursor-pointer hover:ring-2 ring-secondary-container transition-all">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYuDCvHs8yv8rPacS6XparPbQQvaJLKJdpW6skhk2OJnfOC6_EnrviOZTLGZepLf0rStWLdEm0hFr0TQdFgtwsBP_G3Pd_Nx4nnSwpm8NaPkP6uIxu3HpWzkfewPFg3urhpaN04rROb_SjIg8ASGv7Dkv-rwogQGUu6DkZ9rdpOD-Ka03drpHcq3sdQgnaln1O1kuFVY0wQuGpn7GrWwgvbTnqrXbSwS4DArC0SOa-gfC2YCz0Ox0R5L59pmDLsXcyGN6AriLM_Rs" alt="Rear Seat Detail" class="gallery-img w-full aspect-[4/3] object-cover">
                     </div>
                 </div>
             </div>
 
-            <!-- Right Column: Vehicle Details -->
-            <div class="lg:col-span-5 flex flex-col">
-                <!-- Title & Header Area -->
-                <div class="bg-surface rounded-xl p-stack-md md:p-stack-lg shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05)] border border-slate-200 mb-stack-lg flex flex-col gap-stack-md relative overflow-hidden">
-                    <!-- Decorative Background Element -->
-                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl pointer-events-none"></div>
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="bg-surface-container text-primary-container px-3 py-1 rounded-full font-label-sm text-label-sm uppercase tracking-wider">SUV Premium</span>
-                            <!-- Rating -->
-                            <div class="flex items-center gap-1">
-                                <span class="material-symbols-outlined text-secondary-container text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
-                                <span class="font-label-md text-label-md text-on-surface">4.9</span>
-                                <span class="font-body-sm text-body-sm text-on-surface-variant">(120 Ulasan)</span>
+            <!-- Right Column: Information & Booking -->
+            <div class="md:col-span-5 space-y-gutter">
+                <div class="bg-surface p-stack-lg rounded-3xl shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] border border-slate-200">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-4 py-1 rounded-full bg-blue-100 text-primary text-label-sm uppercase font-bold tracking-wider">{{ $kendaraan->tipe }} PREMIUM</span>
+                        <div class="flex items-center text-secondary-container">
+                            <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="ml-1 font-label-md text-on-surface">{{ number_format($kendaraan->rating, 1) }} ({{ $kendaraan->umpanBaliks ? $kendaraan->umpanBaliks->count() : 0 }} Review)</span>
+                        </div>
+                    </div>
+                    
+                    <h1 class="font-headline-lg text-on-surface mb-2">{{ $kendaraan->nama }}</h1>
+                    <p class="font-body-md text-on-surface-variant mb-6">Nikmati kemewahan dan kenyamanan maksimal untuk perjalanan keluarga atau bisnis Anda dengan {{ $kendaraan->nama }} terbaru. Efisien dan tangguh.</p>
+                    
+                    <div class="flex items-baseline gap-2 mb-8">
+                        <span class="text-headline-md text-secondary-container font-bold">Rp {{ number_format($kendaraan->harga_sewa, 0, ',', '.') }}</span>
+                        <span class="text-on-surface-variant font-body-sm">/ hari</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        @if($kendaraan->tipe === 'Mobil' && isset($kendaraan->spesifikasi['seats']))
+                        <div class="flex items-center gap-3 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                            <span class="material-symbols-outlined text-primary">groups</span>
+                            <div>
+                                <p class="text-label-sm text-outline">Kapasitas</p>
+                                <p class="text-label-md text-on-surface">{{ $kendaraan->spesifikasi['seats'] }} Penumpang</p>
                             </div>
                         </div>
-                        <h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Toyota Fortuner VRZ</h1>
-                    </div>
-                    <p class="font-body-md text-body-md text-on-surface-variant">
-                        Nikmati perjalanan Anda dengan kenyamanan maksimal dan performa tangguh. Fortuner VRZ menawarkan ruang kabin yang luas, teknologi hiburan terkini, dan fitur keselamatan premium untuk keluarga atau perjalanan bisnis Anda.
-                    </p>
-                    <!-- Price Block -->
-                    <div class="mt-stack-sm pt-stack-sm border-t border-slate-200">
-                        <div class="text-on-surface-variant font-label-sm text-label-sm mb-1">Mulai dari</div>
-                        <div class="flex items-baseline gap-2">
-                            <span class="font-headline-md text-headline-md text-primary">Rp 850.000</span>
-                            <span class="font-body-sm text-body-sm text-on-surface-variant">/ hari</span>
+                        @elseif($kendaraan->tipe === 'Motor' && isset($kendaraan->spesifikasi['cc']))
+                        <div class="flex items-center gap-3 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                            <span class="material-symbols-outlined text-primary">two_wheeler</span>
+                            <div>
+                                <p class="text-label-sm text-outline">Kapasitas Mesin</p>
+                                <p class="text-label-md text-on-surface">{{ $kendaraan->spesifikasi['cc'] }} CC</p>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                        @endif
 
-                <!-- Specifications Bento Grid -->
-                <h3 class="font-headline-sm text-headline-sm text-on-surface mb-stack-sm">Spesifikasi Utama</h3>
-                <div class="grid grid-cols-2 gap-stack-sm mb-stack-lg">
-                    <div class="bg-surface rounded-xl p-4 shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05)] border border-slate-200 flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary">
-                            <span class="material-symbols-outlined">group</span>
+                        <div class="flex items-center gap-3 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                            <span class="material-symbols-outlined text-primary">settings_input_component</span>
+                            <div>
+                                <p class="text-label-sm text-outline">Transmisi</p>
+                                <p class="text-label-md text-on-surface">{{ $kendaraan->spesifikasi['transmisi'] ?? 'Otomatis' }}</p>
+                            </div>
                         </div>
-                        <div>
-                            <div class="font-label-sm text-label-sm text-on-surface-variant">Kapasitas</div>
-                            <div class="font-label-md text-label-md text-on-surface">7 Penumpang</div>
-                        </div>
-                    </div>
-                    <div class="bg-surface rounded-xl p-4 shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05)] border border-slate-200 flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary">
-                            <span class="material-symbols-outlined">settings</span>
-                        </div>
-                        <div>
-                            <div class="font-label-sm text-label-sm text-on-surface-variant">Transmisi</div>
-                            <div class="font-label-md text-label-md text-on-surface">Otomatis</div>
-                        </div>
-                    </div>
-                    <div class="bg-surface rounded-xl p-4 shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05)] border border-slate-200 flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary">
-                            <span class="material-symbols-outlined">local_gas_station</span>
-                        </div>
-                        <div>
-                            <div class="font-label-sm text-label-sm text-on-surface-variant">Bahan Bakar</div>
-                            <div class="font-label-md text-label-md text-on-surface">Diesel</div>
-                        </div>
-                    </div>
-                    <div class="bg-surface rounded-xl p-4 shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05)] border border-slate-200 flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary">
-                            <span class="material-symbols-outlined">work</span>
-                        </div>
-                        <div>
-                            <div class="font-label-sm text-label-sm text-on-surface-variant">Bagasi</div>
-                            <div class="font-label-md text-label-md text-on-surface">4 Koper</div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Sticky CTA Block (Mobile & Desktop) -->
-                <div class="bg-surface rounded-xl p-stack-md shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1)] border border-slate-200 sticky top-24 z-40">
-                    <div class="flex items-center gap-2 mb-4 text-sm text-on-surface-variant">
-                        <span class="material-symbols-outlined text-success text-[18px]">verified_user</span>
-                        <span class="">Termasuk asuransi dasar & pajak</span>
+                        <div class="flex items-center gap-3 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                            <span class="material-symbols-outlined text-primary">local_gas_station</span>
+                            <div>
+                                <p class="text-label-sm text-outline">Bahan Bakar</p>
+                                <p class="text-label-md text-on-surface">{{ $kendaraan->spesifikasi['bahan_bakar'] ?? 'Bensin' }}</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                            <span class="material-symbols-outlined text-primary">luggage</span>
+                            <div>
+                                <p class="text-label-sm text-outline">Bagasi</p>
+                                <p class="text-label-md text-on-surface">{{ $kendaraan->spesifikasi['bagasi'] ?? 'Standard' }}</p>
+                            </div>
+                        </div>
                     </div>
-                    <button class="w-full bg-[#F97316] hover:bg-[#ea580c] text-white font-label-md text-label-md py-4 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:-translate-y-1 shadow-md hover:shadow-lg">
-                        <span class="material-symbols-outlined">calendar_month</span>
-                        Pesan Sekarang
-                    </button>
-                    <button class="w-full mt-stack-sm bg-transparent border border-primary text-primary hover:bg-surface-container font-label-md text-label-md py-3 rounded-lg transition-colors duration-200">
-                        Tanya Ketersediaan (WhatsApp)
-                    </button>
+
+                    <div class="bg-surface-container-lowest border border-slate-200 p-6 rounded-2xl mb-6">
+                        <div class="flex items-center gap-2 text-success mb-6">
+                            <span class="material-symbols-outlined">verified_user</span>
+                            <span class="text-body-sm font-semibold">Termasuk asuransi dasar & pajak</span>
+                        </div>
+                        <div class="space-y-3">
+                            <a href="{{ url('/pemesanan/create/' . $kendaraan->id) }}" class="w-full bg-secondary-container text-on-primary py-4 rounded-xl font-headline-sm hover:translate-y-[-4px] transition-transform shadow-lg active:scale-95 text-center inline-block">
+                                Pesan Sekarang
+                            </a>
+                            <button class="w-full border-2 border-primary text-primary py-4 rounded-xl font-label-md flex items-center justify-center gap-2 hover:bg-slate-50 transition-all active:scale-95">
+                                <span class="material-symbols-outlined">chat</span>
+                                Tanya Ketersediaan (WhatsApp)
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- Additional Specifications Table-like Detail -->
+        <section class="mt-section-gap">
+            <h2 class="font-headline-md text-on-surface mb-gutter">Detail Spesifikasi</h2>
+            <div class="bg-surface rounded-3xl overflow-hidden shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] border border-slate-200">
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="p-6 border-b border-r border-slate-100 flex justify-between items-center">
+                        <span class="text-outline">Tipe Mesin</span>
+                        <span class="font-label-md">{{ $kendaraan->spesifikasi['mesin'] ?? 'Standard' }}</span>
+                    </div>
+                    <div class="p-6 border-b border-slate-100 flex justify-between items-center">
+                        <span class="text-outline">Tenaga Maksimum</span>
+                        <span class="font-label-md">{{ $kendaraan->spesifikasi['power'] ?? 'N/A' }}</span>
+                    </div>
+                    <div class="p-6 border-b border-r border-slate-100 flex justify-between items-center">
+                        <span class="text-outline">Torsi Maksimum</span>
+                        <span class="font-label-md">{{ $kendaraan->spesifikasi['torque'] ?? 'N/A' }}</span>
+                    </div>
+                    <div class="p-6 border-b border-slate-100 flex justify-between items-center">
+                        <span class="text-outline">Tahun Produksi</span>
+                        <span class="font-label-md">{{ $kendaraan->spesifikasi['tahun'] ?? '2023 - 2024' }}</span>
+                    </div>
+                    <div class="p-6 border-r border-slate-100 flex justify-between items-center">
+                        <span class="text-outline">Sistem Hiburan</span>
+                        <span class="font-label-md">{{ $kendaraan->spesifikasi['entertainment'] ?? 'Standard Audio' }}</span>
+                    </div>
+                    <div class="p-6 flex justify-between items-center">
+                        <span class="text-outline">Fitur Keamanan</span>
+                        <span class="font-label-md">{{ $kendaraan->spesifikasi['safety'] ?? 'ABS + EBD' }}</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Terms and Conditions -->
+        <section class="mt-section-gap mb-section-gap">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+                <div class="bg-white p-8 rounded-3xl shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] border border-slate-100">
+                    <div class="w-12 h-12 bg-blue-50 text-primary rounded-2xl flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined">verified</span>
+                    </div>
+                    <h3 class="font-headline-sm mb-2">Syarat Sewa</h3>
+                    <ul class="text-body-sm text-on-surface-variant space-y-2">
+                        <li>• KTP & SIM Aktif</li>
+                        <li>• Kartu Identitas Lainnya</li>
+                        <li>• Akun Media Sosial Aktif</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-8 rounded-3xl shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] border border-slate-100">
+                    <div class="w-12 h-12 bg-orange-50 text-secondary-container rounded-2xl flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined">schedule</span>
+                    </div>
+                    <h3 class="font-headline-sm mb-2">Waktu Sewa</h3>
+                    <ul class="text-body-sm text-on-surface-variant space-y-2">
+                        <li>• Durasi minimal 24 Jam</li>
+                        <li>• Overtime 10% per jam</li>
+                        <li>• Pengambilan mulai jam 08:00</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-8 rounded-3xl shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] border border-slate-100">
+                    <div class="w-12 h-12 bg-green-50 text-success rounded-2xl flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined">health_and_safety</span>
+                    </div>
+                    <h3 class="font-headline-sm mb-2">Layanan Extra</h3>
+                    <ul class="text-body-sm text-on-surface-variant space-y-2">
+                        <li>• Driver Profesional (Opsional)</li>
+                        <li>• Antar Jemput Bandara</li>
+                        <li>• Emergency Road Assistance 24/7</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
     </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const galleryImages = document.querySelectorAll('.gallery-img');
+            const mainImage = document.getElementById('main-image');
+
+            galleryImages.forEach(img => {
+                img.addEventListener('click', () => {
+                    const tempSrc = mainImage.src;
+                    
+                    mainImage.style.opacity = '0';
+                    setTimeout(() => {
+                        mainImage.src = img.src;
+                        mainImage.style.opacity = '1';
+                    }, 200);
+                });
+            });
+        });
+    </script>
 </x-app-layout>

@@ -65,6 +65,15 @@ class PemesananController extends Controller
     }
 
     /**
+     * Menampilkan form pemesanan kendaraan.
+     */
+    public function create($id)
+    {
+        $kendaraan = Kendaraan::findOrFail($id);
+        return view('pemesanan.create', compact('kendaraan'));
+    }
+
+    /**
      * Menyimpan pemesanan baru.
      */
     public function store(Request $request)
@@ -97,7 +106,16 @@ class PemesananController extends Controller
             'denda' => 0
         ]);
 
-        return redirect()->route('pemesanan.riwayat')->with('success', 'Pemesanan berhasil dibuat. Silakan selesaikan pembayaran.');
+        return redirect()->route('pemesanan.pembayaran', $pesanan->id)->with('success', 'Pemesanan berhasil dibuat. Silakan selesaikan pembayaran.');
+    }
+
+    /**
+     * Menampilkan halaman pembayaran.
+     */
+    public function pembayaran($id)
+    {
+        $pesanan = Pemesanan::with('kendaraan')->where('user_id', Auth::id())->findOrFail($id);
+        return view('pemesanan.pembayaran', compact('pesanan'));
     }
 
     /**
