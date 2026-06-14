@@ -27,6 +27,39 @@
     <body class="bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col">
         @include('layouts.navigation')
 
+        <!-- Flash Messages -->
+        @if (session('success') || session('error'))
+            <div class="fixed top-24 right-4 z-50 flex flex-col gap-2 max-w-sm w-full">
+                @if (session('success'))
+                    <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" x-transition.duration.500ms
+                         class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-lg shadow-lg flex items-start gap-3">
+                        <span class="material-symbols-outlined text-emerald-500 mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        <div class="flex-grow">
+                            <h4 class="font-headline-sm text-sm text-emerald-800 font-bold">Berhasil!</h4>
+                            <p class="font-body-sm text-sm text-emerald-700 mt-1">{{ session('success') }}</p>
+                        </div>
+                        <button @click="show = false" class="text-emerald-500 hover:text-emerald-700 transition-colors">
+                            <span class="material-symbols-outlined text-sm">close</span>
+                        </button>
+                    </div>
+                @endif
+                
+                @if (session('error'))
+                    <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" x-transition.duration.500ms
+                         class="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg shadow-lg flex items-start gap-3">
+                        <span class="material-symbols-outlined text-red-500 mt-0.5" style="font-variation-settings: 'FILL' 1;">error</span>
+                        <div class="flex-grow">
+                            <h4 class="font-headline-sm text-sm text-red-800 font-bold">Terjadi Kesalahan!</h4>
+                            <p class="font-body-sm text-sm text-red-700 mt-1">{{ session('error') }}</p>
+                        </div>
+                        <button @click="show = false" class="text-red-500 hover:text-red-700 transition-colors">
+                            <span class="material-symbols-outlined text-sm">close</span>
+                        </button>
+                    </div>
+                @endif
+            </div>
+        @endif
+
         <!-- Page Content -->
         <main class="flex-grow">
             {{ $slot }}
