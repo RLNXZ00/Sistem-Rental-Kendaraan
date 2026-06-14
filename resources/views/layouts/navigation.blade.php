@@ -18,8 +18,8 @@
         <div class="hidden md:flex items-center gap-stack-md font-body-md text-body-md">
             @auth
                 <!-- Notification Dropdown Panel -->
-                <div x-data="{ notifOpen: false, hasNewNotif: true }" class="relative cursor-pointer group" @click.away="notifOpen = false">
-                    <button @click="notifOpen = !notifOpen; hasNewNotif = false" class="relative focus:outline-none flex items-center justify-center">
+                <div x-data="{ notifOpen: false, hasNewNotif: localStorage.getItem('notifRead') !== 'true' }" class="relative cursor-pointer group" @click.away="notifOpen = false">
+                    <button @click="notifOpen = !notifOpen; hasNewNotif = false; localStorage.setItem('notifRead', 'true')" class="relative focus:outline-none flex items-center justify-center">
                         <span class="material-symbols-outlined text-on-primary/80 hover:text-secondary-container transition-colors duration-200">notifications</span>
                         <span x-show="hasNewNotif" class="absolute -top-1 -right-1 w-3 h-3 bg-error rounded-full border-2 border-primary"></span>
                     </button>
