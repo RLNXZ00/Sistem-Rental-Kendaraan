@@ -18,9 +18,11 @@
         <div class="hidden md:flex items-center gap-stack-md font-body-md text-body-md">
             @auth
                 <!-- Notification Dropdown Panel -->
-                <div x-data="{ notifOpen: false }" class="relative cursor-pointer group" @click.away="notifOpen = false">
-                    <span @click="notifOpen = !notifOpen" class="material-symbols-outlined text-on-primary/80 hover:text-secondary-container transition-colors duration-200">notifications</span>
-                    <span class="absolute -top-1 -right-1 w-3 h-3 bg-error rounded-full border-2 border-primary"></span>
+                <div x-data="{ notifOpen: false, hasNewNotif: true }" class="relative cursor-pointer group" @click.away="notifOpen = false">
+                    <button @click="notifOpen = !notifOpen; hasNewNotif = false" class="relative focus:outline-none flex items-center justify-center">
+                        <span class="material-symbols-outlined text-on-primary/80 hover:text-secondary-container transition-colors duration-200">notifications</span>
+                        <span x-show="hasNewNotif" class="absolute -top-1 -right-1 w-3 h-3 bg-error rounded-full border-2 border-primary"></span>
+                    </button>
                     
                     <div x-show="notifOpen" x-transition style="display: none;" class="absolute right-0 mt-2 w-80 bg-surface rounded-[20px] shadow-lg border border-slate-200 overflow-hidden z-50">
                         <div class="p-4 border-b border-slate-100">

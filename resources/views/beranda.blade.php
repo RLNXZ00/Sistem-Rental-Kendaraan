@@ -6,13 +6,13 @@
             <p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
                 Nikmati perjalanan Anda dengan armada modern dan terawat kami. Dari mobil keluarga yang nyaman hingga motor yang gesit, AutoRide menyediakan solusi mobilitas profesional dan efisien untuk setiap kebutuhan Anda.
             </p>
-            <div class="flex gap-stack-md pt-4">
-                <button class="bg-secondary-container text-on-secondary font-label-md text-label-md px-6 py-3 rounded hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+            <div class="flex flex-col sm:flex-row gap-stack-md pt-4">
+                <a href="{{ route('kendaraan.index') }}" class="bg-secondary-container text-on-secondary font-label-md text-label-md px-6 py-3 rounded hover:-translate-y-1 hover:shadow-lg transition-all duration-300 text-center">
                     Pesan Sekarang
-                </button>
-                <button class="border border-primary text-primary font-label-md text-label-md px-6 py-3 rounded hover:-translate-y-1 hover:shadow-sm hover:bg-slate-50 transition-all duration-300">
+                </a>
+                <a href="#koleksi-unggulan" class="border border-primary text-primary font-label-md text-label-md px-6 py-3 rounded hover:-translate-y-1 hover:shadow-sm hover:bg-slate-50 transition-all duration-300 text-center">
                     Lihat Armada
-                </button>
+                </a>
             </div>
         </div>
         <div class="rounded-xl overflow-hidden shadow-md bg-slate-100 h-96 relative">
@@ -21,7 +21,7 @@
     </section>
 
     <!-- Featured Collection (Bento Grid) -->
-    <section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-section-gap bg-slate-50 rounded-3xl mb-section-gap">
+    <section id="koleksi-unggulan" class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-section-gap bg-slate-50 rounded-3xl mb-section-gap scroll-mt-20">
         <div class="flex flex-col gap-stack-sm mb-8">
             <h2 class="font-headline-lg text-headline-lg text-on-background font-bold">Koleksi Unggulan</h2>
             <p class="font-body-md text-body-md text-on-surface-variant">Pilihan kendaraan terbaik yang paling sering disewa oleh pelanggan profesional kami.</p>
