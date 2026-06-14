@@ -27,62 +27,62 @@
             <p class="font-body-md text-body-md text-on-surface-variant">Pilihan kendaraan terbaik yang paling sering disewa oleh pelanggan profesional kami.</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter h-auto md:h-[600px]">
+            @if($kendaraanUnggulan->count() > 0)
             <!-- Large Card (Left) -->
-            <div class="md:col-span-7 bg-surface rounded-[20px] shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05)] hover:shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 border border-slate-200 overflow-hidden flex flex-col group cursor-pointer">
+            <div class="md:col-span-7 bg-surface rounded-[20px] shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05)] hover:shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 border border-slate-200 overflow-hidden flex flex-col group cursor-pointer" onclick="window.location='{{ route('kendaraan.show', $kendaraanUnggulan[0]->id) }}'">
                 <div class="h-2/3 bg-slate-100 overflow-hidden relative">
                     <div class="absolute top-4 left-4 bg-surface-container-low text-primary px-3 py-1 rounded-full font-label-sm text-label-sm flex items-center gap-1 shadow-sm z-10">
-                        <span class="material-symbols-outlined text-[16px]">directions_car</span> Mobil
+                        <span class="material-symbols-outlined text-[16px]">{{ $kendaraanUnggulan[0]->tipe == 'Motor' ? 'motorcycle' : 'directions_car' }}</span> {{ $kendaraanUnggulan[0]->tipe }}
                     </div>
-                    <img alt="Premium SUV" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A luxurious, modern dark blue SUV positioned prominently in a brightly lit, pristine studio environment. The vehicle's polished surface reflects a soft, diffused white light, highlighting its sophisticated design lines and robust build. The setting is minimalist, relying on a pure white to light-grey gradient background that keeps the focus entirely on the vehicle. The visual style is highly professional and corporate, emphasizing reliability and premium comfort within a clean light mode UI context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZPVlYaqwttdwv_hrEJXtrxMY7RxfSS-_73fzhBzyFEg-AU6JpWN-K6ZfquQnlH5M-AxcBbYkV-1_Z_KYprGkz4-ghBfo7OdI37nJzCgnzxcGQrPuighzFVTOxaPdrKNYw_TQekAyQUyRpSE6molb1s90to0voTtTQS6folFN-SvUCXURRIts-xudCMfx8gUoerBVHJHuoDbc_FiBLQ_JivKvFIfuHxIIB072e4gciv3u1oiRc0sxwJF3BYd6HkFaJUbNRw8KTIQ8"/>
+                    <img alt="{{ $kendaraanUnggulan[0]->nama_kendaraan }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="{{ $kendaraanUnggulan[0]->gambar_url ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuAZPVlYaqwttdwv_hrEJXtrxMY7RxfSS-_73fzhBzyFEg-AU6JpWN-K6ZfquQnlH5M-AxcBbYkV-1_Z_KYprGkz4-ghBfo7OdI37nJzCgnzxcGQrPuighzFVTOxaPdrKNYw_TQekAyQUyRpSE6molb1s90to0voTtTQS6folFN-SvUCXURRIts-xudCMfx8gUoerBVHJHuoDbc_FiBLQ_JivKvFIfuHxIIB072e4gciv3u1oiRc0sxwJF3BYd6HkFaJUbNRw8KTIQ8' }}"/>
                 </div>
                 <div class="p-6 flex flex-col justify-between flex-grow">
                     <div>
-                        <h3 class="font-headline-md text-headline-md font-bold text-on-surface">Toyota Fortuner VRZ</h3>
+                        <h3 class="font-headline-md text-headline-md font-bold text-on-surface">{{ $kendaraanUnggulan[0]->nama_kendaraan }}</h3>
                         <div class="flex items-center gap-2 mt-2 text-on-surface-variant font-body-sm text-body-sm">
-                            <span class="material-symbols-outlined text-[18px] text-secondary-container">star</span>
-                            <span class="">4.9 (120 Ulasan)</span>
+                            <span class="material-symbols-outlined text-[18px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="">{{ number_format($kendaraanUnggulan[0]->rating, 1) }} ({{ $kendaraanUnggulan[0]->umpan_baliks_count ?? 0 }} Ulasan)</span>
                         </div>
                     </div>
                     <div class="flex justify-between items-end mt-4">
                         <div>
                             <span class="font-label-md text-label-md text-on-surface-variant">Mulai dari</span>
-                            <div class="font-headline-sm text-headline-sm font-bold text-primary">Rp 800.000 <span class="font-body-sm text-body-sm font-normal text-on-surface-variant">/ hari</span></div>
+                            <div class="font-headline-sm text-headline-sm font-bold text-primary">Rp {{ number_format($kendaraanUnggulan[0]->harga_sewa, 0, ',', '.') }} <span class="font-body-sm text-body-sm font-normal text-on-surface-variant">/ hari</span></div>
                         </div>
-                        <a href="{{ route('kendaraan.show', 1) }}" class="bg-primary text-on-primary border border-primary px-4 py-2 rounded-lg font-label-md hover:bg-primary-container transition-colors duration-200 flex items-center gap-2">
+                        <a href="{{ route('kendaraan.show', $kendaraanUnggulan[0]->id) }}" class="bg-primary text-on-primary border border-primary px-4 py-2 rounded-lg font-label-md hover:bg-primary-container transition-colors duration-200 flex items-center gap-2">
                             Lihat Detail
                         </a>
                     </div>
                 </div>
             </div>
+            @endif
 
             <!-- Stacked Cards (Right) -->
             <div class="md:col-span-5 grid grid-rows-2 gap-gutter">
-                <!-- Top Small Card -->
-                <div class="bg-surface rounded-[20px] shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05)] hover:shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 border border-slate-200 overflow-hidden flex cursor-pointer group">
-                    <div class="w-2/5 bg-slate-100 overflow-hidden relative">
-                        <img alt="City Car" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A compact, pristine white city car parked on an urban street lined with modern glass buildings during a bright, sunny day. The lighting is natural and clear, casting soft shadows and highlighting the car's practical yet modern design. The environment feels efficient and vibrant, reflecting a professional urban lifestyle. The composition is balanced and clean, fitting seamlessly into a trustworthy, functional light-mode web interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxEJHrhOvce4RametoVf4JlOGYh_KLnQRBrlr6XQQY0UVlM4wnYHRuB5qa3S6uARro4s-_k4tdaYLzDRokdB7sJMaHPN8eRKEauzLJSY7O8xCudQrLxpiLv-raeXWYtWe3LkZQp9Zf6fZdmd-_EU9tjLt9PMrn8WFTPj5GKt_XLw3KJFJe7HKBCv9LSG41dX-NlN_FCpZbqX7QJSdPdAmcHb9kn2HPMZBAEzvOFvmS3rh_Lrol1pwg8iubUt9Yl5RHN8SmRFdt1oA"/>
-                    </div>
-                    <div class="w-3/5 p-4 flex flex-col justify-center">
-                        <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface line-clamp-1">Honda Brio RS</h3>
-                        <div class="font-body-sm text-body-sm text-on-surface-variant mt-1">Mobil Compact</div>
-                        <div class="font-headline-sm text-headline-sm font-bold text-primary mt-3">Rp 350.000 <span class="font-body-sm text-body-sm font-normal text-on-surface-variant">/ hari</span></div>
-                    </div>
-                </div>
-
-                <!-- Bottom Small Card -->
-                <div class="bg-surface rounded-[20px] shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05)] hover:shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 border border-slate-200 overflow-hidden flex cursor-pointer group">
+                @foreach($kendaraanUnggulan->skip(1)->take(2) as $kendaraan)
+                <!-- Small Card -->
+                <div class="bg-surface rounded-[20px] shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05)] hover:shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 border border-slate-200 overflow-hidden flex cursor-pointer group" onclick="window.location='{{ route('kendaraan.show', $kendaraan->id) }}'">
                     <div class="w-2/5 bg-slate-100 overflow-hidden relative">
                         <div class="absolute top-2 left-2 bg-surface-container-highest text-secondary-container px-2 py-0.5 rounded-full font-label-sm text-[10px] flex items-center gap-1 shadow-sm z-10">
-                            <span class="material-symbols-outlined text-[12px]">motorcycle</span> Motor
+                            <span class="material-symbols-outlined text-[12px]">{{ $kendaraan->tipe == 'Motor' ? 'motorcycle' : 'directions_car' }}</span> {{ $kendaraan->tipe }}
                         </div>
-                        <img alt="Scooter" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A sleek, modern matte grey automatic scooter positioned cleanly against a stark white studio backdrop. The studio lighting is bright, even, and professional, emphasizing the scooter's functional design and flawless finish. The aesthetic is strictly minimalist and corporate, removing any distracting background elements to focus purely on the vehicle as a reliable service product. The overall tone is crisp, efficient, and perfectly suited for a trustworthy rental platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcFQks4ZOmhE9VhyI5HZZr8kDUiuJRiJ_suBdEFS4IzdcnY_b272uRAVVCNz1Zmy_hyDXceWznU3S2FONlVPtAO6FUf04KHkUjNbcAJKzL4RvIcoNYs2JNT0WZfA-q4ECPUUj719c7pKcttlOSoDtfN2BtKHnvfCaVLceWmouQWyx7Z-DlVpFRbxqQJsuySB_6RtIpPJRWp29Ce67k46lhJoNk_QLM27b6MpFKRy6m814PmCUeD0u-xULNW_Vh41c7X1fPZ1zvp9k"/>
+                        <img alt="{{ $kendaraan->nama_kendaraan }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="{{ $kendaraan->gambar_url ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuAxEJHrhOvce4RametoVf4JlOGYh_KLnQRBrlr6XQQY0UVlM4wnYHRuB5qa3S6uARro4s-_k4tdaYLzDRokdB7sJMaHPN8eRKEauzLJSY7O8xCudQrLxpiLv-raeXWYtWe3LkZQp9Zf6fZdmd-_EU9tjLt9PMrn8WFTPj5GKt_XLw3KJFJe7HKBCv9LSG41dX-NlN_FCpZbqX7QJSdPdAmcHb9kn2HPMZBAEzvOFvmS3rh_Lrol1pwg8iubUt9Yl5RHN8SmRFdt1oA' }}"/>
                     </div>
-                    <div class="w-3/5 p-4 flex flex-col justify-center">
-                        <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface line-clamp-1">Yamaha NMAX</h3>
-                        <div class="font-body-sm text-body-sm text-on-surface-variant mt-1">Skuter Premium</div>
-                        <div class="font-headline-sm text-headline-sm font-bold text-primary mt-3">Rp 150.000 <span class="font-body-sm text-body-sm font-normal text-on-surface-variant">/ hari</span></div>
+                    <div class="w-3/5 p-4 flex flex-col justify-center relative">
+                        <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface line-clamp-1 pr-8">{{ $kendaraan->nama_kendaraan }}</h3>
+                        <div class="font-body-sm text-body-sm text-on-surface-variant mt-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[14px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+                            {{ number_format($kendaraan->rating, 1) }}
+                        </div>
+                        <div class="font-headline-sm text-headline-sm font-bold text-primary mt-3">Rp {{ number_format($kendaraan->harga_sewa, 0, ',', '.') }} <span class="font-body-sm text-body-sm font-normal text-on-surface-variant">/ hari</span></div>
+                        
+                        <!-- Arrow Button -->
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-slate-100 text-primary rounded-full group-hover:bg-primary group-hover:text-white transition-colors shadow-sm">
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </div>
                     </div>
                 </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -98,8 +98,45 @@
             <p class="font-body-sm text-body-sm text-on-surface-variant mb-6">Bantu kami meningkatkan layanan profesional AutoRide.</p>
             <form action="{{ route('umpan-balik.store') }}" method="POST" class="flex flex-col gap-4 text-left">
                 @csrf
-                <input type="hidden" name="kendaraan_id" value="1"> <!-- Dummy ID for static slice -->
-                <input type="hidden" name="rating" value="5"> <!-- Dummy rating for static slice -->
+                <div class="flex flex-col gap-1 mb-4">
+                    <label class="font-label-sm text-label-sm text-on-surface">Pilih Kendaraan yang Pernah Disewa</label>
+                    <select name="kendaraan_id" class="rounded-lg border-slate-200 bg-surface focus:border-primary focus:ring focus:ring-primary/20 transition-all text-body-md font-body-md p-3" required>
+                        @auth
+                            @php
+                                $rentedVehicles = \App\Models\Pemesanan::where('user_id', auth()->id())
+                                    ->where('status', 'Selesai')
+                                    ->with('kendaraan')
+                                    ->get()
+                                    ->pluck('kendaraan')
+                                    ->unique('id');
+                            @endphp
+                            @forelse($rentedVehicles as $vehicle)
+                                <option value="{{ $vehicle->id }}">{{ $vehicle->nama_kendaraan }}</option>
+                            @empty
+                                <option value="" disabled selected>Belum ada riwayat sewa</option>
+                            @endforelse
+                        @else
+                            <option value="" disabled selected>Silakan login terlebih dahulu</option>
+                        @endauth
+                    </select>
+                </div>
+                
+                <div class="flex flex-col gap-1 mb-4">
+                    <label class="font-label-sm text-label-sm text-on-surface">Rating Kepuasan</label>
+                    <div class="flex gap-2 text-slate-300" x-data="{ rating: 5, hoverRating: 0 }">
+                        <input type="hidden" name="rating" x-model="rating">
+                        @for($i = 1; $i <= 5; $i++)
+                            <button type="button" 
+                                @click="rating = {{ $i }}" 
+                                @mouseenter="hoverRating = {{ $i }}" 
+                                @mouseleave="hoverRating = 0"
+                                class="focus:outline-none transition-all"
+                                :class="({{ $i }} <= (hoverRating || rating)) ? 'text-secondary-container' : 'text-slate-300'">
+                                <span class="material-symbols-outlined text-4xl" :style="({{ $i }} <= (hoverRating || rating)) ? 'font-variation-settings: \'FILL\' 1;' : 'font-variation-settings: \'FILL\' 0;'">star</span>
+                            </button>
+                        @endfor
+                    </div>
+                </div>
                 <div class="flex flex-col gap-1">
                     <label class="font-label-sm text-label-sm text-on-surface">Pesan Anda</label>
                     <textarea name="komentar" class="rounded-lg border-slate-200 bg-surface focus:border-primary focus:ring focus:ring-primary/20 transition-all text-body-md font-body-md p-3 min-h-[100px]" placeholder="Bagikan pengalaman Anda..." required></textarea>
@@ -113,43 +150,24 @@
         <!-- Testimonials Grid -->
         <div>
             <h3 class="font-headline-sm text-headline-sm font-bold text-center mb-8 text-on-surface">Apa Kata Pelanggan Kami</h3>
+            @if($umpanBalik->count() > 0)
             <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+                @foreach($umpanBalik->take(3) as $feedback)
                 <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
                     <div class="flex gap-1 text-secondary-container mb-3">
-                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
-                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
-                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
-                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
-                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                        @for($i = 1; $i <= 5; $i++)
+                            <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' {{ $i <= $feedback->rating ? '1' : '0' }};">star</span>
+                        @endfor
                     </div>
-                    <p class="font-body-sm text-body-sm text-on-surface-variant mb-4 italic">"Proses sewa sangat cepat dan tidak ribet. Mobil dalam kondisi prima dan bersih. Sangat direkomendasikan untuk perjalanan bisnis."</p>
-                    <div class="font-label-md text-label-md text-primary">Budi Santoso</div>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant mb-4 italic line-clamp-4">"{{ $feedback->komentar }}"</p>
+                    <div class="font-label-md text-label-md text-primary">{{ $feedback->user->name ?? 'Anonim' }}</div>
+                    <div class="text-xs text-slate-400 mt-1">{{ $feedback->kendaraan->nama_kendaraan ?? '' }}</div>
                 </div>
-
-                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
-                    <div class="flex gap-1 text-secondary-container mb-3">
-                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
-                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
-                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
-                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
-                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
-                    </div>
-                    <p class="font-body-sm text-body-sm text-on-surface-variant mb-4 italic">"Pelayanan pelanggan luar biasa. Aplikasi mudah digunakan untuk booking dadakan. Motornya irit dan terawat."</p>
-                    <div class="font-label-md text-label-md text-primary">Siti Rahma</div>
-                </div>
-
-                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
-                    <div class="flex gap-1 text-secondary-container mb-3">
-                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
-                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
-                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
-                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
-                        <span class="material-symbols-outlined text-sm">star</span>
-                    </div>
-                    <p class="font-body-sm text-body-sm text-on-surface-variant mb-4 italic">"Pilihan kendaraan beragam. Harga sangat transparan tanpa biaya tersembunyi. Solusi tepat untuk liburan keluarga."</p>
-                    <div class="font-label-md text-label-md text-primary">Andi Pratama</div>
-                </div>
+                @endforeach
             </div>
+            @else
+            <p class="text-center text-on-surface-variant font-body-md text-body-md py-8">Belum ada ulasan dari pelanggan.</p>
+            @endif
         </div>
     </section>
 </x-app-layout>
