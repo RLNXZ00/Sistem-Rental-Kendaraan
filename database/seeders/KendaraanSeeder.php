@@ -22,7 +22,12 @@ class KendaraanSeeder extends Seeder
                 'stok' => 3,
                 'rating' => 4.8,
                 'deskripsi' => 'Mobil SUV premium dengan performa tangguh untuk perjalanan dalam dan luar kota.',
-                'gambar_utama' => 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'gambar_utama' => '/images/kendaraan/fortuner.png',
+                'gambar_galeri' => [
+                    '/images/kendaraan/fortuner.png',
+                    '/images/kendaraan/galeri/fortuner_side.png',
+                    '/images/kendaraan/galeri/fortuner_interior.png'
+                ],
                 'spesifikasi' => [
                     'seats' => 7,
                     'transmisi' => 'Otomatis',
@@ -38,7 +43,12 @@ class KendaraanSeeder extends Seeder
                 'stok' => 5,
                 'rating' => 4.9,
                 'deskripsi' => 'MPV hybrid yang sangat nyaman untuk keluarga dengan efisiensi bahan bakar yang baik.',
-                'gambar_utama' => 'https://images.unsplash.com/photo-1549317661-bd32c8ce0be2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'gambar_utama' => '/images/kendaraan/zenix.png',
+                'gambar_galeri' => [
+                    '/images/kendaraan/zenix.png',
+                    '/images/kendaraan/galeri/zenix_side.png',
+                    '/images/kendaraan/galeri/zenix_interior.png'
+                ],
                 'spesifikasi' => [
                     'seats' => 7,
                     'transmisi' => 'Otomatis',
@@ -54,7 +64,12 @@ class KendaraanSeeder extends Seeder
                 'stok' => 4,
                 'rating' => 4.7,
                 'deskripsi' => 'Kombinasi MPV dan SUV, lega dan nyaman.',
-                'gambar_utama' => 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'gambar_utama' => '/images/kendaraan/xpander.png',
+                'gambar_galeri' => [
+                    '/images/kendaraan/xpander.png',
+                    '/images/kendaraan/galeri/xpander_side.png',
+                    '/images/kendaraan/galeri/xpander_interior.png'
+                ],
                 'spesifikasi' => [
                     'seats' => 7,
                     'transmisi' => 'Otomatis',
@@ -70,7 +85,12 @@ class KendaraanSeeder extends Seeder
                 'stok' => 8,
                 'rating' => 4.5,
                 'deskripsi' => 'Mobil mungil lincah untuk mobilitas perkotaan.',
-                'gambar_utama' => 'https://images.unsplash.com/photo-1590362891991-f766f5f76b5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'gambar_utama' => '/images/kendaraan/brio.png',
+                'gambar_galeri' => [
+                    '/images/kendaraan/brio.png',
+                    '/images/kendaraan/galeri/brio_side.png',
+                    '/images/kendaraan/galeri/brio_interior.png'
+                ],
                 'spesifikasi' => [
                     'seats' => 4,
                     'transmisi' => 'Manual',
@@ -86,7 +106,12 @@ class KendaraanSeeder extends Seeder
                 'stok' => 2,
                 'rating' => 4.8,
                 'deskripsi' => 'SUV elegan dengan fitur keselamatan canggih Honda Sensing.',
-                'gambar_utama' => 'https://images.unsplash.com/photo-1506057213367-028a17ec52e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'gambar_utama' => '/images/kendaraan/crv.png',
+                'gambar_galeri' => [
+                    '/images/kendaraan/crv.png',
+                    '/images/kendaraan/galeri/crv_side.png',
+                    '/images/kendaraan/galeri/crv_interior.png'
+                ],
                 'spesifikasi' => [
                     'seats' => 6,
                     'transmisi' => 'Otomatis',
@@ -102,7 +127,12 @@ class KendaraanSeeder extends Seeder
                 'stok' => 6,
                 'rating' => 4.6,
                 'deskripsi' => 'Mobil sejuta umat dengan tampilan lebih sporty.',
-                'gambar_utama' => 'https://images.unsplash.com/photo-1609521263047-f8f205293f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'gambar_utama' => '/images/kendaraan/veloz.png',
+                'gambar_galeri' => [
+                    '/images/kendaraan/veloz.png',
+                    '/images/kendaraan/galeri/veloz_side.png',
+                    '/images/kendaraan/galeri/veloz_interior.png'
+                ],
                 'spesifikasi' => [
                     'seats' => 7,
                     'transmisi' => 'Otomatis',
@@ -118,7 +148,12 @@ class KendaraanSeeder extends Seeder
                 'stok' => 10,
                 'rating' => 4.8,
                 'deskripsi' => 'Skuter matik premium yang nyaman untuk jarak jauh dan dekat.',
-                'gambar_utama' => 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'gambar_utama' => '/images/kendaraan/nmax.png',
+                'gambar_galeri' => [
+                    '/images/kendaraan/nmax.png',
+                    '/images/kendaraan/galeri/nmax_side.png',
+                    '/images/kendaraan/galeri/nmax_dashboard.png'
+                ],
                 'spesifikasi' => [
                     'cc' => 150,
                     'transmisi' => 'Otomatis',
@@ -133,7 +168,12 @@ class KendaraanSeeder extends Seeder
                 'stok' => 8,
                 'rating' => 4.7,
                 'deskripsi' => 'Skuter matik elegan dengan performa bertenaga.',
-                'gambar_utama' => 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'gambar_utama' => '/images/kendaraan/pcx.png',
+                'gambar_galeri' => [
+                    '/images/kendaraan/pcx.png',
+                    '/images/kendaraan/galeri/pcx_side.png',
+                    '/images/kendaraan/galeri/pcx_dashboard.png'
+                ],
                 'spesifikasi' => [
                     'cc' => 150,
                     'transmisi' => 'Otomatis',
@@ -148,7 +188,12 @@ class KendaraanSeeder extends Seeder
                 'stok' => 1,
                 'rating' => 4.9,
                 'deskripsi' => 'Motor petualang kelas berat untuk touring jarak jauh.',
-                'gambar_utama' => 'https://images.unsplash.com/photo-1558980394-0a06c4631733?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'gambar_utama' => '/images/kendaraan/africatwin.png',
+                'gambar_galeri' => [
+                    '/images/kendaraan/africatwin.png',
+                    '/images/kendaraan/galeri/africatwin_side.png',
+                    '/images/kendaraan/galeri/africatwin_dashboard.png'
+                ],
                 'spesifikasi' => [
                     'cc' => 250,
                     'transmisi' => 'Manual',
@@ -163,7 +208,12 @@ class KendaraanSeeder extends Seeder
                 'stok' => 15,
                 'rating' => 4.5,
                 'deskripsi' => 'Skuter matik harian yang lincah dan irit bahan bakar.',
-                'gambar_utama' => 'https://images.unsplash.com/photo-1625068221840-08d1f2b1d310?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'gambar_utama' => '/images/kendaraan/vario.png',
+                'gambar_galeri' => [
+                    '/images/kendaraan/vario.png',
+                    '/images/kendaraan/galeri/vario_side.png',
+                    '/images/kendaraan/galeri/vario_dashboard.png'
+                ],
                 'spesifikasi' => [
                     'cc' => 125,
                     'transmisi' => 'Otomatis',

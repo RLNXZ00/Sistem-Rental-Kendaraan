@@ -26,19 +26,22 @@
             <!-- Left Column: Gallery -->
             <div class="md:col-span-7 space-y-gutter">
                 <div class="bg-surface rounded-3xl overflow-hidden shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)]">
-                    <img src="{{ $kendaraan->gambar_url ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuCAq_hivCr6iqSl5x-TT9a6xKFrQQY7M10X4fxFXWY91VsXpre2G1guCfburjmIPWM0UYlwFeZD-r0CQpZgQiuhksaqtLuNvre1_Tp3puMYx-3dIDt11CGXmt_KWEGOSOOlj7RZuuthtMqLYBbpaObqhAbKsGWCgAOs4sFE9rmi6u429rpgjND5jgI41P4ZHbvJhzyrOqxv614SDhtseQXL_6pBw33r4-8DafiLc5afD1MN_guLSU-PUjB905H3KWsQ_Aa_KnGth10' }}" 
+                    <img src="{{ $kendaraan->gambar_utama ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuCAq_hivCr6iqSl5x-TT9a6xKFrQQY7M10X4fxFXWY91VsXpre2G1guCfburjmIPWM0UYlwFeZD-r0CQpZgQiuhksaqtLuNvre1_Tp3puMYx-3dIDt11CGXmt_KWEGOSOOlj7RZuuthtMqLYBbpaObqhAbKsGWCgAOs4sFE9rmi6u429rpgjND5jgI41P4ZHbvJhzyrOqxv614SDhtseQXL_6pBw33r4-8DafiLc5afD1MN_guLSU-PUjB905H3KWsQ_Aa_KnGth10' }}" 
                          alt="{{ $kendaraan->nama_kendaraan }} Front View" id="main-image" class="w-full aspect-video object-cover transition-all duration-200">
                 </div>
                 <div class="grid grid-cols-3 gap-4">
+                    @php
+                        $galeri = (is_array($kendaraan->gambar_galeri) && count($kendaraan->gambar_galeri) > 0) ? $kendaraan->gambar_galeri : [
+                            $kendaraan->gambar_utama ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuBXglxGybZor3kXqRrwlrGTDqLZjVt6WaLUCIDDWh9GIyLZnwy5m164i7eopucIh6Nl8S0lNocd4Vm3QnMiMFa-EDeCPqm0aggZrGNYrgsqgqdy0S4x81zJgHXVTp25Xgu7DOktmfCW6eCNwqGef01mLELr9tP3Yp3n5Pd70PSBS-Bc76-x0CKwBtMwmKCaOk793Kn7HgTe2rjysoP9s7gq-noQtBp7wTxSBNpEp95yghSB-dEKVwnVuIPaRPWwVfQWzrLs26RJuR0',
+                            $kendaraan->gambar_utama ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuCgGSVYhcB1rV-jWX5e-aa1vuM70CFOzFHU2BA7FW3b-drZcci4jbs1dAPWRHcqm9GVA12P3T7LouCyIxS8nex5ITy5MFs-C7tmmisKQJq7iA-qfDNSl7FiKHblsOP31aQ3cBLpX5s4yMsXkfUtbmkGu4Ldj5N0GkzXF8bzZxwG62HnWNNtB5Cx9vaXkl168ZROJiGJkH7WckoNRTNg2XU5lnMsclQ794RZxr_ydFM8CK2QH1oKVxxCD9lb67oUrLLUEg5cC9KVkXI',
+                            $kendaraan->gambar_utama ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuAYuDCvHs8yv8rPacS6XparPbQQvaJLKJdpW6skhk2OJnfOC6_EnrviOZTLGZepLf0rStWLdEm0hFr0TQdFgtwsBP_G3Pd_Nx4nnSwpm8NaPkP6uIxu3HpWzkfewPFg3urhpaN04rROb_SjIg8ASGv7Dkv-rwogQGUu6DkZ9rdpOD-Ka03drpHcq3sdQgnaln1O1kuFVY0wQuGpn7GrWwgvbTnqrXbSwS4DArC0SOa-gfC2YCz0Ox0R5L59pmDLsXcyGN6AriLM_Rs'
+                        ];
+                    @endphp
+                    @foreach(array_slice($galeri, 0, 3) as $img)
                     <div class="bg-surface rounded-xl overflow-hidden shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] cursor-pointer hover:ring-2 ring-secondary-container transition-all">
-                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXglxGybZor3kXqRrwlrGTDqLZjVt6WaLUCIDDWh9GIyLZnwy5m164i7eopucIh6Nl8S0lNocd4Vm3QnMiMFa-EDeCPqm0aggZrGNYrgsqgqdy0S4x81zJgHXVTp25Xgu7DOktmfCW6eCNwqGef01mLELr9tP3Yp3n5Pd70PSBS-Bc76-x0CKwBtMwmKCaOk793Kn7HgTe2rjysoP9s7gq-noQtBp7wTxSBNpEp95yghSB-dEKVwnVuIPaRPWwVfQWzrLs26RJuR0" alt="Interior Detail" class="gallery-img w-full aspect-[4/3] object-cover">
+                        <img src="{{ $img }}" alt="Gallery Image" class="gallery-img w-full aspect-[4/3] object-cover">
                     </div>
-                    <div class="bg-surface rounded-xl overflow-hidden shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] cursor-pointer hover:ring-2 ring-secondary-container transition-all">
-                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgGSVYhcB1rV-jWX5e-aa1vuM70CFOzFHU2BA7FW3b-drZcci4jbs1dAPWRHcqm9GVA12P3T7LouCyIxS8nex5ITy5MFs-C7tmmisKQJq7iA-qfDNSl7FiKHblsOP31aQ3cBLpX5s4yMsXkfUtbmkGu4Ldj5N0GkzXF8bzZxwG62HnWNNtB5Cx9vaXkl168ZROJiGJkH7WckoNRTNg2XU5lnMsclQ794RZxr_ydFM8CK2QH1oKVxxCD9lb67oUrLLUEg5cC9KVkXI" alt="Side Detail" class="gallery-img w-full aspect-[4/3] object-cover">
-                    </div>
-                    <div class="bg-surface rounded-xl overflow-hidden shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] cursor-pointer hover:ring-2 ring-secondary-container transition-all">
-                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYuDCvHs8yv8rPacS6XparPbQQvaJLKJdpW6skhk2OJnfOC6_EnrviOZTLGZepLf0rStWLdEm0hFr0TQdFgtwsBP_G3Pd_Nx4nnSwpm8NaPkP6uIxu3HpWzkfewPFg3urhpaN04rROb_SjIg8ASGv7Dkv-rwogQGUu6DkZ9rdpOD-Ka03drpHcq3sdQgnaln1O1kuFVY0wQuGpn7GrWwgvbTnqrXbSwS4DArC0SOa-gfC2YCz0Ox0R5L59pmDLsXcyGN6AriLM_Rs" alt="Rear Seat Detail" class="gallery-img w-full aspect-[4/3] object-cover">
-                    </div>
+                    @endforeach
                 </div>
             </div>
 
