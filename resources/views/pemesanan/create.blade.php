@@ -71,7 +71,7 @@
                     <div class="sticky top-24 bg-surface rounded-[20px] shadow-sm border border-slate-200 p-margin-mobile md:p-margin-desktop flex flex-col gap-stack-md">
                         <!-- Vehicle Info -->
                         <div class="relative w-full aspect-[16/9] rounded-xl overflow-hidden mb-stack-sm bg-slate-100">
-                            <img src="{{ isset($kendaraan) ? $kendaraan->gambar_url : 'https://lh3.googleusercontent.com/aida-public/AB6AXuAu1eCwLTLbCCGXVU6ov7xfzNChrJOWaYDwl4UzCNNrpy6HS_LsxPEikJDmi8KAqOWZEyye49ancahF2WboiIrx2-GIfCioDtW6IFn6_ymqNCLOX59m_czj-8dh4iSFnf0YbO0NANbB1JrwXuIDlTWpplCA6ihp6Krm24k95_M5EtwgPfOzPUq31GSDkfQeuMN8VP9zRFaWXg1hrZi93fU-Gk0HyJvFnuqFSiW3sj6rky2pKcgUBCWPJ2PoP5uEuE3NWquu1Mwqyw4' }}" alt="Vehicle Image" class="w-full h-full object-cover">
+                            <img src="{{ $kendaraan->gambar_utama }}" alt="{{ $kendaraan->nama_kendaraan }}" class="w-full h-full object-cover">
                             <div class="absolute top-3 left-3 bg-inverse-surface/80 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1 text-on-primary">
                                 <span class="material-symbols-outlined text-[16px]" data-icon="directions_car">{{ isset($kendaraan) && $kendaraan->tipe === 'Motor' ? 'motorcycle' : 'directions_car' }}</span>
                                 <span class="font-label-sm text-label-sm">{{ $kendaraan->tipe ?? 'Mobil' }}</span>
@@ -79,7 +79,7 @@
                         </div>
                         
                         <div>
-                            <h3 class="font-headline-sm text-headline-sm text-on-surface">{{ $kendaraan->nama ?? 'Toyota Innova Zenix' }}</h3>
+                            <h3 class="font-headline-sm text-headline-sm text-on-surface">{{ $kendaraan->nama_kendaraan }}</h3>
                             <p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1 mt-1">
                                 <span class="material-symbols-outlined text-[16px] text-[#F59E0B]" data-icon="star">star</span>
                                 {{ number_format($kendaraan->rating ?? 4.9, 1) }} Ulasan
