@@ -7,10 +7,20 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    /**
+     * Mark all unread notifications as read.
+     */
+    public function markNotificationsAsRead(Request $request)
+    {
+        $request->user()->unreadNotifications->markAsRead();
+        return response()->json(['success' => true]);
+    }
+
     /**
      * Display the user's profile form.
      */
@@ -65,6 +75,61 @@ class ProfileController extends Controller
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    /**
+     * Update the user's profile and cover photos.
+     */
+    public function updatePhotos(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'profile_photo' => ['nullable', 'image', 'max:2048'],
+            'cover_photo' => ['nullable', 'image', 'max:2048'],
+        ]);
+
+        $user = $request->user();
+
+        if ($request->hasFile('profile_photo')) {
+            if ($user->profile_photo) {
+                Storage::disk('public')->delete($user->profile_photo);
+            }
+            $user->profile_photo = $request->file('profile_photo')->store('profile-photos', 'public');
+        }
+
+        if ($request->hasFile('cover_photo')) {
+            if ($user->cover_photo) {
+                Storage::disk('public')->delete($user->cover_photo);
+            }
+            $user->cover_photo = $request->file('cover_photo')->store('cover-photos', 'public');
+        }
+
+        $user->save();
+
+        return Redirect::back()->with('success', 'Foto berhasil diperbarui.');
+    }
+
+    /**
+     * Delete the user's profile or cover photo.
+     */
+    public function destroyPhoto(Request $request, $type): RedirectResponse
+    {
+        $user = $request->user();
+
+        if ($type === 'profile' && $user->profile_photo) {
+            Storage::disk('public')->delete($user->profile_photo);
+            $user->profile_photo = null;
+            $user->save();
+            return Redirect::back()->with('success', 'Foto profil berhasil dihapus.');
+        }
+
+        if ($type === 'cover' && $user->cover_photo) {
+            Storage::disk('public')->delete($user->cover_photo);
+            $user->cover_photo = null;
+            $user->save();
+            return Redirect::back()->with('success', 'Foto sampul berhasil dihapus.');
+        }
+
+        return Redirect::back()->with('error', 'Gagal menghapus foto.');
     }
 
     /**

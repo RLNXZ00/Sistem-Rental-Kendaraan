@@ -42,6 +42,8 @@ class PemesananController extends Controller
                         $pesanan->status = 'Denda Terlambat';
                         $pesanan->denda = $totalDenda;
                         $pesanan->save();
+
+                        $user->notify(new \App\Notifications\PenaltyWarningNotification($pesanan));
                     }
                 }
             }
@@ -162,6 +164,8 @@ class PemesananController extends Controller
         // Simulasi pembayaran selalu berhasil untuk uji coba
         $pesanan->status = 'Akan Datang';
         $pesanan->save();
+
+        $request->user()->notify(new \App\Notifications\BookingCreatedNotification($pesanan));
 
         return redirect()->route('pemesanan.riwayat')->with('success', 'Pembayaran berhasil dikonfirmasi! Pesanan Anda telah aktif.');
     }

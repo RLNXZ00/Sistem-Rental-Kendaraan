@@ -76,6 +76,58 @@
                         </div>
                     </form>
                 </div>
+
+                <!-- Delete Account Section -->
+                <div class="bg-surface rounded-2xl p-6 md:p-8 shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05)] hover:shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1)] transition-all duration-300 border border-error/20 mt-6 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-error/5"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h2 class="font-headline-lg text-headline-sm md:text-headline-md text-error">Hapus Akun</h2>
+                                <p class="text-body-md text-on-surface-variant">Sekali akun Anda dihapus, semua sumber daya dan datanya akan dihapus secara permanen dan tidak dapat dipulihkan.</p>
+                            </div>
+                            <div class="hidden md:block">
+                                <span class="material-symbols-outlined text-error text-4xl opacity-20" data-icon="person_remove">person_remove</span>
+                            </div>
+                        </div>
+                        
+                        <div x-data="{ showDeleteModal: {{ $errors->userDeletion->isNotEmpty() ? 'true' : 'false' }} }">
+                            <button @click="showDeleteModal = true" class="px-8 py-3 bg-error text-white rounded-lg font-label-md hover:bg-red-600 transition-colors active:scale-95 flex items-center gap-2" type="button">
+                                <span class="material-symbols-outlined text-[20px]">warning</span>
+                                Hapus Akun Saya
+                            </button>
+
+                            <!-- Delete Modal -->
+                            <div x-show="showDeleteModal" style="display: none;" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+                                <div @click.away="showDeleteModal = false" class="bg-surface p-6 rounded-2xl w-full max-w-md shadow-xl">
+                                    <div class="flex items-center gap-3 text-error mb-4">
+                                        <span class="material-symbols-outlined text-[28px]">warning</span>
+                                        <h3 class="font-headline-sm text-headline-sm">Peringatan!</h3>
+                                    </div>
+                                    <p class="font-body-sm text-on-surface-variant mb-6">Apakah Anda yakin ingin menghapus akun? Sekali akun Anda dihapus, semua data profil dan riwayat pemesanan Anda akan dihapus secara permanen. Masukkan kata sandi Anda untuk mengonfirmasi.</p>
+                                    
+                                    <form method="post" action="{{ route('profile.destroy') }}">
+                                        @csrf
+                                        @method('delete')
+                                        
+                                        <div class="mb-6 relative">
+                                            <input class="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-200 focus:border-error focus:ring-2 focus:ring-error/20 transition-all outline-none bg-surface-bright" id="delete_password" name="password" type="password" placeholder="Kata Sandi Saat Ini" required />
+                                            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]" data-icon="key">key</span>
+                                            <x-input-error class="mt-2 text-error font-body-sm" :messages="$errors->userDeletion->get('password')" />
+                                        </div>
+
+                                        <div class="flex justify-end gap-3">
+                                            <button type="button" @click="showDeleteModal = false" class="px-4 py-2 text-on-surface-variant font-label-md hover:bg-slate-50 rounded-lg">Batal</button>
+                                            <button type="submit" class="px-4 py-2 bg-error text-white font-label-md rounded-lg hover:bg-red-600 transition-colors flex items-center gap-2">
+                                                Hapus Permanen
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

@@ -22,90 +22,95 @@
                     </div>
                     
                     <div class="flex flex-col gap-4">
-                        <!-- Rental Ending -->
-                        <div class="p-4 bg-surface-bright rounded-xl border border-slate-100 hover:border-primary-container transition-colors">
+                        @forelse(auth()->user()->notifications as $notification)
+                        <div class="p-4 {{ is_null($notification->read_at) ? 'bg-primary/5' : 'bg-surface-bright' }} rounded-xl border border-slate-100 hover:border-primary-container transition-colors">
                             <div class="flex gap-4">
-                                <div class="w-12 h-12 bg-surface-container-low rounded-full flex items-center justify-center flex-shrink-0">
-                                    <span class="material-symbols-outlined text-primary-container">info</span>
+                                <div class="w-12 h-12 bg-{{ $notification->data['color'] ?? 'primary' }}/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <span class="material-symbols-outlined text-{{ $notification->data['color'] ?? 'primary' }}">{{ $notification->data['icon'] ?? 'info' }}</span>
                                 </div>
-                                <div class="flex flex-col">
-                                    <div class="flex justify-between items-start">
-                                        <span class="font-label-md text-label-md text-primary-container">Sewa Berakhir</span>
-                                        <span class="text-[10px] text-on-surface-variant">Baru saja</span>
+                                <div class="flex flex-col flex-1">
+                                    <div class="flex justify-between items-start gap-2">
+                                        <span class="font-label-md text-label-md text-{{ $notification->data['color'] ?? 'primary-container' }} leading-tight">{{ $notification->data['title'] ?? 'Notifikasi' }}</span>
+                                        <span class="text-[10px] text-on-surface-variant flex-shrink-0">{{ $notification->created_at->diffForHumans() }}</span>
                                     </div>
-                                    <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Masa sewa Toyota Camry Anda telah berakhir. Silakan lakukan pengembalian atau perpanjangan.</p>
+                                    <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">{{ $notification->data['message'] ?? '' }}</p>
                                 </div>
                             </div>
                         </div>
-                        <!-- Thank You -->
-                        <div class="p-4 bg-surface-bright rounded-xl border border-slate-100 hover:border-primary-container transition-colors">
-                            <div class="flex gap-4">
-                                <div class="w-12 h-12 bg-success/10 rounded-full flex items-center justify-center flex-shrink-0">
-                                    <span class="material-symbols-outlined text-success">check_circle</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <div class="flex justify-between items-start">
-                                        <span class="font-label-md text-label-md text-primary-container">Terima Kasih</span>
-                                        <span class="text-[10px] text-on-surface-variant">2 jam yang lalu</span>
-                                    </div>
-                                    <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Terima kasih telah mempercayai layanan AutoRide untuk perjalanan Anda. Kami tunggu pesanan berikutnya!</p>
-                                </div>
-                            </div>
+                        @empty
+                        <div class="p-8 text-center text-on-surface-variant">
+                            Belum ada notifikasi.
                         </div>
-                        <!-- Overdue Warning -->
-                        <div class="p-4 bg-surface-bright rounded-xl border border-slate-100 hover:border-primary-container transition-colors">
-                            <div class="flex gap-4">
-                                <div class="w-12 h-12 bg-secondary-container/10 rounded-full flex items-center justify-center flex-shrink-0">
-                                    <span class="material-symbols-outlined text-secondary-container">warning</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <div class="flex justify-between items-start">
-                                        <span class="font-label-md text-label-md text-secondary-container">Peringatan Denda</span>
-                                        <span class="text-[10px] text-on-surface-variant">Kemarin</span>
-                                    </div>
-                                    <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Kendaraan Mitsubishi Pajero belum dikembalikan. Anda dikenakan denda keterlambatan sesuai ketentuan.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-8 pt-6 border-t border-slate-100 flex justify-center">
-                        <button class="text-label-md text-primary hover:underline">Muat Notifikasi Lainnya</button>
+                        @endforelse
                     </div>
                 </div>
 
                 <!-- Recent Bookings Teaser -->
-                <div class="mt-gutter bg-surface rounded-2xl p-6 shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05)] hover:shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1)] transition-all duration-300 border border-slate-200">
+                <div class="mt-gutter bg-surface rounded-2xl p-6 shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05)] hover:shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1)] transition-all duration-300 border border-slate-200" x-data="{ showAllTransactions: false }">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="font-headline-sm text-headline-sm text-primary">Riwayat Transaksi Terakhir</h3>
-                        <a class="text-secondary-container font-label-md hover:underline" href="{{ route('pemesanan.riwayat') }}">Lihat Semua</a>
                     </div>
+                    
+                    @php
+                        $recentTransactions = auth()->user()->pemesanans()->latest()->take(2)->get();
+                        $allTransactions = auth()->user()->pemesanans()->latest()->get();
+                    @endphp
+
                     <div class="space-y-4">
-                        <!-- Item 1 -->
+                        @forelse($recentTransactions as $pesanan)
                         <div class="flex items-center gap-4 p-4 rounded-xl border border-slate-50 bg-surface-bright hover:border-primary-container transition-colors">
                             <div class="w-16 h-12 rounded-lg bg-slate-100 overflow-hidden flex-shrink-0">
-                                <img alt="Vehicle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvxgmiOu6n1O75s9c_Vv6suPPuQ06OUYBSZQL2y5expqIfofuZq4qhnYHqzfhOzLK-EaNLm6uRQ8SSFhRyQ8KG9TldzLoFw6Qfd3aPbAtMSQXrx4QuWdavix_vek8SD8HCLDx6XfeZfnCPSQUKxq70P6ns5NUCUENDE-Ko7ItWCZGEhn58l3H5TEEFWTIq4qHDnCDNjnTCN_rJPfMm7xYlUGvY-EY-picJo_dhmu6_M1ICqU_LFCFGPZcRAm3qi2181mujGmJzJPQ" class="w-full h-full object-cover"/>
+                                <img alt="{{ $pesanan->kendaraan->nama }}" src="{{ $pesanan->kendaraan->foto_url ?? 'https://placehold.co/150x150/e2e8f0/475569?text=AutoRide' }}" class="w-full h-full object-cover"/>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <h4 class="font-label-md text-on-surface truncate">Toyota Fortuner GR Sport</h4>
-                                <p class="text-body-sm text-on-surface-variant">12 Jan - 15 Jan 2024</p>
+                                <h4 class="font-label-md text-on-surface truncate">{{ $pesanan->kendaraan->merek }} {{ $pesanan->kendaraan->nama }}</h4>
+                                <p class="text-body-sm text-on-surface-variant">{{ \Carbon\Carbon::parse($pesanan->tanggal_mulai)->format('d M') }} - {{ \Carbon\Carbon::parse($pesanan->tanggal_selesai)->format('d M Y') }}</p>
                             </div>
-                            <div class="text-right">
-                                <span class="block font-bold text-primary">Rp 2.400.000</span>
-                                <span class="text-[10px] font-bold text-success uppercase">Selesai</span>
+                            <div class="text-right flex flex-col justify-center items-end">
+                                <span class="block font-bold text-primary">Rp {{ number_format($pesanan->total_biaya, 0, ',', '.') }}</span>
+                                <span class="text-[10px] font-bold uppercase {{ $pesanan->status === 'Selesai' ? 'text-success' : ($pesanan->status === 'Dibatalkan' ? 'text-on-surface-variant' : 'text-secondary-container') }}">{{ $pesanan->status }}</span>
                             </div>
                         </div>
-                        <!-- Item 2 -->
-                        <div class="flex items-center gap-4 p-4 rounded-xl border border-slate-50 bg-surface-bright hover:border-primary-container transition-colors opacity-80">
-                            <div class="w-16 h-12 rounded-lg bg-slate-100 overflow-hidden flex-shrink-0">
-                                <img alt="Motorbike" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDW4HP-zJKb1Hf2Ig1dF1v7lgBiyjjflO-8xCpAP79tUYESLGtKGJ7W9su_o6WqkW8E4QTO08FNaVppIoPYiHLVBemkdh6UzVq6oXyiVwYADrzNJuYBfvk2QM2h6WhBYBz_X2s__8gTsWUwnOHoaZ9Xj0mIPGaNxU1P659kwC5I7hRMwoA2SDE8M1ySl554leHQICSET4Oheta2cZEXLmsF4ltiubqyMSfNiBcmWD7ErVEMqDdM2fN6jRwTr4e-t8Ko2DSllLNFU3o" class="w-full h-full object-cover"/>
+                        @empty
+                        <div class="p-6 text-center text-on-surface-variant">
+                            Belum ada transaksi.
+                        </div>
+                        @endforelse
+                    </div>
+
+                    @if($allTransactions->count() > 2)
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex justify-center">
+                        <button @click="showAllTransactions = true" class="text-label-md text-primary hover:underline flex items-center gap-2">
+                            Expand Daftar Transaksi <span class="material-symbols-outlined text-[18px]">expand_more</span>
+                        </button>
+                    </div>
+                    @endif
+
+                    <!-- Modal All Transactions -->
+                    <div x-show="showAllTransactions" style="display: none;" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+                        <div @click.away="showAllTransactions = false" class="bg-surface p-6 rounded-2xl w-full max-w-2xl shadow-xl max-h-[80vh] flex flex-col">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="font-headline-sm text-primary">Semua Riwayat Transaksi</h3>
+                                <button @click="showAllTransactions = false" class="text-on-surface-variant hover:text-error transition-colors">
+                                    <span class="material-symbols-outlined">close</span>
+                                </button>
                             </div>
-                            <div class="flex-1 min-w-0">
-                                <h4 class="font-label-md text-on-surface truncate">Honda Africa Twin</h4>
-                                <p class="text-body-sm text-on-surface-variant">05 Jan - 07 Jan 2024</p>
-                            </div>
-                            <div class="text-right">
-                                <span class="block font-bold text-primary">Rp 1.100.000</span>
-                                <span class="text-[10px] font-bold text-on-surface-variant uppercase">Dibatalkan</span>
+                            <div class="overflow-y-auto pr-2 space-y-4">
+                                @foreach($allTransactions as $pesanan)
+                                <div class="flex items-center gap-4 p-4 rounded-xl border border-slate-50 bg-surface-bright hover:border-primary-container transition-colors">
+                                    <div class="w-16 h-12 rounded-lg bg-slate-100 overflow-hidden flex-shrink-0">
+                                        <img alt="{{ $pesanan->kendaraan->nama }}" src="{{ $pesanan->kendaraan->foto_url ?? 'https://placehold.co/150x150/e2e8f0/475569?text=AutoRide' }}" class="w-full h-full object-cover"/>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <h4 class="font-label-md text-on-surface truncate">{{ $pesanan->kendaraan->merek }} {{ $pesanan->kendaraan->nama }}</h4>
+                                        <p class="text-body-sm text-on-surface-variant">{{ \Carbon\Carbon::parse($pesanan->tanggal_mulai)->format('d M') }} - {{ \Carbon\Carbon::parse($pesanan->tanggal_selesai)->format('d M Y') }}</p>
+                                    </div>
+                                    <div class="text-right flex flex-col justify-center items-end">
+                                        <span class="block font-bold text-primary">Rp {{ number_format($pesanan->total_biaya, 0, ',', '.') }}</span>
+                                        <span class="text-[10px] font-bold uppercase {{ $pesanan->status === 'Selesai' ? 'text-success' : ($pesanan->status === 'Dibatalkan' ? 'text-on-surface-variant' : 'text-secondary-container') }}">{{ $pesanan->status }}</span>
+                                    </div>
+                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
