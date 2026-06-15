@@ -76,8 +76,8 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter">
                     @forelse($kendaraans as $kendaraan)
                     <div class="bg-surface rounded-xl border border-slate-200 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] hover:-translate-y-1 hover:shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1)] transition-all duration-300 flex flex-col overflow-hidden group">
-                        <div class="aspect-video w-full bg-slate-100 relative overflow-hidden">
-                            <img src="{{ $kendaraan->gambar_utama ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuBDcvLSYJJkALKIQ-cJMOtZzxuInVk4XJt-7G7zVXIjmxE-ePUvbsVd-4LNvPc4P1T4RTvlcK_BkWQZJW6ZbOiOxrfcJpQz7KDrueO-VjkhZwvHqu34OWK45MoW5lAckYYlpxlFo2x8vQMG0JTm738erimGl8jeiYNCr8QxiJ_DzUDGkK5HhjimpFENmQots5iqBaqUS4JQYVpTXUk6kxaTP1BLR8-dOB9bxxhsyxyGCavinQUxEzSfgumbRKapGFRo7pXkIHP9TPo' }}" alt="{{ $kendaraan->nama_kendaraan }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="relative aspect-video bg-slate-100 overflow-hidden">
+                            <img src="{{ $kendaraan->gambar_utama ? asset($kendaraan->gambar_utama) : 'https://lh3.googleusercontent.com/aida-public/AB6AXuBDcvLSYJJkALKIQ-cJMOtZzxuInVk4XJt-7G7zVXIjmxE-ePUvbsVd-4LNvPc4P1T4RTvlcK_BkWQZJW6ZbOiOxrfcJpQz7KDrueO-VjkhZwvHqu34OWK45MoW5lAckYYlpxlFo2x8vQMG0JTm738erimGl8jeiYNCr8QxiJ_DzUDGkK5HhjimpFENmQots5iqBaqUS4JQYVpTXUk6kxaTP1BLR8-dOB9bxxhsyxyGCavinQUxEzSfgumbRKapGFRo7pXkIHP9TPo' }}" alt="{{ $kendaraan->nama_kendaraan }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <div class="absolute top-2 left-2 bg-inverse-on-surface text-primary font-label-sm text-label-sm px-2 py-1 rounded-full shadow-sm">{{ $kendaraan->tipe }}</div>
                         </div>
                         <div class="p-stack-md flex flex-col flex-grow gap-stack-sm">

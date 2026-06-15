@@ -117,10 +117,10 @@
                     
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-20 h-20 rounded-xl bg-slate-100 overflow-hidden">
-                            <img src="{{ isset($pesanan) ? $pesanan->kendaraan->gambar_url : 'https://lh3.googleusercontent.com/aida-public/AB6AXuCKBIqdnvM8wos-TF9RZbSqzX2q-Dx5C1UkOZ75eNYNkDl3tHMCjva1FeTphKUVQ8j97DMdTVk9QP9QWrNV2TjZ7VkJ8p--hd3X5Pfd4qD5WggmmAOKHnxgEhmGMePDWxdxE_JqReDO3z5gMXK9-iSuhZs1WHyT_QnQnUi8n3df742tMsz5gz3AQkPXcVrEnS0L27oGlhNDhDWo718HJFZKkhE_RgoZtCTH5-zgMX69S_mmPe9GjjuRSE3Kdb2AoZiG3dfnDE_HLBA' }}" alt="Vehicle" class="w-full h-full object-cover">
+                            <img src="{{ isset($pesanan) && $pesanan->kendaraan->gambar_utama ? asset($pesanan->kendaraan->gambar_utama) : 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800' }}" alt="Vehicle" class="w-full h-full object-cover">
                         </div>
                         <div>
-                            <h4 class="font-label-md text-label-md text-primary">{{ isset($pesanan) ? $pesanan->kendaraan->nama : 'Toyota Innova Zenix' }}</h4>
+                            <h4 class="font-label-md text-label-md text-primary">{{ isset($pesanan) ? $pesanan->kendaraan->nama_kendaraan : 'Toyota Innova Zenix' }}</h4>
                             <p class="text-body-sm text-on-surface-variant">{{ isset($pesanan) ? $pesanan->kendaraan->tipe : 'Mobil' }}</p>
                         </div>
                     </div>
