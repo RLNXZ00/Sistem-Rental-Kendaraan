@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="py-12 bg-slate-50 min-h-screen" x-data="{ activeModal: false, historyModal: false, selectedPemesanan: {} }">
+    <div class="py-12 bg-slate-50 min-h-screen" x-data="{ activeModal: false, historyModal: false, cancelModal: false, selectedPemesanan: {} }">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-12">
             
             <header>
@@ -23,6 +23,7 @@
                         @foreach ($pemesananAktif as $pesanan)
                         <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer"
                              @click="selectedPemesanan = {{ json_encode([
+                                 'id' => $pesanan->id,
                                  'kendaraan' => $pesanan->kendaraan->nama_kendaraan,
                                  'gambar' => $pesanan->kendaraan->gambar_utama,
                                  'tanggal' => \Carbon\Carbon::parse($pesanan->tanggal_mulai)->format('d M Y') . ' - ' . \Carbon\Carbon::parse($pesanan->tanggal_selesai)->format('d M Y'),
@@ -178,7 +179,10 @@
                     </div>
                 </div>
                 <!-- Actions -->
-                <div class="p-4 border-t border-slate-200 bg-slate-50 flex justify-end">
+                <div class="p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-2">
+                    <button x-show="selectedPemesanan.status === 'Akan Datang'" @click="cancelModal = true" class="px-6 py-2 rounded-lg border border-red-600 text-red-600 text-sm font-semibold hover:bg-red-600 hover:text-white transition-colors duration-200">
+                        Batalkan Pesanan
+                    </button>
                     <button @click="activeModal = false" class="px-6 py-2 rounded-lg border border-blue-900 text-blue-900 text-sm font-semibold hover:bg-blue-900 hover:text-white transition-colors duration-200">
                         Tutup
                     </button>
@@ -251,6 +255,53 @@
                 <div class="p-4 border-t border-slate-200 bg-white flex justify-end gap-2">
                     <button class="px-4 py-2 bg-white text-blue-900 border border-blue-900 rounded-lg text-sm font-semibold hover:-translate-y-1 hover:shadow-md transition-all duration-200">Unduh Invoice</button>
                     <button @click="historyModal = false" class="px-4 py-2 bg-blue-900 text-white rounded-lg text-sm font-semibold hover:bg-blue-800 hover:-translate-y-1 hover:shadow-md transition-all duration-200">Pesan Lagi</button>
+                </div>
+            </div>
+        </div>
+        <!-- MODAL KONFIRMASI PEMBATALAN -->
+        <div x-show="cancelModal" style="display: none;" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4 transition-opacity duration-300">
+            <div @click.away="cancelModal = false" x-show="cancelModal" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" class="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+                <div class="p-6 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center text-red-600 mb-4">
+                        <span class="material-symbols-outlined text-4xl">warning</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Batalkan Pesanan Ini?</h3>
+                    <p class="text-sm text-slate-600 mb-6">Apakah Anda yakin ingin membatalkan penyewaan mobil <strong class="text-slate-900" x-text="selectedPemesanan.kendaraan"></strong>? Aksi ini tidak dapat dibatalkan.</p>
+                    
+                    <form :action="'/pemesanan/' + selectedPemesanan.id + '/batal'" method="POST" class="w-full text-left" x-data="{ alasan: '' }">
+                        @csrf
+                        <div class="mb-4">
+                            <label class="block text-sm font-semibold text-slate-700 mb-3">Beritahu kami alasan pembatalan Anda:</label>
+                            
+                            <div class="space-y-3">
+                                <label class="flex items-center gap-3 text-sm text-slate-700 cursor-pointer hover:bg-slate-50 p-2 rounded-lg transition-colors border border-transparent hover:border-slate-200">
+                                    <input type="radio" name="alasan_batal_radio" value="Menemukan kendaraan lain" x-model="alasan" class="w-4 h-4 text-red-600 focus:ring-red-500 cursor-pointer border-slate-300">
+                                    Menemukan kendaraan lain
+                                </label>
+                                <label class="flex items-center gap-3 text-sm text-slate-700 cursor-pointer hover:bg-slate-50 p-2 rounded-lg transition-colors border border-transparent hover:border-slate-200">
+                                    <input type="radio" name="alasan_batal_radio" value="Kesalahan memilih tanggal" x-model="alasan" class="w-4 h-4 text-red-600 focus:ring-red-500 cursor-pointer border-slate-300">
+                                    Kesalahan memilih tanggal
+                                </label>
+                                <label class="flex items-center gap-3 text-sm text-slate-700 cursor-pointer hover:bg-slate-50 p-2 rounded-lg transition-colors border border-transparent hover:border-slate-200">
+                                    <input type="radio" name="alasan_batal_radio" value="Berubah pikiran" x-model="alasan" class="w-4 h-4 text-red-600 focus:ring-red-500 cursor-pointer border-slate-300">
+                                    Berubah pikiran
+                                </label>
+                                <label class="flex items-center gap-3 text-sm text-slate-700 cursor-pointer hover:bg-slate-50 p-2 rounded-lg transition-colors border border-transparent hover:border-slate-200" :class="alasan === 'Lainnya' ? 'bg-slate-50 border-slate-200' : ''">
+                                    <input type="radio" name="alasan_batal_radio" value="Lainnya" x-model="alasan" class="w-4 h-4 text-red-600 focus:ring-red-500 cursor-pointer border-slate-300">
+                                    Lainnya...
+                                </label>
+                            </div>
+                            
+                            <!-- Panel Text Area (Muncul jika Lainnya dipilih) -->
+                            <div x-show="alasan === 'Lainnya'" x-collapse class="mt-3 overflow-hidden transition-all duration-300">
+                                <textarea name="alasan_batal_lainnya" rows="2" class="w-full border-slate-300 rounded-lg shadow-sm focus:border-red-500 focus:ring-red-500 text-sm placeholder-slate-400" placeholder="Tuliskan alasan spesifik Anda di sini..." :required="alasan === 'Lainnya'"></textarea>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 mt-6">
+                            <button type="button" @click="cancelModal = false" class="flex-1 px-4 py-2 bg-slate-100 text-slate-700 font-semibold rounded-lg hover:bg-slate-200 transition-colors">Kembali</button>
+                            <button type="submit" class="flex-1 px-4 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors">Ya, Batalkan</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
