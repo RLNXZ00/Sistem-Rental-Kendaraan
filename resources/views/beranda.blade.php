@@ -34,7 +34,7 @@
                     <div class="absolute top-4 left-4 bg-surface-container-low text-primary px-3 py-1 rounded-full font-label-sm text-label-sm flex items-center gap-1 shadow-sm z-10">
                         <span class="material-symbols-outlined text-[16px]">{{ $kendaraanUnggulan[0]->tipe == 'Motor' ? 'motorcycle' : 'directions_car' }}</span> {{ $kendaraanUnggulan[0]->tipe }}
                     </div>
-                    <img alt="{{ $kendaraanUnggulan[0]->nama_kendaraan }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="{{ $kendaraanUnggulan[0]->gambar_url ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuAZPVlYaqwttdwv_hrEJXtrxMY7RxfSS-_73fzhBzyFEg-AU6JpWN-K6ZfquQnlH5M-AxcBbYkV-1_Z_KYprGkz4-ghBfo7OdI37nJzCgnzxcGQrPuighzFVTOxaPdrKNYw_TQekAyQUyRpSE6molb1s90to0voTtTQS6folFN-SvUCXURRIts-xudCMfx8gUoerBVHJHuoDbc_FiBLQ_JivKvFIfuHxIIB072e4gciv3u1oiRc0sxwJF3BYd6HkFaJUbNRw8KTIQ8' }}"/>
+                    <img alt="{{ $kendaraanUnggulan[0]->nama_kendaraan }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="{{ $kendaraanUnggulan[0]->gambar_utama ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuAZPVlYaqwttdwv_hrEJXtrxMY7RxfSS-_73fzhBzyFEg-AU6JpWN-K6ZfquQnlH5M-AxcBbYkV-1_Z_KYprGkz4-ghBfo7OdI37nJzCgnzxcGQrPuighzFVTOxaPdrKNYw_TQekAyQUyRpSE6molb1s90to0voTtTQS6folFN-SvUCXURRIts-xudCMfx8gUoerBVHJHuoDbc_FiBLQ_JivKvFIfuHxIIB072e4gciv3u1oiRc0sxwJF3BYd6HkFaJUbNRw8KTIQ8' }}"/>
                 </div>
                 <div class="p-6 flex flex-col justify-between flex-grow">
                     <div>
@@ -66,7 +66,7 @@
                         <div class="absolute top-2 left-2 bg-surface-container-highest text-secondary-container px-2 py-0.5 rounded-full font-label-sm text-[10px] flex items-center gap-1 shadow-sm z-10">
                             <span class="material-symbols-outlined text-[12px]">{{ $kendaraan->tipe == 'Motor' ? 'motorcycle' : 'directions_car' }}</span> {{ $kendaraan->tipe }}
                         </div>
-                        <img alt="{{ $kendaraan->nama_kendaraan }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="{{ $kendaraan->gambar_url ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuAxEJHrhOvce4RametoVf4JlOGYh_KLnQRBrlr6XQQY0UVlM4wnYHRuB5qa3S6uARro4s-_k4tdaYLzDRokdB7sJMaHPN8eRKEauzLJSY7O8xCudQrLxpiLv-raeXWYtWe3LkZQp9Zf6fZdmd-_EU9tjLt9PMrn8WFTPj5GKt_XLw3KJFJe7HKBCv9LSG41dX-NlN_FCpZbqX7QJSdPdAmcHb9kn2HPMZBAEzvOFvmS3rh_Lrol1pwg8iubUt9Yl5RHN8SmRFdt1oA' }}"/>
+                        <img alt="{{ $kendaraan->nama_kendaraan }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="{{ $kendaraan->gambar_utama ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuAxEJHrhOvce4RametoVf4JlOGYh_KLnQRBrlr6XQQY0UVlM4wnYHRuB5qa3S6uARro4s-_k4tdaYLzDRokdB7sJMaHPN8eRKEauzLJSY7O8xCudQrLxpiLv-raeXWYtWe3LkZQp9Zf6fZdmd-_EU9tjLt9PMrn8WFTPj5GKt_XLw3KJFJe7HKBCv9LSG41dX-NlN_FCpZbqX7QJSdPdAmcHb9kn2HPMZBAEzvOFvmS3rh_Lrol1pwg8iubUt9Yl5RHN8SmRFdt1oA' }}"/>
                     </div>
                     <div class="w-3/5 p-4 flex flex-col justify-center relative">
                         <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface line-clamp-1 pr-8">{{ $kendaraan->nama_kendaraan }}</h3>
