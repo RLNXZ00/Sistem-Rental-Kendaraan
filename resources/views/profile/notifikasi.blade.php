@@ -60,10 +60,10 @@
                         @forelse($recentTransactions as $pesanan)
                         <div class="flex items-center gap-4 p-4 rounded-xl border border-slate-50 bg-surface-bright hover:border-primary-container transition-colors">
                             <div class="w-16 h-12 rounded-lg bg-slate-100 overflow-hidden flex-shrink-0">
-                                <img alt="{{ $pesanan->kendaraan->nama }}" src="{{ $pesanan->kendaraan->foto_url ?? 'https://placehold.co/150x150/e2e8f0/475569?text=AutoRide' }}" class="w-full h-full object-cover"/>
+                                <img alt="{{ $pesanan->kendaraan->nama_kendaraan }}" src="{{ $pesanan->kendaraan->gambar_utama ? asset($pesanan->kendaraan->gambar_utama) : 'https://placehold.co/150x150/e2e8f0/475569?text=AutoRide' }}" class="w-full h-full object-cover"/>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <h4 class="font-label-md text-on-surface truncate">{{ $pesanan->kendaraan->merek }} {{ $pesanan->kendaraan->nama }}</h4>
+                                <h4 class="font-label-md text-on-surface truncate">{{ $pesanan->kendaraan->nama_kendaraan }}</h4>
                                 <p class="text-body-sm text-on-surface-variant">{{ \Carbon\Carbon::parse($pesanan->tanggal_mulai)->format('d M') }} - {{ \Carbon\Carbon::parse($pesanan->tanggal_selesai)->format('d M Y') }}</p>
                             </div>
                             <div class="text-right flex flex-col justify-center items-end">
@@ -99,10 +99,10 @@
                                 @foreach($allTransactions as $pesanan)
                                 <div class="flex items-center gap-4 p-4 rounded-xl border border-slate-50 bg-surface-bright hover:border-primary-container transition-colors">
                                     <div class="w-16 h-12 rounded-lg bg-slate-100 overflow-hidden flex-shrink-0">
-                                        <img alt="{{ $pesanan->kendaraan->nama }}" src="{{ $pesanan->kendaraan->foto_url ?? 'https://placehold.co/150x150/e2e8f0/475569?text=AutoRide' }}" class="w-full h-full object-cover"/>
+                                        <img alt="{{ $pesanan->kendaraan->nama_kendaraan }}" src="{{ $pesanan->kendaraan->gambar_utama ? asset($pesanan->kendaraan->gambar_utama) : 'https://placehold.co/150x150/e2e8f0/475569?text=AutoRide' }}" class="w-full h-full object-cover"/>
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <h4 class="font-label-md text-on-surface truncate">{{ $pesanan->kendaraan->merek }} {{ $pesanan->kendaraan->nama }}</h4>
+                                        <h4 class="font-label-md text-on-surface truncate">{{ $pesanan->kendaraan->nama_kendaraan }}</h4>
                                         <p class="text-body-sm text-on-surface-variant">{{ \Carbon\Carbon::parse($pesanan->tanggal_mulai)->format('d M') }} - {{ \Carbon\Carbon::parse($pesanan->tanggal_selesai)->format('d M Y') }}</p>
                                     </div>
                                     <div class="text-right flex flex-col justify-center items-end">

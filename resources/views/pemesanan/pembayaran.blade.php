@@ -117,10 +117,10 @@
                     
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-20 h-20 rounded-xl bg-slate-100 overflow-hidden">
-                            <img src="{{ $pesanan->kendaraan->gambar_utama }}" alt="{{ $pesanan->kendaraan->nama_kendaraan }}" class="w-full h-full object-cover">
+                            <img src="{{ isset($pesanan) && $pesanan->kendaraan->gambar_utama ? asset($pesanan->kendaraan->gambar_utama) : 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800' }}" alt="Vehicle" class="w-full h-full object-cover">
                         </div>
                         <div>
-                            <h4 class="font-label-md text-label-md text-primary">{{ $pesanan->kendaraan->nama_kendaraan }}</h4>
+                            <h4 class="font-label-md text-label-md text-primary">{{ isset($pesanan) ? $pesanan->kendaraan->nama_kendaraan : 'Toyota Innova Zenix' }}</h4>
                             <p class="text-body-sm text-on-surface-variant">{{ isset($pesanan) ? $pesanan->kendaraan->tipe : 'Mobil' }}</p>
                         </div>
                     </div>

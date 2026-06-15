@@ -21,6 +21,17 @@ class PemesananController extends Controller
         $pemesanans = Pemesanan::with('kendaraan')->where('user_id', $user->id)->get();
 
         foreach ($pemesanans as $pesanan) {
+            // Cek jika statusnya masih Akan Datang, dan hari ini >= tanggal_mulai
+            if ($pesanan->status === 'Akan Datang') {
+                $tanggalMulai = Carbon::parse($pesanan->tanggal_mulai)->startOfDay();
+                $hariIni = Carbon::now()->startOfDay();
+
+                if ($hariIni->greaterThanOrEqualTo($tanggalMulai)) {
+                    $pesanan->status = 'Berjalan';
+                    $pesanan->save();
+                }
+            }
+
             // Logika Sanksi/Denda otomatis: 
             // Cek jika statusnya masih Berjalan, dan hari ini melebihi tanggal selesai
             if ($pesanan->status === 'Berjalan') {

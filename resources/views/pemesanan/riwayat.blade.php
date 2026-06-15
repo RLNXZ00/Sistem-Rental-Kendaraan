@@ -24,18 +24,18 @@
                         <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer"
                              @click="selectedPemesanan = {{ json_encode([
                                  'id' => $pesanan->id,
-                                 'kendaraan' => $pesanan->kendaraan->nama_kendaraan,
-                                 'gambar' => $pesanan->kendaraan->gambar_utama,
+                                 'kendaraan' => $pesanan->kendaraan->nama_kendaraan ?? 'Kendaraan',
+                                 'gambar' => $pesanan->kendaraan->gambar_utama ? asset($pesanan->kendaraan->gambar_utama) : 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800',
                                  'tanggal' => \Carbon\Carbon::parse($pesanan->tanggal_mulai)->format('d M Y') . ' - ' . \Carbon\Carbon::parse($pesanan->tanggal_selesai)->format('d M Y'),
                                  'durasi' => $pesanan->durasi_hari . ' Hari',
                                  'total' => 'Rp ' . number_format($pesanan->total_biaya, 0, ',', '.'),
                                  'status' => $pesanan->status
                              ]) }}; activeModal = true">
                             <div class="aspect-video w-full bg-slate-100 relative">
-                                <img src="{{ $pesanan->kendaraan->gambar_utama }}" class="w-full h-full object-cover" alt="{{ $pesanan->kendaraan->nama_kendaraan }}">
+                                <img src="{{ $pesanan->kendaraan->gambar_utama ? asset($pesanan->kendaraan->gambar_utama) : 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800' }}" class="w-full h-full object-cover" alt="{{ $pesanan->kendaraan->nama_kendaraan ?? 'Mobil' }}">
                                 
                                 @if($pesanan->status === 'Berjalan')
-                                <div class="absolute top-4 left-4 bg-blue-900 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md flex items-center gap-1">
+                                <div class="absolute top-4 left-4 bg-emerald-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md flex items-center gap-1">
                                     <span class="material-symbols-outlined text-[14px]">local_taxi</span>
                                     Berjalan
                                 </div>
@@ -47,7 +47,7 @@
                                 @endif
                             </div>
                             <div class="p-4 flex flex-col gap-2">
-                                <h3 class="text-xl font-bold text-slate-900" style="font-family: 'Montserrat', sans-serif;">{{ $pesanan->kendaraan->nama_kendaraan }}</h3>
+                                <h3 class="text-xl font-bold text-slate-900" style="font-family: 'Montserrat', sans-serif;">{{ $pesanan->kendaraan->nama_kendaraan ?? 'Kendaraan' }}</h3>
                                 <p class="text-sm text-slate-500 flex items-center gap-1" style="font-family: 'Inter', sans-serif;">
                                     <span class="material-symbols-outlined text-[16px]">calendar_today</span>
                                     {{ \Carbon\Carbon::parse($pesanan->tanggal_mulai)->format('d M Y') }} - {{ \Carbon\Carbon::parse($pesanan->tanggal_selesai)->format('d M Y') }}
@@ -96,7 +96,7 @@
                             
                             <!-- Content -->
                             <div class="flex-grow w-full text-center md:text-left">
-                                <h3 class="text-xl font-bold text-slate-900" style="font-family: 'Montserrat', sans-serif;">{{ $pesanan->kendaraan->nama_kendaraan }}</h3>
+                                <h3 class="text-xl font-bold text-slate-900" style="font-family: 'Montserrat', sans-serif;">{{ $pesanan->kendaraan->nama_kendaraan ?? 'Kendaraan' }}</h3>
                                 <p class="text-sm text-slate-500 mt-1" style="font-family: 'Inter', sans-serif;">{{ \Carbon\Carbon::parse($pesanan->tanggal_mulai)->format('d M Y') }} - {{ \Carbon\Carbon::parse($pesanan->tanggal_selesai)->format('d M Y') }}</p>
                                 <div class="flex items-center justify-center md:justify-start gap-2 mt-2">
                                     @if($pesanan->status === 'Selesai')
@@ -115,8 +115,8 @@
                             <div class="w-full md:w-auto mt-4 md:mt-0">
                                 <button class="w-full md:w-auto border border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white transition-colors px-4 py-2 rounded-lg text-sm font-semibold"
                                         @click="selectedPemesanan = {{ json_encode([
-                                            'kendaraan' => $pesanan->kendaraan->nama_kendaraan,
-                                            'gambar' => $pesanan->kendaraan->gambar_utama,
+                                            'kendaraan' => $pesanan->kendaraan->nama_kendaraan ?? 'Kendaraan',
+                                            'gambar' => $pesanan->kendaraan->gambar_utama ? asset($pesanan->kendaraan->gambar_utama) : 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800',
                                             'tanggal' => \Carbon\Carbon::parse($pesanan->tanggal_mulai)->format('d M Y') . ' - ' . \Carbon\Carbon::parse($pesanan->tanggal_selesai)->format('d M Y'),
                                             'durasi' => $pesanan->durasi_hari . ' Hari' . ($pesanan->denda > 0 ? ' (+ Denda)' : ''),
                                             'total' => 'Rp ' . number_format($pesanan->total_biaya + $pesanan->denda, 0, ',', '.'),
@@ -146,10 +146,11 @@
                 <div class="p-6 overflow-y-auto max-h-[70vh]">
                     <div class="flex flex-col items-center mb-6">
                         <div class="w-full aspect-video bg-slate-100 rounded-xl mb-4 overflow-hidden relative shadow-sm border border-slate-200">
-                            <img :src="selectedPemesanan.gambar" class="w-full h-full object-cover" :alt="selectedPemesanan.kendaraan">
+                            <img :src="selectedPemesanan.gambar" class="w-full h-full object-cover" alt="Vehicle">
                         </div>
                         <h3 class="text-xl font-bold text-blue-900 text-center mb-2" x-text="selectedPemesanan.kendaraan" style="font-family: 'Montserrat', sans-serif;"></h3>
-                        <div class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-900 text-xs font-semibold border border-blue-100">
+                        <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border"
+                             :class="selectedPemesanan.status === 'Berjalan' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-blue-50 text-blue-900 border-blue-100'">
                             <span class="w-2 h-2 rounded-full mr-2" :class="selectedPemesanan.status === 'Berjalan' ? 'bg-emerald-500' : 'bg-blue-600'"></span>
                             <span x-text="selectedPemesanan.status"></span>
                         </div>
@@ -203,7 +204,7 @@
                 <!-- Content -->
                 <div class="p-6 overflow-y-auto max-h-[70vh]">
                     <div class="w-full aspect-video rounded-xl overflow-hidden bg-slate-100 relative shadow-sm border border-slate-200 mb-6">
-                        <img :src="selectedPemesanan.gambar" class="w-full h-full object-cover" :alt="selectedPemesanan.kendaraan">
+                        <img :src="selectedPemesanan.gambar" class="w-full h-full object-cover" alt="Vehicle">
                         <div class="absolute top-2 right-2 px-3 py-1 rounded-full text-xs font-semibold shadow-md flex items-center gap-1"
                              :class="selectedPemesanan.status === 'Selesai' ? 'bg-emerald-500 text-white' : (selectedPemesanan.status === 'Denda Terlambat' ? 'bg-red-500 text-white' : 'bg-slate-500 text-white')">
                             <span class="material-symbols-outlined text-[14px]" x-text="selectedPemesanan.status === 'Selesai' ? 'check_circle' : (selectedPemesanan.status === 'Denda Terlambat' ? 'warning' : 'info')"></span>

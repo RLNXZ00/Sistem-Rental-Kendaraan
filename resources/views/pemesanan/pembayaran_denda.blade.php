@@ -60,7 +60,7 @@
                         <div>
                             <h3 class="font-label-md text-label-md">Denda Keterlambatan Pengembalian</h3>
                             <p class="font-body-sm text-body-sm mt-1">
-                                Kendaraan <strong>{{ $pesanan->kendaraan->nama }}</strong> dikembalikan melewati batas waktu sewa yang disepakati.
+                                Kendaraan <strong>{{ $pesanan->kendaraan->nama_kendaraan }}</strong> dikembalikan melewati batas waktu sewa yang disepakati.
                                 Harap selesaikan pembayaran denda ini sesegera mungkin.
                             </p>
                         </div>
@@ -72,7 +72,7 @@
                         <div class="space-y-stack-sm">
                             <div class="flex justify-between items-center py-2 border-b border-slate-200">
                                 <span class="font-body-md text-body-md text-on-surface-variant">Kendaraan</span>
-                                <span class="font-label-md text-label-md text-on-surface">{{ $pesanan->kendaraan->nama }}</span>
+                                <span class="font-label-md text-label-md text-on-surface">{{ $pesanan->kendaraan->nama_kendaraan }}</span>
                             </div>
                             <div class="flex justify-between items-center py-2 border-b border-slate-200">
                                 <span class="font-body-md text-body-md text-on-surface-variant">Tanggal Seharusnya Kembali</span>
@@ -199,8 +199,8 @@
                         {{-- Vehicle Info --}}
                         <div class="flex items-center gap-3 mb-stack-md pb-stack-md border-b border-slate-100">
                             <div class="w-16 h-16 rounded-xl bg-slate-100 overflow-hidden flex-shrink-0">
-                                @if($pesanan->kendaraan->gambar_url)
-                                    <img src="{{ $pesanan->kendaraan->gambar_url }}" alt="{{ $pesanan->kendaraan->nama }}" class="w-full h-full object-cover">
+                                @if($pesanan->kendaraan->gambar_utama)
+                                    <img src="{{ asset($pesanan->kendaraan->gambar_utama) }}" alt="{{ $pesanan->kendaraan->nama_kendaraan }}" class="w-full h-full object-cover">
                                 @else
                                     <div class="w-full h-full flex items-center justify-center">
                                         <span class="material-symbols-outlined text-slate-400 text-[32px]">directions_car</span>
@@ -208,7 +208,7 @@
                                 @endif
                             </div>
                             <div>
-                                <h4 class="font-label-md text-label-md text-primary">{{ $pesanan->kendaraan->nama }}</h4>
+                                <h4 class="font-label-md text-label-md text-primary">{{ $pesanan->kendaraan->nama_kendaraan }}</h4>
                                 <p class="font-body-sm text-body-sm text-on-surface-variant">{{ $pesanan->kendaraan->tipe }}</p>
                             </div>
                         </div>
