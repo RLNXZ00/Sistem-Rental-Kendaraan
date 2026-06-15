@@ -42,11 +42,11 @@
                 </div>
 
                 <!-- Rating Sidebar -->
-                <div class="bg-surface rounded-xl p-stack-md border border-slate-200 shadow-sm flex flex-col gap-stack-md">
+                <div class="bg-surface rounded-xl p-stack-md border border-slate-200 shadow-sm flex flex-col gap-stack-md" x-data="{ limit: 5 }">
                     <h2 class="font-headline-sm text-headline-sm text-primary">Rating Tertinggi</h2>
                     <div class="flex flex-col gap-stack-sm">
-                        @foreach($topRated as $top)
-                        <a href="{{ route('kendaraan.show', $top->id) }}" class="flex items-center gap-stack-sm p-2 hover:bg-slate-50 rounded-lg cursor-pointer transition-colors">
+                        @foreach($topRated as $index => $top)
+                        <a href="{{ route('kendaraan.show', $top->id) }}" x-show="{{ $index }} < limit" x-transition class="flex items-center gap-stack-sm p-2 hover:bg-slate-50 rounded-lg cursor-pointer transition-colors">
                             <div class="w-12 h-12 rounded-lg bg-slate-200 overflow-hidden flex-shrink-0">
                                 <img src="{{ $top->gambar_url ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuAc3-_XnM82PvN0CmdsdoMoS85Y3gBULHn82FilfGgKQcRALpkEPLm4ODVC13gW31c0nFjY0rBxJDs3sf-cD5dNEYFVu1ex-U6uAwV1DoDsqvKunosBp36bw1cfjhea5Si8J7ZbHk5HwUGWDkzHBR7pLJPxWL56s4RPcTaQhiuKQF3WIeVBkOFkyEeLV11eIPGdRVFKhg-NWKKnF92S70ltDNqOYaYBp8y0nkqyImcRCrF0Fk19pVNcCU0ERG9pqzdHmTrXDwB8LGY' }}" alt="{{ $top->nama_kendaraan }}" class="w-full h-full object-cover">
                             </div>
@@ -60,7 +60,9 @@
                         </a>
                         @endforeach
                     </div>
-                    <a href="{{ route('kendaraan.rating') }}" class="text-primary font-label-md text-label-md mt-2 hover:text-secondary-container transition-colors text-center w-full">Lihat Semua</a>
+                    @if($topRated->count() > 5)
+                        <button @click="limit += 5" x-show="limit < {{ $topRated->count() }}" class="text-primary font-label-md text-label-md mt-2 hover:text-secondary-container transition-colors text-center w-full">Muat Lebih Banyak</button>
+                    @endif
                 </div>
             </aside>
 
@@ -87,13 +89,21 @@
                                 </div>
                             </div>
                             
-                            <div class="font-body-sm text-body-sm text-on-surface-variant flex gap-4 mt-auto">
+                            <div class="grid grid-cols-2 gap-y-2 mt-auto">
                                 @if($kendaraan->tipe === 'Mobil' && isset($kendaraan->spesifikasi['seats']))
-                                    <span class="flex items-center gap-1"><span class="material-symbols-outlined" style="font-size: 16px;">airline_seat_recline_normal</span> {{ $kendaraan->spesifikasi['seats'] }} Seats</span>
+                                    <span class="flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant"><span class="material-symbols-outlined" style="font-size: 16px;">airline_seat_recline_normal</span> {{ $kendaraan->spesifikasi['seats'] }} Seats</span>
                                 @elseif($kendaraan->tipe === 'Motor' && isset($kendaraan->spesifikasi['cc']))
-                                    <span class="flex items-center gap-1"><span class="material-symbols-outlined" style="font-size: 16px;">two_wheeler</span> {{ $kendaraan->spesifikasi['cc'] }} CC</span>
+                                    <span class="flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant"><span class="material-symbols-outlined" style="font-size: 16px;">two_wheeler</span> {{ $kendaraan->spesifikasi['cc'] }} CC</span>
                                 @endif
-                                <span class="flex items-center gap-1"><span class="material-symbols-outlined" style="font-size: 16px;">local_gas_station</span> {{ $kendaraan->spesifikasi['bahan_bakar'] ?? 'Bensin' }}</span>
+                                
+                                <span class="flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant"><span class="material-symbols-outlined" style="font-size: 16px;">settings_input_component</span> {{ $kendaraan->spesifikasi['transmisi'] ?? 'Otomatis' }}</span>
+                                <span class="flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant"><span class="material-symbols-outlined" style="font-size: 16px;">local_gas_station</span> {{ $kendaraan->spesifikasi['bahan_bakar'] ?? 'Bensin' }}</span>
+                                
+                                @if($kendaraan->tipe === 'Mobil')
+                                    <span class="flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant"><span class="material-symbols-outlined" style="font-size: 16px;">luggage</span> {{ $kendaraan->spesifikasi['bagasi'] ?? 'Standard' }}</span>
+                                @elseif($kendaraan->tipe === 'Motor')
+                                    <span class="flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant"><span class="material-symbols-outlined" style="font-size: 16px;">sports_motorsports</span> {{ $kendaraan->spesifikasi['bagasi'] ?? '1 Helm' }}</span>
+                                @endif
                             </div>
                             
                             <div class="flex items-end justify-between mt-2">

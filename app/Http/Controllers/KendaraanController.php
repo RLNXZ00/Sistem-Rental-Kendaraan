@@ -35,10 +35,10 @@ class KendaraanController extends Controller
 
         $kendaraans = $query->get();
 
-        // Get top 3 highest-rated vehicles for the sidebar
+        // Get top 10 highest-rated vehicles for the sidebar
         $topRated = Kendaraan::query()
             ->orderByDesc('rating')
-            ->limit(3)
+            ->limit(10)
             ->get();
 
         return view('kendaraan.index', compact('kendaraans', 'topRated', 'tipe'));

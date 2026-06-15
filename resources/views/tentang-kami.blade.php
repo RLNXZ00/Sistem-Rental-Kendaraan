@@ -34,16 +34,16 @@
             
             <!-- Map Container -->
             <div class="w-full max-w-4xl rounded-xl overflow-hidden shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05)] border border-slate-200 bg-surface mb-stack-lg aspect-video relative group">
-                <!-- Embedded Google Map (Jakarta as placeholder) -->
-                <iframe allowfullscreen="" class="absolute inset-0 grayscale contrast-125 opacity-90 group-hover:grayscale-0 transition-all duration-500" height="100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126920.24009855512!2d106.75877864467776!3d-6.229746499999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3e945e34b9d%3A0x100c5e82dd4b820!2sJakarta%2C%20Daerah%20Khusus%20Ibukota%20Jakarta!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" style="border:0;" width="100%">
+                <!-- Embedded Google Map -->
+                <iframe allowfullscreen="" class="absolute inset-0 grayscale contrast-125 opacity-90 group-hover:grayscale-0 transition-all duration-500" height="100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=Kampus+III+Universitas+Sanata+Dharma&t=&z=15&ie=UTF8&iwloc=&output=embed" style="border:0;" width="100%">
                 </iframe>
             </div>
             
             <!-- Action Button -->
-            <button class="bg-primary hover:bg-primary-container text-white font-label-md text-label-md py-3 px-6 rounded-lg shadow-sm hover:shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-200 flex items-center space-x-2">
+            <a href="https://maps.app.goo.gl/wpw7kzVDNkmgk1kA9" target="_blank" rel="noopener noreferrer" class="bg-primary hover:bg-primary-container text-white font-label-md text-label-md py-3 px-6 rounded-lg shadow-sm hover:shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-200 flex items-center space-x-2">
                 <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">location_on</span>
                 <span class="">Buka Peta Besar</span>
-            </button>
+            </a>
         </div>
     </section>
 </x-app-layout>

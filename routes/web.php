@@ -23,7 +23,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/profile/photos', [ProfileController::class, 'updatePhotos'])->name('profile.photos.update');
+    Route::delete('/profile/photos/{type}', [ProfileController::class, 'destroyPhoto'])->name('profile.photos.destroy');
     Route::get('/profile/notifikasi', [ProfileController::class, 'notifikasi'])->name('profile.notifikasi');
+    Route::post('/profile/notifikasi/read', [ProfileController::class, 'markNotificationsAsRead'])->name('profile.notifikasi.read');
     Route::get('/profile/bahasa', [ProfileController::class, 'bahasa'])->name('profile.bahasa');
     Route::get('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
 

@@ -18,27 +18,54 @@
         <div class="hidden md:flex items-center gap-stack-md font-body-md text-body-md">
             @auth
                 <!-- Notification Dropdown Panel -->
-                <div x-data="{ notifOpen: false }" class="relative cursor-pointer group" @click.away="notifOpen = false">
-                    <span @click="notifOpen = !notifOpen" class="material-symbols-outlined text-on-primary/80 hover:text-secondary-container transition-colors duration-200">notifications</span>
-                    <span class="absolute -top-1 -right-1 w-3 h-3 bg-error rounded-full border-2 border-primary"></span>
+                <div x-data="{ 
+                        notifOpen: false, 
+                        hasNewNotif: {{ auth()->user()->unreadNotifications->count() > 0 ? 'true' : 'false' }},
+                        markAsRead() {
+                            if(this.hasNewNotif) {
+                                fetch('{{ route('profile.notifikasi.read') }}', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                    }
+                                }).then(res => {
+                                    if(res.ok) this.hasNewNotif = false;
+                                });
+                            }
+                        }
+                    }" class="relative cursor-pointer group" @click.away="notifOpen = false">
+                    <button @click="notifOpen = !notifOpen; markAsRead()" class="relative focus:outline-none flex items-center justify-center">
+                        <span class="material-symbols-outlined text-on-primary/80 hover:text-secondary-container transition-colors duration-200">notifications</span>
+                        <span x-show="hasNewNotif" style="display: none;" class="absolute -top-1 -right-1 w-3 h-3 bg-error rounded-full border-2 border-primary"></span>
+                    </button>
                     
                     <div x-show="notifOpen" x-transition style="display: none;" class="absolute right-0 mt-2 w-80 bg-surface rounded-[20px] shadow-lg border border-slate-200 overflow-hidden z-50">
-                        <div class="p-4 border-b border-slate-100">
+                        <div class="p-4 border-b border-slate-100 flex justify-between items-center">
                             <h3 class="font-headline-sm text-headline-sm text-primary-container font-bold">Notifikasi</h3>
                         </div>
-                        <div class="flex flex-col">
-                            <div class="p-4 hover:bg-slate-50 transition-colors border-b border-slate-100">
+                        <div class="flex flex-col max-h-[300px] overflow-y-auto">
+                            @forelse(auth()->user()->notifications()->latest()->take(3)->get() as $notification)
+                            <div class="p-4 hover:bg-slate-50 transition-colors border-b border-slate-100 {{ is_null($notification->read_at) ? 'bg-primary/5' : '' }}">
                                 <div class="flex gap-3">
-                                    <span class="material-symbols-outlined text-success">check_circle</span>
+                                    <span class="material-symbols-outlined text-{{ $notification->data['color'] ?? 'primary' }} mt-0.5">{{ $notification->data['icon'] ?? 'info' }}</span>
                                     <div class="flex flex-col text-left">
-                                        <span class="font-label-md text-label-md text-primary-container">Selamat Datang</span>
-                                        <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Anda telah berhasil masuk ke sistem.</p>
+                                        <div class="flex justify-between items-start gap-2">
+                                            <span class="font-label-md text-label-md text-primary-container leading-tight">{{ $notification->data['title'] ?? 'Notifikasi' }}</span>
+                                            <span class="text-[10px] text-on-surface-variant flex-shrink-0">{{ $notification->created_at->diffForHumans(null, true, true) }} lalu</span>
+                                        </div>
+                                        <p class="font-body-sm text-body-sm text-on-surface-variant mt-1 line-clamp-2">{{ $notification->data['message'] ?? '' }}</p>
                                     </div>
                                 </div>
                             </div>
+                            @empty
+                            <div class="p-6 text-center text-on-surface-variant font-body-sm">
+                                Tidak ada notifikasi.
+                            </div>
+                            @endforelse
                         </div>
-                        <div class="p-3 bg-slate-50 text-center">
-                            <a class="text-label-sm text-primary hover:underline" href="#">Lihat Semua Notifikasi</a>
+                        <div class="p-3 bg-slate-50 text-center border-t border-slate-100">
+                            <a class="text-label-sm text-primary hover:underline font-label-md" href="{{ route('profile.notifikasi') }}">Lihat Selengkapnya</a>
                         </div>
                     </div>
                 </div>
@@ -47,7 +74,10 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-on-primary bg-primary hover:text-secondary-container focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div class="flex items-center gap-2">
+                                <img src="{{ Auth::user()->profile_photo_url }}" alt="Avatar" class="w-6 h-6 rounded-full object-cover border border-white/20">
+                                <div>{{ Auth::user()->name }}</div>
+                            </div>
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
