@@ -195,4 +195,35 @@ class PemesananController extends Controller
             ->back()
             ->with('error', 'Status pesanan tidak valid untuk pembayaran denda.');
     }
+
+    /**
+     * Membatalkan pesanan.
+     */
+    public function batalkan(Request $request, $id)
+    {
+        $pesanan = Pemesanan::where('user_id', Auth::id())->findOrFail($id);
+
+        if ($pesanan->status === 'Akan Datang') {
+            $request->validate([
+                'alasan_batal_radio' => 'required|string',
+                'alasan_batal_lainnya' => 'nullable|string|max:255',
+            ]);
+
+            $alasan = $request->alasan_batal_radio === 'Lainnya' 
+                        ? $request->alasan_batal_lainnya 
+                        : $request->alasan_batal_radio;
+
+            $pesanan->status = 'Dibatalkan';
+            $pesanan->alasan_batal = $alasan;
+            $pesanan->save();
+
+            return redirect()
+                ->route('pemesanan.riwayat')
+                ->with('success', 'Pemesanan kendaraan ' . ($pesanan->kendaraan->nama ?? '') . ' berhasil dibatalkan.');
+        }
+
+        return redirect()
+            ->back()
+            ->with('error', 'Pemesanan tidak dapat dibatalkan pada status ini.');
+    }
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pemesanan extends Model
 {
     protected $fillable = [
-        'user_id', 'kendaraan_id', 'tanggal_mulai', 'tanggal_selesai', 'durasi_hari', 'total_biaya', 'status', 'denda'
+        'user_id', 'kendaraan_id', 'tanggal_mulai', 'tanggal_selesai', 'durasi_hari', 'total_biaya', 'status', 'denda', 'alasan_batal'
     ];
 
     protected $casts = [

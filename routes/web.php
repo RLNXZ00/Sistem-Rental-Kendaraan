@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/pemesanan/{id}/pembayaran', [App\Http\Controllers\PemesananController::class, 'prosesPembayaran'])->name('pemesanan.prosesPembayaran');
     Route::get('/pemesanan/{id}/bayar-denda', [App\Http\Controllers\PemesananController::class, 'pembayaranDenda'])->name('pemesanan.pembayaranDenda');
     Route::post('/pemesanan/{id}/bayar-denda', [App\Http\Controllers\PemesananController::class, 'bayarDenda'])->name('pemesanan.bayarDenda');
+    Route::post('/pemesanan/{id}/batal', [App\Http\Controllers\PemesananController::class, 'batalkan'])->name('pemesanan.batalkan');
 });
 
 // Rute Admin
