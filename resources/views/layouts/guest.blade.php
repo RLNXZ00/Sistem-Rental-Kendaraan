@@ -42,7 +42,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body {{ $attributes->merge(['class' => 'font-sans text-on-surface antialiased bg-background relative overflow-hidden min-h-screen']) }}>
+    <body {{ $attributes->merge(['class' => 'font-sans text-on-surface antialiased bg-background relative overflow-x-hidden min-h-screen']) }}>
         {{ $slot }}
     </body>
 </html>
