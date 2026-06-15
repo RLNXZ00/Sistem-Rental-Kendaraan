@@ -1,7 +1,7 @@
 <x-guest-layout>
-    <div class="min-h-screen flex items-center justify-center p-margin-mobile md:p-margin-desktop">
+    <div class="min-h-screen flex py-10 px-4 sm:px-6 lg:px-8 overflow-y-auto">
         <!-- Main Registration Container -->
-        <div class="w-full max-w-5xl bg-surface rounded-[20px] shadow-sm border border-slate-200 overflow-hidden flex flex-col md:flex-row relative z-10 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
+        <div class="w-full max-w-5xl m-auto bg-surface rounded-[20px] shadow-sm border border-slate-200 overflow-hidden flex flex-col md:flex-row relative z-10 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
             
             <!-- Left Side: Image/Branding Panel (Hidden on smaller mobile) -->
             <div class="hidden md:flex md:w-5/12 bg-primary text-on-primary p-10 flex-col justify-between relative overflow-hidden">
@@ -92,24 +92,64 @@
                         </div>
 
                         <!-- Password -->
-                        <div class="space-y-stack-sm col-span-1">
+                        <div class="space-y-stack-sm col-span-1 md:col-span-2" x-data="passwordValidator()">
                             <label class="block font-label-md text-label-md text-on-surface" for="password">Kata Sandi</label>
                             <div class="relative">
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-outline">
                                     <span class="material-symbols-outlined text-[20px]">lock</span>
                                 </span>
-                                <input class="w-full pl-10 pr-10 py-3 bg-surface border border-slate-200 rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline-variant transition-all duration-200 input-glow" id="password" name="password" placeholder="••••••••" required type="password" autocomplete="new-password"/>
+                                <input class="w-full pl-10 pr-10 py-3 bg-surface border border-slate-200 rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline-variant transition-all duration-200 input-glow" 
+                                    id="password" name="password" placeholder="Min. 8 karakter" required 
+                                    :type="showPassword ? 'text' : 'password'" 
+                                    x-model="password" 
+                                    @input="validatePassword"
+                                    autocomplete="new-password"/>
+                                <button type="button" @click="showPassword = !showPassword" class="absolute inset-y-0 right-0 flex items-center pr-3 text-outline hover:text-on-surface focus:outline-none">
+                                    <span class="material-symbols-outlined text-[20px]" x-text="showPassword ? 'visibility_off' : 'visibility'">visibility</span>
+                                </button>
+                            </div>
+                            
+                            <!-- Validation Box -->
+                            <div class="mt-2 p-4 bg-[#F5F3FF] rounded-lg border border-[#EDE9FE] text-sm font-body-sm text-on-surface-variant">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <div class="flex items-center gap-2 transition-colors duration-200" :class="rules.length ? 'text-primary' : 'text-slate-400'">
+                                        <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                                        <span>Min. 8 Karakter</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 transition-colors duration-200" :class="rules.uppercase ? 'text-primary' : 'text-slate-400'">
+                                        <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                                        <span>Huruf Besar</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 transition-colors duration-200" :class="rules.lowercase ? 'text-primary' : 'text-slate-400'">
+                                        <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                                        <span>Huruf Kecil</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 transition-colors duration-200" :class="rules.number ? 'text-primary' : 'text-slate-400'">
+                                        <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                                        <span>Angka (0-9)</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 col-span-1 md:col-span-2 transition-colors duration-200" :class="rules.special ? 'text-primary' : 'text-slate-400'">
+                                        <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                                        <span>Karakter Khusus</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Confirm Password -->
-                        <div class="space-y-stack-sm col-span-1">
+                        <div class="space-y-stack-sm col-span-1 md:col-span-2" x-data="{ showConfirmPassword: false }">
                             <label class="block font-label-md text-label-md text-on-surface" for="password_confirmation">Konfirmasi Sandi</label>
                             <div class="relative">
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-outline">
                                     <span class="material-symbols-outlined text-[20px]">lock_reset</span>
                                 </span>
-                                <input class="w-full pl-10 pr-10 py-3 bg-surface border border-slate-200 rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline-variant transition-all duration-200 input-glow" id="password_confirmation" name="password_confirmation" placeholder="••••••••" required type="password" autocomplete="new-password"/>
+                                <input class="w-full pl-10 pr-10 py-3 bg-surface border border-slate-200 rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline-variant transition-all duration-200 input-glow" 
+                                    id="password_confirmation" name="password_confirmation" placeholder="••••••••" required 
+                                    :type="showConfirmPassword ? 'text' : 'password'" 
+                                    autocomplete="new-password"/>
+                                <button type="button" @click="showConfirmPassword = !showConfirmPassword" class="absolute inset-y-0 right-0 flex items-center pr-3 text-outline hover:text-on-surface focus:outline-none">
+                                    <span class="material-symbols-outlined text-[20px]" x-text="showConfirmPassword ? 'visibility_off' : 'visibility'">visibility</span>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -152,4 +192,28 @@
             </div>
         </div>
     </div>
+
+    <!-- Alpine.js script for password validation -->
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('passwordValidator', () => ({
+                password: '',
+                showPassword: false,
+                rules: {
+                    length: false,
+                    lowercase: false,
+                    uppercase: false,
+                    number: false,
+                    special: false
+                },
+                validatePassword() {
+                    this.rules.length = this.password.length >= 8;
+                    this.rules.lowercase = /[a-z]/.test(this.password);
+                    this.rules.uppercase = /[A-Z]/.test(this.password);
+                    this.rules.number = /[0-9]/.test(this.password);
+                    this.rules.special = /[!@#$%^&*(),.?":{}|<>\-_=+]/.test(this.password);
+                }
+            }))
+        })
+    </script>
 </x-guest-layout>
