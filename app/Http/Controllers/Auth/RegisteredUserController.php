@@ -31,8 +31,16 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'name' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) {
+                if (strtolower($value) === 'admin') {
+                    $fail('Nama ini dicadangkan dan tidak dapat digunakan.');
+                }
+            }],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class, function ($attribute, $value, $fail) {
+                if (strtolower($value) === 'admin' || strpos(strtolower($value), 'admin@') === 0) {
+                    $fail('Alamat email ini dicadangkan untuk sistem.');
+                }
+            }],
             'password' => ['required', 'confirmed', Rules\Password::min(8)
                 ->mixedCase()
                 ->numbers()

@@ -3,8 +3,7 @@
 @section('title', 'AutoRide Admin Dashboard Overview')
 
 @section('content')
-<main class="md:pl-72 pr-margin-mobile md:pr-margin-desktop pb-section-gap min-h-screen pt-stack-lg w-full overflow-y-auto">
-    <div class="max-w-container-max mx-auto space-y-12">
+<div class="max-w-container-max mx-auto space-y-12 pb-section-gap">
         <div class="flex justify-between items-end mb-stack-lg">
             <div>
                 <h1 class="font-headline-lg text-headline-lg text-primary">Dashboard Overview</h1>
@@ -330,5 +329,5 @@
             </div>
         </section>
     </div>
-</main>
+</div>
 @endsection

@@ -30,6 +30,10 @@ class AuthenticatedSessionController extends Controller
 
         $request->user()->notify(new \App\Notifications\LoginNotification());
 
+        if ($request->user()->is_admin) {
+            return redirect()->intended(route('admin.dashboard.index', absolute: false));
+        }
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
