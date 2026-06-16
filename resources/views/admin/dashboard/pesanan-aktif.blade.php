@@ -55,138 +55,47 @@
                     </tr>
                 </thead>
                 <tbody class="text-body-sm font-body-sm divide-y divide-slate-100">
-                    <!-- Row 1 -->
+                    @forelse($pesanans as $pesanan)
                     <tr class="hover:bg-slate-50 transition-colors group cursor-pointer">
-                        <td class="p-4 font-medium text-primary">#AR-7392</td>
-                        <td class="p-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full overflow-hidden bg-slate-200 shrink-0">
-                                    <img alt="User avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCd6CwxGfuGIpSwHXCtsP9u322X0MFva9B46Gym8rhz2vljJ-7PYf6pGD2Iru-LZRrb1KTXNML5Oznc5nvwkiFg6kZO4urmRhFRUBXBpdor81A-3C0two3Ay1oU3MqLZ42iHBTApWfFib9wgyqz5cDkKNUb9UOetkHNWw_gGJlYSKAX059c2i1WhWVc_UVr0HNj_up2cDtqDws28oNS8cFyboXI_rZ6PBPIZ-mguzmxUnoswlt8aGYi09oEG4_RNuDue24s4BKuPdU">
-                                </div>
-                                <div>
-                                    <div class="font-medium text-on-background group-hover:text-primary transition-colors">Sarah Jenkins</div>
-                                    <div class="text-xs text-on-surface-variant">@sjenkins</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="p-4">
-                            <div class="flex items-center gap-2">
-                                <span class="px-2 py-0.5 rounded-full bg-surface-container-high text-primary text-xs font-semibold uppercase tracking-wide">Mobil</span>
-                                <span class="font-medium">Toyota Innova Zenix</span>
-                            </div>
-                        </td>
-                        <td class="p-4">
-                            <div class="flex items-center gap-2 text-error font-medium">
-                                <span class="material-symbols-outlined text-sm">error</span>
-                                Overdue (2h)
-                            </div>
-                            <div class="text-xs text-on-surface-variant mt-0.5">Today, 14:00</div>
-                        </td>
-                        <td class="p-4 text-right">
-                            <button class="px-3 py-1.5 bg-secondary-container text-on-primary text-xs font-label-md rounded-md hover:bg-secondary transition-colors shadow-sm hover:shadow">
-                                Mark Returned
-                            </button>
-                        </td>
-                    </tr>
-                    <!-- Row 2 -->
-                    <tr class="hover:bg-slate-50 transition-colors group cursor-pointer">
-                        <td class="p-4 font-medium text-primary">#AR-7388</td>
+                        <td class="p-4 font-medium text-primary">#AR-{{ str_pad($pesanan->id, 4, '0', STR_PAD_LEFT) }}</td>
                         <td class="p-4">
                             <div class="flex items-center gap-3">
                                 <div class="w-8 h-8 rounded-full overflow-hidden bg-slate-200 shrink-0 flex items-center justify-center text-primary font-bold bg-primary-fixed">
-                                    MR
+                                    {{ strtoupper(substr($pesanan->user->name, 0, 2)) }}
                                 </div>
                                 <div>
-                                    <div class="font-medium text-on-background group-hover:text-primary transition-colors">Michael Ross</div>
-                                    <div class="text-xs text-on-surface-variant">@mross88</div>
+                                    <div class="font-medium text-on-background group-hover:text-primary transition-colors">{{ $pesanan->user->name }}</div>
+                                    <div class="text-xs text-on-surface-variant">{{ $pesanan->user->email }}</div>
                                 </div>
                             </div>
                         </td>
                         <td class="p-4">
                             <div class="flex items-center gap-2">
-                                <span class="px-2 py-0.5 rounded-full bg-surface-container-high text-primary text-xs font-semibold uppercase tracking-wide">Mobil</span>
-                                <span class="font-medium">Honda CR-V 2023</span>
+                                <span class="px-2 py-0.5 rounded-full {{ strtolower($pesanan->kendaraan->kategori) == 'motor' ? 'bg-tertiary-fixed text-on-tertiary-fixed' : 'bg-surface-container-high text-primary' }} text-xs font-semibold uppercase tracking-wide">{{ $pesanan->kendaraan->kategori }}</span>
+                                <span class="font-medium">{{ $pesanan->kendaraan->nama_kendaraan }}</span>
                             </div>
                         </td>
                         <td class="p-4">
-                            <div class="flex items-center gap-2 text-secondary font-medium">
-                                <span class="material-symbols-outlined text-sm">schedule</span>
-                                Today
+                            <div class="flex items-center gap-2 {{ $pesanan->status === 'Denda Terlambat' ? 'text-error' : 'text-secondary' }} font-medium">
+                                <span class="material-symbols-outlined text-sm">{{ $pesanan->status === 'Denda Terlambat' ? 'error' : 'schedule' }}</span>
+                                {{ $pesanan->status }}
                             </div>
-                            <div class="text-xs text-on-surface-variant mt-0.5">Today, 18:30</div>
+                            <div class="text-xs text-on-surface-variant mt-0.5">{{ \Carbon\Carbon::parse($pesanan->tanggal_selesai)->format('M d, H:i') }}</div>
                         </td>
                         <td class="p-4 text-right">
-                            <button class="px-3 py-1.5 bg-primary text-on-primary text-xs font-label-md rounded-md hover:bg-primary-container transition-colors shadow-sm hover:shadow">
-                                Mark Returned
-                            </button>
+                            <form action="{{ route('admin.pesanan.kembalikan', $pesanan->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="px-3 py-1.5 {{ $pesanan->status === 'Denda Terlambat' ? 'bg-secondary-container' : 'bg-primary' }} text-on-primary text-xs font-label-md rounded-md hover:opacity-90 transition-colors shadow-sm hover:shadow">
+                                    Mark Returned
+                                </button>
+                            </form>
                         </td>
                     </tr>
-                    <!-- Row 3 -->
-                    <tr class="hover:bg-slate-50 transition-colors group cursor-pointer">
-                        <td class="p-4 font-medium text-primary">#AR-7385</td>
-                        <td class="p-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full overflow-hidden bg-slate-200 shrink-0">
-                                    <img alt="User avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPkrphzoh67N9rEekLacjG9RvuazY7emlKrbvvsFsHsjFAP7hb-GI5g_xHWuIm9ck5ERubnPOHpKoCvEf7UQAliRHf3UuuspFakkhrb9AGRyybtxUBxd55YFKfEFh5_53t7DiARjJBkchpXm-7GdInBhFSsmexLAFZiaUmrfHvzxmZFFbYWDEf-hN2PDUxhFvKIGQESux9mQdhvdL5jl_wHHfdXvTpgjecUK0_2QTaRiXx8LRN9fxYAB1_PsCyKXvscdYi335y9aY">
-                                </div>
-                                <div>
-                                    <div class="font-medium text-on-background group-hover:text-primary transition-colors">David Chen</div>
-                                    <div class="text-xs text-on-surface-variant">@dchen_rides</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="p-4">
-                            <div class="flex items-center gap-2">
-                                <span class="px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed text-xs font-semibold uppercase tracking-wide">Motor</span>
-                                <span class="font-medium">Yamaha NMAX 155</span>
-                            </div>
-                        </td>
-                        <td class="p-4">
-                            <div class="flex items-center gap-2 text-on-background font-medium">
-                                <span class="material-symbols-outlined text-sm text-on-surface-variant">calendar_today</span>
-                                Tomorrow
-                            </div>
-                            <div class="text-xs text-on-surface-variant mt-0.5">Nov 25, 09:00</div>
-                        </td>
-                        <td class="p-4 text-right">
-                            <button class="px-3 py-1.5 bg-primary text-on-primary text-xs font-label-md rounded-md hover:bg-primary-container transition-colors shadow-sm hover:shadow">
-                                Mark Returned
-                            </button>
-                        </td>
+                    @empty
+                    <tr>
+                        <td colspan="5" class="p-4 text-center text-on-surface-variant">Tidak ada pesanan aktif saat ini.</td>
                     </tr>
-                    <!-- Row 4 -->
-                    <tr class="hover:bg-slate-50 transition-colors group cursor-pointer">
-                        <td class="p-4 font-medium text-primary">#AR-7370</td>
-                        <td class="p-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full overflow-hidden bg-slate-200 shrink-0 flex items-center justify-center text-secondary font-bold bg-secondary-fixed">
-                                    EK
-                                </div>
-                                <div>
-                                    <div class="font-medium text-on-background group-hover:text-primary transition-colors">Elena Kusuma</div>
-                                    <div class="text-xs text-on-surface-variant">@elena_k</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="p-4">
-                            <div class="flex items-center gap-2">
-                                <span class="px-2 py-0.5 rounded-full bg-surface-container-high text-primary text-xs font-semibold uppercase tracking-wide">Mobil</span>
-                                <span class="font-medium">Mitsubishi Pajero Sport</span>
-                            </div>
-                        </td>
-                        <td class="p-4">
-                            <div class="flex items-center gap-2 text-on-background font-medium">
-                                <span class="material-symbols-outlined text-sm text-on-surface-variant">calendar_today</span>
-                                Nov 28
-                            </div>
-                            <div class="text-xs text-on-surface-variant mt-0.5">Nov 28, 12:00</div>
-                        </td>
-                        <td class="p-4 text-right">
-                            <button class="px-3 py-1.5 bg-primary text-on-primary text-xs font-label-md rounded-md hover:bg-primary-container transition-colors shadow-sm hover:shadow">
-                                Mark Returned
-                            </button>
-                        </td>
-                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
