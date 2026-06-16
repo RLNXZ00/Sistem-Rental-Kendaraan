@@ -41,21 +41,20 @@ Route::middleware('auth')->group(function () {
     Route::post('/pemesanan/{id}/batal', [App\Http\Controllers\PemesananController::class, 'batalkan'])->name('pemesanan.batalkan');
 });
 
-// Rute Admin
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    // Dashboard
+// Rute Admin (Middleware 'admin' dinonaktifkan sementara untuk preview UI)
+Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard.index');
-    })->name('dashboard');
-
+    })->name('dashboard.index');
+    
     Route::get('/dashboard/pesanan-aktif', function () {
         return view('admin.dashboard.pesanan-aktif');
     })->name('dashboard.pesanan-aktif');
-
+    
     Route::get('/dashboard/umpan-balik', function () {
         return view('admin.dashboard.umpan-balik');
     })->name('dashboard.umpan-balik');
-
+    
     Route::get('/dashboard/detail-ulasan', function () {
         return view('admin.dashboard.detail-ulasan');
     })->name('dashboard.detail-ulasan');
@@ -64,6 +63,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/tentang', function () {
         return view('admin.tentang');
     })->name('tentang');
+
+    // Keamanan
+    Route::get('/keamanan', [\App\Http\Controllers\Admin\AdminKeamananController::class, 'index'])->name('keamanan.index');
+
+    // Slicing UI Admin Armada
+    Route::get('/armada', function () {
+        return view('admin.armada.index');
+    })->name('armada.index');
 });
 
 require __DIR__ . '/auth.php';
