@@ -43,9 +43,24 @@ Route::middleware('auth')->group(function () {
 
 // Rute Admin
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    // Dashboard
     Route::get('/dashboard', function () {
-        return "Ini adalah halaman Dashboard Admin (Akses Terlindungi)";
+        return view('admin.dashboard.index');
     })->name('dashboard');
+
+    Route::get('/dashboard/pesanan-aktif', function () {
+        return view('admin.dashboard.pesanan-aktif');
+    })->name('dashboard.pesanan-aktif');
+
+    Route::get('/dashboard/umpan-balik', function () {
+        return view('admin.dashboard.umpan-balik');
+    })->name('dashboard.umpan-balik');
+
+    Route::get('/dashboard/detail-ulasan', function () {
+        return view('admin.dashboard.detail-ulasan');
+    })->name('dashboard.detail-ulasan');
+
+    // Tentang
     Route::get('/tentang', function () {
         return view('admin.tentang');
     })->name('tentang');
