@@ -63,7 +63,7 @@ class PemesananController extends Controller
         // Pisahkan data untuk tampilan (Active vs History)
         $pemesananAktif = Pemesanan::with('kendaraan')
             ->where('user_id', $user->id)
-            ->whereIn('status', ['Akan Datang', 'Berjalan'])
+            ->whereIn('status', ['Menunggu Pembayaran', 'Akan Datang', 'Berjalan'])
             ->orderBy('tanggal_mulai', 'asc')
             ->get();
 
@@ -126,7 +126,7 @@ class PemesananController extends Controller
             'tanggal_selesai' => $tanggalSelesai,
             'durasi_hari' => $durasiHari,
             'total_biaya' => $totalBiaya,
-            'status' => 'Akan Datang',
+            'status' => 'Menunggu Pembayaran',
             'denda' => 0
         ]);
 
@@ -176,6 +176,10 @@ class PemesananController extends Controller
         $pesanan->status = 'Akan Datang';
         $pesanan->save();
 
+        if ($pesanan->kendaraan->stok > 0) {
+            $pesanan->kendaraan->decrement('stok');
+        }
+
         $request->user()->notify(new \App\Notifications\BookingCreatedNotification($pesanan));
 
         return redirect()->route('pemesanan.riwayat')->with('success', 'Pembayaran berhasil dikonfirmasi! Pesanan Anda telah aktif.');
@@ -197,6 +201,8 @@ class PemesananController extends Controller
             $pesanan->status = 'Selesai';
             $pesanan->save();
 
+            $pesanan->kendaraan->increment('stok');
+
             return redirect()
                 ->route('pemesanan.riwayat')
                 ->with('success', 'Denda sebesar Rp ' . number_format($pesanan->denda, 0, ',', '.') . ' berhasil dibayarkan via ' . $request->metode_pembayaran . '. Pemesanan telah selesai.');
@@ -214,7 +220,7 @@ class PemesananController extends Controller
     {
         $pesanan = Pemesanan::where('user_id', Auth::id())->findOrFail($id);
 
-        if ($pesanan->status === 'Akan Datang') {
+        if (in_array($pesanan->status, ['Akan Datang', 'Menunggu Pembayaran'])) {
             $request->validate([
                 'alasan_batal_radio' => 'required|string',
                 'alasan_batal_lainnya' => 'nullable|string|max:255',
@@ -224,9 +230,14 @@ class PemesananController extends Controller
                         ? $request->alasan_batal_lainnya 
                         : $request->alasan_batal_radio;
 
+            $statusSebelumnya = $pesanan->status;
             $pesanan->status = 'Dibatalkan';
             $pesanan->alasan_batal = $alasan;
             $pesanan->save();
+
+            if ($statusSebelumnya === 'Akan Datang') {
+                $pesanan->kendaraan->increment('stok');
+            }
 
             return redirect()
                 ->route('pemesanan.riwayat')

@@ -39,6 +39,11 @@
                                     <span class="material-symbols-outlined text-[14px]">local_taxi</span>
                                     Berjalan
                                 </div>
+                                @elseif($pesanan->status === 'Menunggu Pembayaran')
+                                <div class="absolute top-4 left-4 bg-orange-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[14px]">payments</span>
+                                    Menunggu Pembayaran
+                                </div>
                                 @else
                                 <div class="absolute top-4 left-4 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md flex items-center gap-1">
                                     <span class="material-symbols-outlined text-[14px]">event_upcoming</span>
@@ -150,8 +155,8 @@
                         </div>
                         <h3 class="text-xl font-bold text-blue-900 text-center mb-2" x-text="selectedPemesanan.kendaraan" style="font-family: 'Montserrat', sans-serif;"></h3>
                         <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border"
-                             :class="selectedPemesanan.status === 'Berjalan' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-blue-50 text-blue-900 border-blue-100'">
-                            <span class="w-2 h-2 rounded-full mr-2" :class="selectedPemesanan.status === 'Berjalan' ? 'bg-emerald-500' : 'bg-blue-600'"></span>
+                             :class="selectedPemesanan.status === 'Berjalan' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : (selectedPemesanan.status === 'Menunggu Pembayaran' ? 'bg-orange-50 text-orange-700 border-orange-200' : 'bg-blue-50 text-blue-900 border-blue-100')">
+                            <span class="w-2 h-2 rounded-full mr-2" :class="selectedPemesanan.status === 'Berjalan' ? 'bg-emerald-500' : (selectedPemesanan.status === 'Menunggu Pembayaran' ? 'bg-orange-500' : 'bg-blue-600')"></span>
                             <span x-text="selectedPemesanan.status"></span>
                         </div>
                     </div>
@@ -181,7 +186,10 @@
                 </div>
                 <!-- Actions -->
                 <div class="p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-2">
-                    <button x-show="selectedPemesanan.status === 'Akan Datang'" @click="cancelModal = true" class="px-6 py-2 rounded-lg border border-red-600 text-red-600 text-sm font-semibold hover:bg-red-600 hover:text-white transition-colors duration-200">
+                    <a :href="'/pemesanan/pembayaran/' + selectedPemesanan.id" x-show="selectedPemesanan.status === 'Menunggu Pembayaran'" class="px-6 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-colors duration-200 shadow-sm flex items-center justify-center">
+                        Bayar Sekarang
+                    </a>
+                    <button x-show="selectedPemesanan.status === 'Akan Datang' || selectedPemesanan.status === 'Menunggu Pembayaran'" @click="cancelModal = true" class="px-6 py-2 rounded-lg border border-red-600 text-red-600 text-sm font-semibold hover:bg-red-600 hover:text-white transition-colors duration-200">
                         Batalkan Pesanan
                     </button>
                     <button @click="activeModal = false" class="px-6 py-2 rounded-lg border border-blue-900 text-blue-900 text-sm font-semibold hover:bg-blue-900 hover:text-white transition-colors duration-200">
