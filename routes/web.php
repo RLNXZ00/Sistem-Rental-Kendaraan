@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Rute Admin (Middleware 'admin' dinonaktifkan sementara untuk preview UI)
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard.index');
     })->name('dashboard.index');
@@ -58,6 +58,11 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/dashboard/detail-ulasan', function () {
         return view('admin.dashboard.detail-ulasan');
     })->name('dashboard.detail-ulasan');
+
+    // Slicing UI Admin Armada
+    Route::get('/armada', function () {
+        return view('admin.armada.index');
+    })->name('armada.index');
 });
 
 require __DIR__ . '/auth.php';
