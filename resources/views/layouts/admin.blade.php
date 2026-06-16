@@ -172,13 +172,10 @@
             </li>
         </ul>
         <div class="mt-auto pt-stack-md border-t border-white/10">
-            <a class="flex items-center gap-3 px-4 py-3 text-slate-200 hover:bg-white/10 hover:text-white rounded-lg transition-all" href="#">
-                <span class="material-symbols-outlined" data-icon="help">help</span>
-                Support
-            </a>
+
             <form method="POST" action="{{ route('logout') }}" class="w-full mt-4">
                 @csrf
-                <button type="submit" class="w-full flex items-center justify-center gap-2 px-4 py-2 border border-white/20 text-white rounded-lg hover:bg-white/10 transition-colors">
+                <button type="submit" class="w-full flex items-center justify-center gap-2 px-4 py-2 border border-white/20 text-white rounded-lg hover:bg-error hover:border-error transition-colors">
                     <span class="material-symbols-outlined">logout</span>
                     Logout
                 </button>
