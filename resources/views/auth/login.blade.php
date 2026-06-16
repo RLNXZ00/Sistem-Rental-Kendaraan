@@ -34,12 +34,12 @@
                 @csrf
                 <!-- Email Input -->
                 <div class="flex flex-col gap-2">
-                    <label class="font-label-sm text-label-sm text-on-surface block" for="email">Alamat Email</label>
+                    <label class="font-label-sm text-label-sm text-on-surface block" for="email">Alamat Email / Username</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <span class="material-symbols-outlined text-outline text-[20px]">mail</span>
+                            <span class="material-symbols-outlined text-outline text-[20px]">person</span>
                         </div>
-                        <input class="w-full pl-10 pr-4 py-3 bg-surface border border-slate-200 rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all shadow-sm" id="email" name="email" value="{{ old('email') }}" placeholder="name@company.com" required type="email" autofocus autocomplete="username" />
+                        <input class="w-full pl-10 pr-4 py-3 bg-surface border border-slate-200 rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all shadow-sm" id="email" name="email" value="{{ old('email') }}" placeholder="admin atau name@company.com" required type="text" autofocus autocomplete="username" />
                     </div>
                 </div>
                 

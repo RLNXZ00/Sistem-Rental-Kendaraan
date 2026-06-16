@@ -41,8 +41,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/pemesanan/{id}/batal', [App\Http\Controllers\PemesananController::class, 'batalkan'])->name('pemesanan.batalkan');
 });
 
-// Rute Admin (Middleware 'admin' dinonaktifkan sementara untuk preview UI)
-Route::prefix('admin')->name('admin.')->group(function () {
+// Rute Admin
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard.index');
     })->name('dashboard.index');
