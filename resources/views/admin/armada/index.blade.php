@@ -21,17 +21,21 @@
         <!-- Filters & Tabs -->
         <div class="bg-surface rounded-xl border border-slate-200 p-4 mb-stack-lg flex flex-wrap gap-4 items-center justify-between shadow-sm">
             <div class="flex gap-2">
-                <button class="px-4 py-2 rounded-lg bg-primary-container text-white font-label-md text-label-md">Semua</button>
-                <button class="px-4 py-2 rounded-lg bg-slate-100 text-on-surface-variant hover:bg-slate-200 font-label-md text-label-md transition-colors">Mobil</button>
-                <button class="px-4 py-2 rounded-lg bg-slate-100 text-on-surface-variant hover:bg-slate-200 font-label-md text-label-md transition-colors">Motor</button>
+                <a href="{{ route('admin.armada.index', ['status' => request('status')]) }}" class="px-4 py-2 rounded-lg {{ !request('tipe') ? 'bg-primary-container text-white' : 'bg-slate-100 text-on-surface-variant hover:bg-slate-200' }} font-label-md text-label-md transition-colors">Semua</a>
+                <a href="{{ route('admin.armada.index', ['tipe' => 'Mobil', 'status' => request('status')]) }}" class="px-4 py-2 rounded-lg {{ request('tipe') == 'Mobil' ? 'bg-primary-container text-white' : 'bg-slate-100 text-on-surface-variant hover:bg-slate-200' }} font-label-md text-label-md transition-colors">Mobil</a>
+                <a href="{{ route('admin.armada.index', ['tipe' => 'Motor', 'status' => request('status')]) }}" class="px-4 py-2 rounded-lg {{ request('tipe') == 'Motor' ? 'bg-primary-container text-white' : 'bg-slate-100 text-on-surface-variant hover:bg-slate-200' }} font-label-md text-label-md transition-colors">Motor</a>
             </div>
             <div class="flex gap-4">
-                <select class="border border-slate-200 rounded-lg px-4 py-2 text-body-sm font-body-sm bg-slate-50 outline-none focus:border-primary-container">
-                    <option>Status: Semua</option>
-                    <option>Tersedia</option>
-                    <option>Disewa</option>
-                    <option>Maintenance</option>
-                </select>
+                <form action="{{ route('admin.armada.index') }}" method="GET" id="filterForm">
+                    @if(request('tipe'))
+                        <input type="hidden" name="tipe" value="{{ request('tipe') }}">
+                    @endif
+                    <select name="status" onchange="document.getElementById('filterForm').submit()" class="border border-slate-200 rounded-lg px-4 py-2 text-body-sm font-body-sm bg-slate-50 outline-none focus:border-primary-container">
+                        <option value="" {{ !request('status') ? 'selected' : '' }}>Status: Semua</option>
+                        <option value="Tersedia" {{ request('status') == 'Tersedia' ? 'selected' : '' }}>Tersedia</option>
+                        <option value="Kosong" {{ request('status') == 'Kosong' ? 'selected' : '' }}>Kosong</option>
+                    </select>
+                </form>
             </div>
         </div>
         

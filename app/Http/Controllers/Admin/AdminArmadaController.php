@@ -12,9 +12,23 @@ class AdminArmadaController extends Controller
     /**
      * Tampilkan daftar kendaraan.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $kendaraans = Kendaraan::latest()->get();
+        $query = Kendaraan::query();
+
+        if ($request->has('tipe') && in_array($request->tipe, ['Mobil', 'Motor'])) {
+            $query->where('tipe', $request->tipe);
+        }
+
+        if ($request->has('status')) {
+            if ($request->status == 'Tersedia') {
+                $query->where('stok', '>', 0);
+            } elseif ($request->status == 'Kosong') {
+                $query->where('stok', '<=', 0);
+            }
+        }
+
+        $kendaraans = $query->latest()->get();
         return view('admin.armada.index', compact('kendaraans'));
     }
 
