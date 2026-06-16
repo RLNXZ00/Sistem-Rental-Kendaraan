@@ -43,10 +43,13 @@ Route::middleware('auth')->group(function () {
 
 // Rute Admin
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'index'])->name('dashboard.index');
-    Route::get('/dashboard/pesanan-aktif', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'pesananAktif'])->name('dashboard.pesanan-aktif');
-    Route::get('/dashboard/umpan-balik', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'umpanBalik'])->name('dashboard.umpan-balik');
-    Route::get('/dashboard/detail-ulasan/{id}', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'detailUlasan'])->name('dashboard.detail-ulasan');
+    Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard.index');
+    
+    Route::get('/dashboard/pesanan-aktif', [\App\Http\Controllers\Admin\AdminPesananController::class, 'aktif'])->name('dashboard.pesanan-aktif');
+    Route::post('/dashboard/pesanan/{id}/kembalikan', [\App\Http\Controllers\Admin\AdminPesananController::class, 'kembalikan'])->name('pesanan.kembalikan');
+    
+    Route::get('/dashboard/umpan-balik', [\App\Http\Controllers\Admin\DashboardController::class, 'umpanBalik'])->name('dashboard.umpan-balik');
+    Route::get('/dashboard/detail-ulasan/{id}', [\App\Http\Controllers\Admin\DashboardController::class, 'detailUlasan'])->name('dashboard.detail-ulasan');
 
     // Tentang
     Route::get('/tentang', function () {
@@ -59,10 +62,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::delete('/keamanan/hapus-akun/{id}', [\App\Http\Controllers\Admin\AdminKeamananController::class, 'hapusAkunPermanen'])->name('keamanan.hapus-akun');
     Route::post('/keamanan/tolak-hapus/{id}', [\App\Http\Controllers\Admin\AdminKeamananController::class, 'tolakHapusAkun'])->name('keamanan.tolak-hapus');
 
-    // Slicing UI Admin Armada
-    Route::get('/armada', function () {
-        return view('admin.armada.index');
-    })->name('armada.index');
+    // Slicing UI Admin Armada -> Resource Controller
+    Route::resource('armada', \App\Http\Controllers\Admin\AdminArmadaController::class)->except(['create', 'show', 'edit']);
 });
 
 require __DIR__ . '/auth.php';

@@ -4,18 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\UmpanBalik;
-// use App\Models\Kendaraan; // for later
-// use App\Models\Pemesanan; // for later
 
-class AdminDashboardController extends Controller
+use App\Models\Kendaraan;
+use App\Models\UmpanBalik;
+
+class DashboardController extends Controller
 {
     public function index()
     {
-        // For now, only Umpan Balik is requested, but we return the view
+        $armadaTerbaru = Kendaraan::latest()->take(3)->get();
         $latestUmpanBalik = UmpanBalik::with(['user', 'kendaraan'])->latest()->take(3)->get();
         $totalUmpanBalik = UmpanBalik::count();
-        return view('admin.dashboard.index', compact('latestUmpanBalik', 'totalUmpanBalik'));
+        
+        return view('admin.dashboard.index', compact('armadaTerbaru', 'latestUmpanBalik', 'totalUmpanBalik'));
     }
 
     public function umpanBalik()
@@ -30,10 +31,5 @@ class AdminDashboardController extends Controller
         $selectedUlasan = UmpanBalik::with(['user', 'kendaraan'])->findOrFail($id);
         
         return view('admin.dashboard.detail-ulasan', compact('semuaUmpanBalik', 'selectedUlasan'));
-    }
-
-    public function pesananAktif()
-    {
-        return view('admin.dashboard.pesanan-aktif');
     }
 }
