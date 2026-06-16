@@ -119,7 +119,7 @@
                                         <span class="text-sm text-slate-600 font-medium">Rp {{ number_format($pesanan->total_biaya, 0, ',', '.') }}</span>
                                     @elseif($pesanan->status === 'Denda Terlambat')
                                         <span class="text-xs font-semibold text-red-600 bg-red-100 px-2 py-0.5 rounded">Denda Terlambat</span>
-                                        <span class="text-sm text-slate-600 font-medium">Rp {{ number_format($pesanan->total_biaya + $pesanan->denda, 0, ',', '.') }}</span>
+                                        <span class="text-sm text-red-600 font-medium">Denda: Rp {{ number_format($pesanan->denda, 0, ',', '.') }}</span>
                                     @else
                                         <span class="text-xs font-semibold text-slate-600 bg-slate-200 px-2 py-0.5 rounded">{{ $pesanan->status }}</span>
                                     @endif
@@ -133,8 +133,8 @@
                                             'kendaraan' => $pesanan->kendaraan->nama_kendaraan ?? 'Kendaraan',
                                             'gambar' => $pesanan->kendaraan->gambar_utama ? asset($pesanan->kendaraan->gambar_utama) : 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800',
                                             'tanggal' => \Carbon\Carbon::parse($pesanan->tanggal_mulai)->format('d M Y') . ' - ' . \Carbon\Carbon::parse($pesanan->tanggal_selesai)->format('d M Y'),
-                                            'durasi' => $pesanan->durasi_hari . ' Hari' . ($pesanan->denda > 0 ? ' (+ Denda)' : ''),
-                                            'total' => 'Rp ' . number_format($pesanan->total_biaya + $pesanan->denda, 0, ',', '.'),
+                                            'durasi' => $pesanan->durasi_hari . ' Hari',
+                                            'total' => $pesanan->status === 'Denda Terlambat' ? 'Denda: Rp ' . number_format($pesanan->denda, 0, ',', '.') : 'Rp ' . number_format($pesanan->total_biaya, 0, ',', '.'),
                                             'status' => $pesanan->status
                                         ]) }}; historyModal = true">
                                     Detail Riwayat
