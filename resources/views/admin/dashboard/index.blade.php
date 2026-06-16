@@ -106,7 +106,7 @@
             <div class="bg-surface rounded-xl p-stack-lg border border-slate-200 shadow-sm">
                 <h3 class="font-headline-md text-headline-md text-primary mb-4">Umpan Balik Terbaru</h3>
                 <div class="space-y-4">
-                    @forelse($latestUmpanBalik as $feedback)
+                    @forelse($umpanBalikTerbaru as $feedback)
                     <div class="flex items-start gap-3 pb-4 border-b border-slate-100">
                         @php
                             $initials = collect(explode(' ', $feedback->user->name))->map(fn($n) => substr($n, 0, 1))->take(2)->join('');

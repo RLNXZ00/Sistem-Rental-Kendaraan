@@ -5,21 +5,23 @@ use App\Http\Controllers\KendaraanController;
 use App\Http\Controllers\BerandaController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [BerandaController::class, 'index'])->name('beranda');
-Route::get('/tentang-kami', function () {
-    return view('tentang-kami');
-})->name('tentang-kami');
-Route::post('/umpan-balik', [BerandaController::class, 'storeFeedback'])->name('umpan-balik.store')->middleware('auth');
+Route::middleware('is_user')->group(function () {
+    Route::get('/', [BerandaController::class, 'index'])->name('beranda');
+    Route::get('/tentang-kami', function () {
+        return view('tentang-kami');
+    })->name('tentang-kami');
+    Route::post('/umpan-balik', [BerandaController::class, 'storeFeedback'])->name('umpan-balik.store')->middleware('auth');
 
-Route::get('/kendaraan', [KendaraanController::class, 'index'])->name('kendaraan.index');
-Route::get('/kendaraan/rating', [KendaraanController::class, 'rating'])->name('kendaraan.rating');
-Route::get('/kendaraan/{id}', [KendaraanController::class, 'show'])->name('kendaraan.show');
+    Route::get('/kendaraan', [KendaraanController::class, 'index'])->name('kendaraan.index');
+    Route::get('/kendaraan/rating', [KendaraanController::class, 'rating'])->name('kendaraan.rating');
+    Route::get('/kendaraan/{id}', [KendaraanController::class, 'show'])->name('kendaraan.show');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'is_user'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'is_user'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
