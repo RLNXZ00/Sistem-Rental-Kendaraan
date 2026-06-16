@@ -45,9 +45,8 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard.index');
     
-    Route::get('/dashboard/pesanan-aktif', function () {
-        return view('admin.dashboard.pesanan-aktif');
-    })->name('dashboard.pesanan-aktif');
+    Route::get('/dashboard/pesanan-aktif', [\App\Http\Controllers\Admin\AdminPesananController::class, 'aktif'])->name('dashboard.pesanan-aktif');
+    Route::post('/dashboard/pesanan/{id}/kembalikan', [\App\Http\Controllers\Admin\AdminPesananController::class, 'kembalikan'])->name('pesanan.kembalikan');
     
     Route::get('/dashboard/umpan-balik', function () {
         return view('admin.dashboard.umpan-balik');
@@ -65,10 +64,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Keamanan
     Route::get('/keamanan', [\App\Http\Controllers\Admin\AdminKeamananController::class, 'index'])->name('keamanan.index');
 
-    // Slicing UI Admin Armada
-    Route::get('/armada', function () {
-        return view('admin.armada.index');
-    })->name('armada.index');
+    // Slicing UI Admin Armada -> Resource Controller
+    Route::resource('armada', \App\Http\Controllers\Admin\AdminArmadaController::class)->except(['create', 'show', 'edit']);
 });
 
 require __DIR__ . '/auth.php';
