@@ -42,10 +42,15 @@ Route::middleware('auth')->group(function () {
 });
 
 // Rute Admin
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
         return "Ini adalah halaman Dashboard Admin (Akses Terlindungi)";
     })->name('dashboard');
+
+    // Slicing UI Admin Armada
+    Route::get('/armada', function () {
+        return view('admin.armada.index');
+    })->name('armada.index');
 });
 
 require __DIR__ . '/auth.php';
