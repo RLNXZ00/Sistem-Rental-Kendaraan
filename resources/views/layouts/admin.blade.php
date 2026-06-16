@@ -10,11 +10,10 @@
 
     <!-- Tailwind Config for Slicing -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet"/>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -119,6 +118,8 @@
         }
     </script>
     <style>
+        .vehicle-card { transition: all 0.3s ease; }
+        .vehicle-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
         .card-hover:hover {
             transform: translateY(-4px);
             box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -136,7 +137,7 @@
     </style>
     @stack('styles')
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen flex antialiased">
+<body class="bg-background text-on-background font-body-md min-h-screen flex antialiased relative">
     <!-- SideNavBar -->
     <nav class="hidden md:flex bg-[#1E3A8A] text-white font-label-md text-label-md docked left-0 h-full w-64 border-r border-white/10 flat no shadows fixed flex flex-col p-stack-md top-0 z-50">
         <div class="mb-stack-lg px-2">
@@ -146,13 +147,13 @@
         
         <ul class="space-y-1 flex-grow">
             <li>
-                <a class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.dashboard.*') ? 'bg-white/10 text-white font-bold' : 'text-slate-200 hover:bg-white/10 hover:text-white' }} rounded-lg transition-all" href="{{ route('admin.dashboard.index') ?? '#' }}">
+                <a class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.dashboard.*') || request()->is('admin/dashboard') ? 'bg-white/10 text-white font-bold' : 'text-slate-200 hover:bg-white/10 hover:text-white' }} rounded-lg transition-all" href="{{ route('admin.dashboard.index') }}">
                     <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
                     Dashboard
                 </a>
             </li>
             <li>
-                <a class="flex items-center gap-3 px-4 py-3 text-slate-200 hover:bg-white/10 hover:text-white rounded-lg transition-all" href="#">
+                <a class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.armada.*') || request()->is('admin/armada') ? 'bg-white/10 text-white font-bold' : 'text-slate-200 hover:bg-white/10 hover:text-white' }} rounded-lg transition-all" href="{{ url('/admin/armada') }}">
                     <span class="material-symbols-outlined" data-icon="directions_car">directions_car</span>
                     Armada
                 </a>
@@ -186,9 +187,9 @@
     </nav>
 
     <!-- Main Content Wrapper -->
-    <div class="flex-1 md:ml-64 flex flex-col min-h-screen">
+    <div class="flex-1 md:ml-64 flex flex-col min-h-screen relative w-full bg-background">
         <!-- Page Canvas -->
-        <main class="flex-1 p-margin-desktop bg-background">
+        <main class="flex-1 p-margin-desktop">
             {{ $slot ?? '' }}
             @yield('content')
         </main>
