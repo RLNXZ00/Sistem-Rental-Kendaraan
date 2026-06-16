@@ -16,7 +16,7 @@ class PemesananController extends Controller
     public function riwayat()
     {
         $user = Auth::user();
-        
+
         // Ambil semua pemesanan user
         $pemesanans = Pemesanan::with('kendaraan')->where('user_id', $user->id)->get();
 
@@ -51,12 +51,12 @@ class PemesananController extends Controller
                 if ($hariIni->greaterThan($tanggalSelesai)) {
                     // Hitung keterlambatan (hari)
                     $terlambatHari = $tanggalSelesai->diffInDays($hariIni);
-                    
+
                     if ($terlambatHari > 0) {
                         // Harga sewa per hari
                         $hargaSewa = $pesanan->kendaraan->harga_sewa;
                         // Denda: (Harga sewa harian + 10% harga sewa harian) * jumlah hari terlambat
-                        $dendaPerHari = $hargaSewa + ($hargaSewa * 0.10);
+                        $dendaPerHari = $hargaSewa * 0.10;
                         $totalDenda = $dendaPerHari * $terlambatHari;
 
                         // Update status dan denda
@@ -110,7 +110,7 @@ class PemesananController extends Controller
         ]);
 
         $user = Auth::user();
-        
+
         // Simpan NIK dan Alamat ke profil user jika sebelumnya kosong
         if (empty($user->nik) || empty($user->alamat)) {
             $user->nik = $request->nik ?? $user->nik;
@@ -119,11 +119,11 @@ class PemesananController extends Controller
         }
 
         $kendaraan = Kendaraan::findOrFail($request->kendaraan_id);
-        
+
         // Kalkulasi biaya otomatis: durasi * harga sewa
         $durasiHari = (int) $request->durasi_hari;
         $totalBiaya = $durasiHari * $kendaraan->harga_sewa;
-        
+
         // Kalkulasi tanggal selesai
         $tanggalMulai = Carbon::parse($request->tanggal_mulai);
         $tanggalSelesai = $tanggalMulai->copy()->addDays($durasiHari);
@@ -151,11 +151,11 @@ class PemesananController extends Controller
     public function pembayaran($id)
     {
         $pesanan = Pemesanan::with('kendaraan')->where('user_id', Auth::id())->findOrFail($id);
-        
+
         $sisaDetik = 0;
         if ($pesanan->status === 'Menunggu Pembayaran') {
             $batasWaktu = $pesanan->created_at->addHour();
-            
+
             if (Carbon::now()->greaterThan($batasWaktu)) {
                 $pesanan->status = 'Dibatalkan';
                 $pesanan->alasan_batal = 'Waktu pembayaran telah habis (Kadaluarsa).';
@@ -164,7 +164,8 @@ class PemesananController extends Controller
             }
 
             $sisaDetik = Carbon::now()->diffInSeconds($batasWaktu, false);
-            if ($sisaDetik < 0) $sisaDetik = 0;
+            if ($sisaDetik < 0)
+                $sisaDetik = 0;
         }
 
         return view('pemesanan.pembayaran', compact('pesanan', 'sisaDetik'));
@@ -182,8 +183,8 @@ class PemesananController extends Controller
             ->findOrFail($id);
 
         // Hitung ulang variabel denda untuk ditampilkan di view
-        $hargaSewa    = $pesanan->kendaraan->harga_sewa;
-        $dendaPerHari = $hargaSewa + ($hargaSewa * 0.10);
+        $hargaSewa = $pesanan->kendaraan->harga_sewa;
+        $dendaPerHari = $hargaSewa * 0.10;
         $terlambatHari = $pesanan->denda > 0
             ? (int) round($pesanan->denda / $dendaPerHari)
             : 0;
@@ -197,7 +198,7 @@ class PemesananController extends Controller
     public function prosesPembayaran(Request $request, $id)
     {
         $pesanan = Pemesanan::where('user_id', Auth::id())->findOrFail($id);
-        
+
         if ($pesanan->status === 'Menunggu Pembayaran') {
             if (Carbon::now()->greaterThan($pesanan->created_at->addHour())) {
                 $pesanan->status = 'Dibatalkan';
@@ -261,9 +262,9 @@ class PemesananController extends Controller
                 'alasan_batal_lainnya' => 'nullable|string|max:255',
             ]);
 
-            $alasan = $request->alasan_batal_radio === 'Lainnya' 
-                        ? $request->alasan_batal_lainnya 
-                        : $request->alasan_batal_radio;
+            $alasan = $request->alasan_batal_radio === 'Lainnya'
+                ? $request->alasan_batal_lainnya
+                : $request->alasan_batal_radio;
 
             $statusSebelumnya = $pesanan->status;
             $pesanan->status = 'Dibatalkan';
