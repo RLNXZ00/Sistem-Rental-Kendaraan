@@ -21,6 +21,16 @@ class PemesananController extends Controller
         $pemesanans = Pemesanan::with('kendaraan')->where('user_id', $user->id)->get();
 
         foreach ($pemesanans as $pesanan) {
+            // Cek kadaluarsa pembayaran (1 jam)
+            if ($pesanan->status === 'Menunggu Pembayaran') {
+                if (Carbon::now()->greaterThan($pesanan->created_at->addHour())) {
+                    $pesanan->status = 'Dibatalkan';
+                    $pesanan->alasan_batal = 'Waktu pembayaran telah habis (Kadaluarsa).';
+                    $pesanan->save();
+                    continue; // Skip the rest of the checks for this booking
+                }
+            }
+
             // Cek jika statusnya masih Akan Datang, dan hari ini >= tanggal_mulai
             if ($pesanan->status === 'Akan Datang') {
                 $tanggalMulai = Carbon::parse($pesanan->tanggal_mulai)->startOfDay();
@@ -63,7 +73,7 @@ class PemesananController extends Controller
         // Pisahkan data untuk tampilan (Active vs History)
         $pemesananAktif = Pemesanan::with('kendaraan')
             ->where('user_id', $user->id)
-            ->whereIn('status', ['Akan Datang', 'Berjalan'])
+            ->whereIn('status', ['Menunggu Pembayaran', 'Akan Datang', 'Berjalan'])
             ->orderBy('tanggal_mulai', 'asc')
             ->get();
 
@@ -126,7 +136,7 @@ class PemesananController extends Controller
             'tanggal_selesai' => $tanggalSelesai,
             'durasi_hari' => $durasiHari,
             'total_biaya' => $totalBiaya,
-            'status' => 'Akan Datang',
+            'status' => 'Menunggu Pembayaran',
             'denda' => 0
         ]);
 
@@ -141,7 +151,23 @@ class PemesananController extends Controller
     public function pembayaran($id)
     {
         $pesanan = Pemesanan::with('kendaraan')->where('user_id', Auth::id())->findOrFail($id);
-        return view('pemesanan.pembayaran', compact('pesanan'));
+        
+        $sisaDetik = 0;
+        if ($pesanan->status === 'Menunggu Pembayaran') {
+            $batasWaktu = $pesanan->created_at->addHour();
+            
+            if (Carbon::now()->greaterThan($batasWaktu)) {
+                $pesanan->status = 'Dibatalkan';
+                $pesanan->alasan_batal = 'Waktu pembayaran telah habis (Kadaluarsa).';
+                $pesanan->save();
+                return redirect()->route('pemesanan.riwayat')->with('error', 'Waktu pembayaran Anda telah habis.');
+            }
+
+            $sisaDetik = Carbon::now()->diffInSeconds($batasWaktu, false);
+            if ($sisaDetik < 0) $sisaDetik = 0;
+        }
+
+        return view('pemesanan.pembayaran', compact('pesanan', 'sisaDetik'));
     }
 
     /**
@@ -172,9 +198,22 @@ class PemesananController extends Controller
     {
         $pesanan = Pemesanan::where('user_id', Auth::id())->findOrFail($id);
         
+        if ($pesanan->status === 'Menunggu Pembayaran') {
+            if (Carbon::now()->greaterThan($pesanan->created_at->addHour())) {
+                $pesanan->status = 'Dibatalkan';
+                $pesanan->alasan_batal = 'Waktu pembayaran telah habis (Kadaluarsa).';
+                $pesanan->save();
+                return redirect()->route('pemesanan.riwayat')->with('error', 'Pembayaran gagal karena waktu telah habis.');
+            }
+        }
+
         // Simulasi pembayaran selalu berhasil untuk uji coba
         $pesanan->status = 'Akan Datang';
         $pesanan->save();
+
+        if ($pesanan->kendaraan->stok > 0) {
+            $pesanan->kendaraan->decrement('stok');
+        }
 
         $request->user()->notify(new \App\Notifications\BookingCreatedNotification($pesanan));
 
@@ -197,6 +236,8 @@ class PemesananController extends Controller
             $pesanan->status = 'Selesai';
             $pesanan->save();
 
+            $pesanan->kendaraan->increment('stok');
+
             return redirect()
                 ->route('pemesanan.riwayat')
                 ->with('success', 'Denda sebesar Rp ' . number_format($pesanan->denda, 0, ',', '.') . ' berhasil dibayarkan via ' . $request->metode_pembayaran . '. Pemesanan telah selesai.');
@@ -214,7 +255,7 @@ class PemesananController extends Controller
     {
         $pesanan = Pemesanan::where('user_id', Auth::id())->findOrFail($id);
 
-        if ($pesanan->status === 'Akan Datang') {
+        if (in_array($pesanan->status, ['Akan Datang', 'Menunggu Pembayaran'])) {
             $request->validate([
                 'alasan_batal_radio' => 'required|string',
                 'alasan_batal_lainnya' => 'nullable|string|max:255',
@@ -224,9 +265,14 @@ class PemesananController extends Controller
                         ? $request->alasan_batal_lainnya 
                         : $request->alasan_batal_radio;
 
+            $statusSebelumnya = $pesanan->status;
             $pesanan->status = 'Dibatalkan';
             $pesanan->alasan_batal = $alasan;
             $pesanan->save();
+
+            if ($statusSebelumnya === 'Akan Datang') {
+                $pesanan->kendaraan->increment('stok');
+            }
 
             return redirect()
                 ->route('pemesanan.riwayat')

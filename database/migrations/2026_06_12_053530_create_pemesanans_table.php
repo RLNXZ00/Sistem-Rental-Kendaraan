@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('tanggal_selesai');
             $table->integer('durasi_hari');
             $table->decimal('total_biaya', 12, 2);
-            $table->enum('status', ['Berjalan', 'Selesai', 'Akan Datang', 'Dibatalkan', 'Denda Terlambat'])->default('Akan Datang');
+            $table->enum('status', ['Menunggu Pembayaran', 'Berjalan', 'Selesai', 'Akan Datang', 'Dibatalkan', 'Denda Terlambat'])->default('Menunggu Pembayaran');
             $table->decimal('denda', 12, 2)->default(0);
             $table->timestamps();
         });

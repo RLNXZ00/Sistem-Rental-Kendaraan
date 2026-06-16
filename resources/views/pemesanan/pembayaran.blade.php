@@ -144,7 +144,7 @@
                         </div>
                     </div>
 
-                    <button onclick="document.getElementById('form-pembayaran').submit();" class="w-full bg-secondary-container hover:bg-secondary text-white font-bold py-4 rounded-xl shadow-lg transition-all duration-300 active:scale-[0.98] flex items-center justify-center gap-2">
+                    <button id="btn-konfirmasi" onclick="document.getElementById('form-pembayaran').submit();" class="w-full bg-secondary-container hover:bg-secondary text-white font-bold py-4 rounded-xl shadow-lg transition-all duration-300 active:scale-[0.98] flex items-center justify-center gap-2" {{ isset($sisaDetik) && $sisaDetik <= 0 ? 'disabled' : '' }}>
                         Konfirmasi Pembayaran
                         <span class="material-symbols-outlined">arrow_forward</span>
                     </button>
@@ -167,8 +167,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            let timeLeft = 59 * 60 + 59; // 59 minutes 59 seconds
+            let timeLeft = Math.floor({{ $sisaDetik ?? (59 * 60 + 59) }});
             const countdownElement = document.getElementById('countdown');
+            const submitBtn = document.getElementById('btn-konfirmasi');
 
             const timer = setInterval(() => {
                 const minutes = Math.floor(timeLeft / 60);
@@ -178,8 +179,18 @@
                 
                 if (timeLeft <= 0) {
                     clearInterval(timer);
-                    countdownElement.textContent = "EXPIRED";
-                    countdownElement.classList.add('text-error');
+                    countdownElement.textContent = "KADALUARSA";
+                    countdownElement.classList.add('text-error', 'text-red-500');
+                    
+                    if(submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                        submitBtn.classList.remove('hover:bg-secondary', 'active:scale-[0.98]');
+                    }
+                    
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
                 }
                 timeLeft--;
             }, 1000);
