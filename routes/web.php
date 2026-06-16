@@ -43,9 +43,7 @@ Route::middleware('auth')->group(function () {
 
 // Rute Admin
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard.index');
-    })->name('dashboard.index');
+    Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard.index');
     
     Route::get('/dashboard/pesanan-aktif', function () {
         return view('admin.dashboard.pesanan-aktif');
