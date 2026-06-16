@@ -41,11 +41,23 @@ Route::middleware('auth')->group(function () {
     Route::post('/pemesanan/{id}/batal', [App\Http\Controllers\PemesananController::class, 'batalkan'])->name('pemesanan.batalkan');
 });
 
-// Rute Admin
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+// Rute Admin (Middleware 'admin' dinonaktifkan sementara untuk preview UI)
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
-        return "Ini adalah halaman Dashboard Admin (Akses Terlindungi)";
-    })->name('dashboard');
+        return view('admin.dashboard.index');
+    })->name('dashboard.index');
+    
+    Route::get('/dashboard/pesanan-aktif', function () {
+        return view('admin.dashboard.pesanan-aktif');
+    })->name('dashboard.pesanan-aktif');
+    
+    Route::get('/dashboard/umpan-balik', function () {
+        return view('admin.dashboard.umpan-balik');
+    })->name('dashboard.umpan-balik');
+    
+    Route::get('/dashboard/detail-ulasan', function () {
+        return view('admin.dashboard.detail-ulasan');
+    })->name('dashboard.detail-ulasan');
 });
 
 require __DIR__ . '/auth.php';
