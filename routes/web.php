@@ -41,12 +41,25 @@ Route::middleware('auth')->group(function () {
     Route::post('/pemesanan/{id}/batal', [App\Http\Controllers\PemesananController::class, 'batalkan'])->name('pemesanan.batalkan');
 });
 
-// Rute Admin (Sementara tanpa middleware ketat untuk tes slicing UI)
-Route::prefix('admin')->name('admin.')->group(function () {
+// Rute Admin (Middleware 'admin' dinonaktifkan sementara untuk preview UI)
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
-        return "Ini adalah halaman Dashboard Admin (Akses Terlindungi)";
-    })->name('dashboard');
+        return view('admin.dashboard.index');
+    })->name('dashboard.index');
+    
+    Route::get('/dashboard/pesanan-aktif', function () {
+        return view('admin.dashboard.pesanan-aktif');
+    })->name('dashboard.pesanan-aktif');
+    
+    Route::get('/dashboard/umpan-balik', function () {
+        return view('admin.dashboard.umpan-balik');
+    })->name('dashboard.umpan-balik');
+    
+    Route::get('/dashboard/detail-ulasan', function () {
+        return view('admin.dashboard.detail-ulasan');
+    })->name('dashboard.detail-ulasan');
 
+    // Keamanan
     Route::get('/keamanan', [\App\Http\Controllers\Admin\AdminKeamananController::class, 'index'])->name('keamanan.index');
 });
 
