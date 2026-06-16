@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="py-12 bg-slate-50 min-h-screen" x-data="{ activeModal: false, historyModal: false, cancelModal: false, selectedPemesanan: {} }">
+    <div class="py-12 bg-slate-50 min-h-screen" x-data="{ activeModal: false, historyModal: false, cancelModal: false, allActiveModal: false, selectedPemesanan: {} }">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-12">
             
             <header>
@@ -19,8 +19,9 @@
                         Tidak ada pemesanan aktif saat ini.
                     </div>
                 @else
+                    @php $activeCount = $pemesananAktif->count(); @endphp
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        @foreach ($pemesananAktif as $pesanan)
+                        @foreach ($pemesananAktif->take(2) as $pesanan)
                         <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer"
                              @click="selectedPemesanan = {{ json_encode([
                                  'id' => $pesanan->id,
@@ -61,6 +62,15 @@
                         </div>
                         @endforeach
                     </div>
+                    
+                    @if($activeCount > 2)
+                        <div class="mt-4 flex justify-center">
+                            <button @click="allActiveModal = true" class="px-6 py-2 bg-white border border-blue-600 text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors shadow-sm flex items-center gap-2">
+                                Lihat Semua ({{ $activeCount }})
+                                <span class="material-symbols-outlined text-[18px]">open_in_new</span>
+                            </button>
+                        </div>
+                    @endif
                 @endif
             </section>
 
@@ -186,7 +196,7 @@
                 </div>
                 <!-- Actions -->
                 <div class="p-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-2">
-                    <a :href="'/pemesanan/pembayaran/' + selectedPemesanan.id" x-show="selectedPemesanan.status === 'Menunggu Pembayaran'" class="px-6 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-colors duration-200 shadow-sm flex items-center justify-center">
+                    <a :href="'/pemesanan/' + selectedPemesanan.id + '/pembayaran'" x-show="selectedPemesanan.status === 'Menunggu Pembayaran'" class="px-6 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-colors duration-200 shadow-sm flex items-center justify-center">
                         Bayar Sekarang
                     </a>
                     <button x-show="selectedPemesanan.status === 'Akan Datang' || selectedPemesanan.status === 'Menunggu Pembayaran'" @click="cancelModal = true" class="px-6 py-2 rounded-lg border border-red-600 text-red-600 text-sm font-semibold hover:bg-red-600 hover:text-white transition-colors duration-200">
@@ -311,6 +321,61 @@
                             <button type="submit" class="flex-1 px-4 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors">Ya, Batalkan</button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL LIHAT SEMUA PEMESANAN AKTIF -->
+        <div x-show="allActiveModal" style="display: none;" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-opacity duration-300">
+            <div @click.away="allActiveModal = false" x-show="allActiveModal" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" class="bg-white w-full max-w-4xl rounded-2xl shadow-2xl flex flex-col max-h-[90vh]">
+                <!-- Header -->
+                <div class="flex items-center justify-between p-4 border-b border-slate-200 bg-white">
+                    <h2 class="text-xl font-bold text-blue-900 ml-2" style="font-family: 'Montserrat', sans-serif;">Semua Pemesanan Aktif</h2>
+                    <button @click="allActiveModal = false" class="p-2 rounded-full hover:bg-slate-100 text-slate-500 transition-colors">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+                <!-- Content -->
+                <div class="p-6 overflow-y-auto bg-slate-50">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        @foreach ($pemesananAktif as $pesanan)
+                        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer"
+                             @click="selectedPemesanan = {{ json_encode([
+                                 'id' => $pesanan->id,
+                                 'kendaraan' => $pesanan->kendaraan->nama_kendaraan ?? 'Kendaraan',
+                                 'gambar' => $pesanan->kendaraan->gambar_utama ? asset($pesanan->kendaraan->gambar_utama) : 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800',
+                                 'tanggal' => \Carbon\Carbon::parse($pesanan->tanggal_mulai)->format('d M Y') . ' - ' . \Carbon\Carbon::parse($pesanan->tanggal_selesai)->format('d M Y'),
+                                 'durasi' => $pesanan->durasi_hari . ' Hari',
+                                 'total' => 'Rp ' . number_format($pesanan->total_biaya, 0, ',', '.'),
+                                 'status' => $pesanan->status
+                             ]) }}; allActiveModal = false; activeModal = true;">
+                            <div class="aspect-video w-full bg-slate-100 relative">
+                                <img src="{{ $pesanan->kendaraan->gambar_utama ? asset($pesanan->kendaraan->gambar_utama) : 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800' }}" class="w-full h-full object-cover" alt="{{ $pesanan->kendaraan->nama_kendaraan ?? 'Mobil' }}">
+                                
+                                @if($pesanan->status === 'Berjalan')
+                                <div class="absolute top-3 left-3 bg-emerald-500 text-white text-[10px] font-semibold px-2 py-1 rounded-full shadow-md flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[12px]">local_taxi</span> Berjalan
+                                </div>
+                                @elseif($pesanan->status === 'Menunggu Pembayaran')
+                                <div class="absolute top-3 left-3 bg-orange-500 text-white text-[10px] font-semibold px-2 py-1 rounded-full shadow-md flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[12px]">payments</span> Menunggu Pembayaran
+                                </div>
+                                @else
+                                <div class="absolute top-3 left-3 bg-blue-600 text-white text-[10px] font-semibold px-2 py-1 rounded-full shadow-md flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[12px]">event_upcoming</span> Akan Datang
+                                </div>
+                                @endif
+                            </div>
+                            <div class="p-4 flex flex-col gap-2">
+                                <h3 class="text-lg font-bold text-slate-900" style="font-family: 'Montserrat', sans-serif;">{{ $pesanan->kendaraan->nama_kendaraan ?? 'Kendaraan' }}</h3>
+                                <p class="text-xs text-slate-500 flex items-center gap-1" style="font-family: 'Inter', sans-serif;">
+                                    <span class="material-symbols-outlined text-[14px]">calendar_today</span>
+                                    {{ \Carbon\Carbon::parse($pesanan->tanggal_mulai)->format('d M y') }} - {{ \Carbon\Carbon::parse($pesanan->tanggal_selesai)->format('d M y') }}
+                                </p>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>

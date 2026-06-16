@@ -21,6 +21,16 @@ class PemesananController extends Controller
         $pemesanans = Pemesanan::with('kendaraan')->where('user_id', $user->id)->get();
 
         foreach ($pemesanans as $pesanan) {
+            // Cek kadaluarsa pembayaran (1 jam)
+            if ($pesanan->status === 'Menunggu Pembayaran') {
+                if (Carbon::now()->greaterThan($pesanan->created_at->addHour())) {
+                    $pesanan->status = 'Dibatalkan';
+                    $pesanan->alasan_batal = 'Waktu pembayaran telah habis (Kadaluarsa).';
+                    $pesanan->save();
+                    continue; // Skip the rest of the checks for this booking
+                }
+            }
+
             // Cek jika statusnya masih Akan Datang, dan hari ini >= tanggal_mulai
             if ($pesanan->status === 'Akan Datang') {
                 $tanggalMulai = Carbon::parse($pesanan->tanggal_mulai)->startOfDay();
@@ -141,7 +151,23 @@ class PemesananController extends Controller
     public function pembayaran($id)
     {
         $pesanan = Pemesanan::with('kendaraan')->where('user_id', Auth::id())->findOrFail($id);
-        return view('pemesanan.pembayaran', compact('pesanan'));
+        
+        $sisaDetik = 0;
+        if ($pesanan->status === 'Menunggu Pembayaran') {
+            $batasWaktu = $pesanan->created_at->addHour();
+            
+            if (Carbon::now()->greaterThan($batasWaktu)) {
+                $pesanan->status = 'Dibatalkan';
+                $pesanan->alasan_batal = 'Waktu pembayaran telah habis (Kadaluarsa).';
+                $pesanan->save();
+                return redirect()->route('pemesanan.riwayat')->with('error', 'Waktu pembayaran Anda telah habis.');
+            }
+
+            $sisaDetik = Carbon::now()->diffInSeconds($batasWaktu, false);
+            if ($sisaDetik < 0) $sisaDetik = 0;
+        }
+
+        return view('pemesanan.pembayaran', compact('pesanan', 'sisaDetik'));
     }
 
     /**
@@ -172,6 +198,15 @@ class PemesananController extends Controller
     {
         $pesanan = Pemesanan::where('user_id', Auth::id())->findOrFail($id);
         
+        if ($pesanan->status === 'Menunggu Pembayaran') {
+            if (Carbon::now()->greaterThan($pesanan->created_at->addHour())) {
+                $pesanan->status = 'Dibatalkan';
+                $pesanan->alasan_batal = 'Waktu pembayaran telah habis (Kadaluarsa).';
+                $pesanan->save();
+                return redirect()->route('pemesanan.riwayat')->with('error', 'Pembayaran gagal karena waktu telah habis.');
+            }
+        }
+
         // Simulasi pembayaran selalu berhasil untuk uji coba
         $pesanan->status = 'Akan Datang';
         $pesanan->save();
