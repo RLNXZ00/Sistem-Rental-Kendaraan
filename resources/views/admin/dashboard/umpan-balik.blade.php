@@ -38,61 +38,44 @@
     <!-- Feedback List -->
     <div class="bg-surface rounded-xl border border-slate-200 shadow-sm overflow-hidden">
         <ul class="divide-y divide-slate-200">
+            @forelse($semuaUmpanBalik as $feedback)
             <li class="p-stack-md hover:bg-slate-50 transition-colors">
                 <div class="flex items-start gap-stack-md">
-                    <img alt="User avatar" class="w-12 h-12 rounded-full object-cover flex-shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJhjInkJ2FH8UhJiDm2xgJW_ZHomBRRPdPoeCa_koZ23wNFq2Ean6Wujnvd4kYCEOU1zPvG09CUDliuWSVRRkcAK4u9O-pGgQi05kCfy_Cadm-c-EgBJ1jqap2bbGvzfk5mNBqGNI6ti4gBZDITe14GYLB3PsFmUb81utsW6fQihPRcPu8N2zrQnANbPcM2_fE05ncLH84z4U9aKyjmq3qf6-QC87ape6nq5nS0ZcpOnZ7cwF2GT2lpt8VQv54s0d0OpymSzMJp-M"/>
+                    @php
+                        $initials = collect(explode(' ', $feedback->user->name))->map(fn($n) => substr($n, 0, 1))->take(2)->join('');
+                    @endphp
+                    <div class="w-12 h-12 rounded-full bg-slate-100 flex-shrink-0 flex items-center justify-center text-primary font-bold text-lg">{{ strtoupper($initials) }}</div>
                     <div class="flex-grow">
                         <div class="flex justify-between items-start mb-1">
                             <div>
-                                <h3 class="font-label-md text-label-md text-on-background">Siti Rahmawati</h3>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant">2 Hari yang lalu</p>
+                                <h3 class="font-label-md text-label-md text-on-background">{{ $feedback->user->name }}</h3>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant">{{ $feedback->created_at->diffForHumans() }}</p>
                             </div>
                             <div class="flex text-secondary-container">
-                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                                @for($i = 1; $i <= 5; $i++)
+                                    @if($i <= $feedback->rating)
+                                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                                    @else
+                                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">star</span>
+                                    @endif
+                                @endfor
                             </div>
                         </div>
                         <p class="font-body-md text-body-md text-on-surface mt-stack-sm">
-                            "Sangat puas dengan layanan AutoRide. Mobil Innova Reborn yang saya sewa dalam kondisi prima, bersih, dan wangi. Sopirnya juga sangat ramah dan hafal jalanan kota Bandung."
+                            "{{ $feedback->komentar }}"
                         </p>
                         <div class="mt-stack-sm flex gap-stack-sm">
-                            <span class="px-2 py-1 bg-surface-container-high text-primary font-label-sm text-label-sm rounded-full">Sewa Mobil: Innova Reborn</span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="p-stack-md hover:bg-slate-50 transition-colors">
-                <div class="flex items-start gap-stack-md">
-                    <img alt="User avatar" class="w-12 h-12 rounded-full object-cover flex-shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBW0zE7BCWvM6dcBLL1ybIDWsasf6MOlhZG3jpYoaOCyZmKJNuoabKJb36ktVyJoC88CoWmi2As_E916WNd3UPhUQ0TGGxtdRc1W_42GGMptm0mwngqQy2mmw4kDjozoLYRV4TQfStc-8ylokVdvFko5gVrhhYobxc0b-ZLV-P4amS69dfkaWj2_lcJ73EuNqG6EgKmh3Jz1jQ29zUs9tyQXOr0EHXi4DuC-yZkrT3_589fWLMshp-QGxGJT0J6BHTNhi-mEw6yDLI"/>
-                    <div class="flex-grow">
-                        <div class="flex justify-between items-start mb-1">
-                            <div>
-                                <h3 class="font-label-md text-label-md text-on-background">Budi Santoso</h3>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant">5 Hari yang lalu</p>
-                            </div>
-                            <div class="flex text-secondary-container">
-                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                                <span class="material-symbols-outlined text-outline-variant">star</span>
-                            </div>
-                        </div>
-                        <p class="font-body-md text-body-md text-on-surface mt-stack-sm">
-                            "Secara keseluruhan pengalaman sewa motor memuaskan. Motor NMAX nya enak dipakai untuk keliling kota. Hanya saja saat serah terima agak sedikit telat."
-                        </p>
-                        <div class="mt-stack-sm flex gap-stack-sm">
-                            <span class="px-2 py-1 bg-secondary-fixed text-secondary font-label-sm text-label-sm rounded-full">Sewa Motor: Yamaha NMAX</span>
+                            <span class="px-2 py-1 {{ $feedback->kendaraan->kategori == 'Mobil' ? 'bg-surface-container-high text-primary' : 'bg-secondary-fixed text-secondary' }} font-label-sm text-label-sm rounded-full">Sewa {{ $feedback->kendaraan->kategori }}: {{ $feedback->kendaraan->nama }}</span>
                         </div>
                         <div class="mt-4 pt-4 border-t border-slate-100 flex justify-end">
-                            <a href="{{ route('admin.dashboard.detail-ulasan') }}" class="text-primary hover:text-primary-container font-label-md text-sm transition-colors">Lihat Detail Ulasan</a>
+                            <a href="{{ route('admin.dashboard.detail-ulasan', $feedback->id) }}" class="text-primary hover:text-primary-container font-label-md text-sm transition-colors">Lihat Detail Ulasan</a>
                         </div>
                     </div>
                 </div>
             </li>
+            @empty
+            <li class="p-stack-md text-center text-outline">Belum ada umpan balik yang diberikan.</li>
+            @endforelse
         </ul>
     </div>
 </div>
