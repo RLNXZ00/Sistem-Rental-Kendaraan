@@ -68,63 +68,35 @@
         <section>
             <div class="flex justify-between items-center mb-stack-md">
                 <h3 class="font-headline-md text-headline-md text-primary">Armada Terbaru</h3>
-                <a class="text-secondary font-label-md text-label-md hover:underline flex items-center gap-1" href="#">View All <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+                <a class="text-secondary font-label-md text-label-md hover:underline flex items-center gap-1" href="{{ url('/admin/armada') }}">View All <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-                <!-- Vehicle 1 -->
+                @forelse($armadaTerbaru as $kendaraan)
+                <!-- Vehicle Card -->
                 <div class="bg-surface rounded-xl border border-slate-200 overflow-hidden shadow-sm card-hover transition-all duration-300 flex flex-col">
                     <div class="h-48 bg-slate-100 relative group overflow-hidden">
-                        <img alt="Toyota Avanza Veloz 2024" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvrVLuFe7JOMQuv1ot3eJkjrbacgtpQ9b3ffQZkVfgcCq3ObmVibLw3bYlaJJg625UmwAASIdtbmdCYQ1Kmzb20cKgJO3CFuI_hcCI02M698W97OfmHutNY4aV8Jt8kR3ZchGlojmI5ylI2kYlsFvFP77kFJob7tEkfWpLk0VotRvXK87XD9eTwImq1BsrNiogonC2zAiD4QtlCPlrlaXi-rnzw9VBv44Vonreal4lmTRJ5LjA3TcQ01jIFTWRgUhTo-cMVWO63OI"/>
-                        <div class="absolute top-3 left-3 bg-surface-container-high text-primary-container px-3 py-1 rounded-full font-label-sm text-label-sm font-bold shadow-sm backdrop-blur-sm bg-white/80">Mobil</div>
+                        <img alt="{{ $kendaraan->nama_kendaraan }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="{{ asset($kendaraan->gambar_utama) }}"/>
+                        <div class="absolute top-3 left-3 bg-surface-container-high text-primary-container px-3 py-1 rounded-full font-label-sm text-label-sm font-bold shadow-sm backdrop-blur-sm bg-white/80">{{ $kendaraan->tipe }}</div>
                     </div>
                     <div class="p-stack-md flex-grow flex flex-col">
-                        <h4 class="font-headline-sm text-headline-sm text-on-background mb-1">Toyota Avanza Veloz 2024</h4>
-                        <p class="text-body-sm font-body-sm text-on-surface-variant mb-4">7 Seats • Automatic • Petrol</p>
+                        <h4 class="font-headline-sm text-headline-sm text-on-background mb-1">{{ $kendaraan->nama_kendaraan }}</h4>
+                        <p class="text-body-sm font-body-sm text-on-surface-variant mb-4">
+                            {{ $kendaraan->spesifikasi['seats'] ?? '-' }} Seats • {{ $kendaraan->spesifikasi['transmisi'] ?? '-' }} • {{ $kendaraan->spesifikasi['bahan_bakar'] ?? '-' }}
+                        </p>
                         <div class="mt-auto pt-4 border-t border-slate-100 flex justify-between items-center">
                             <div>
-                                <span class="font-headline-sm text-headline-sm text-primary">Rp 450k</span>
+                                <span class="font-headline-sm text-headline-sm text-primary">Rp {{ number_format($kendaraan->harga_sewa, 0, ',', '.') }}</span>
                                 <span class="text-label-sm font-label-sm text-outline">/day</span>
                             </div>
-                            <button class="text-primary font-label-md text-label-md border border-primary px-4 py-2 rounded-lg hover:bg-primary-container/5 transition-colors">Details</button>
+                            <a href="{{ url('/admin/armada') }}" class="text-primary font-label-md text-label-md border border-primary px-4 py-2 rounded-lg hover:bg-primary-container/5 transition-colors">Details</a>
                         </div>
                     </div>
                 </div>
-                <!-- Vehicle 2 -->
-                <div class="bg-surface rounded-xl border border-slate-200 overflow-hidden shadow-sm card-hover transition-all duration-300 flex flex-col">
-                    <div class="h-48 bg-slate-100 relative group overflow-hidden">
-                        <img alt="Honda HR-V" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCM4ZlBgy56rgvjSE-UbXRbPxccBTetjdZf5lwiu-8vlc_UWqggjDAt4W_wBCiz-wrrd_X5FxxAim0YGsNZytWN-bRFA26bN05hIYLM9Vb-_CSPHSjMFEBckIv7P7LG4nBCgsqLiDMvmhOAOxBn3GNIPxkmV1KGL02XWcjuyNyePmQ7iw2mIJuRtMGFx1ajkyuoNGJU_EFMj8ueyL2P9u7QxTQz7JHOQs76LL0wpR0a8jX4xRqAdeaaGZCBB2t-hJ2vhG-B2X5RFYk"/>
-                        <div class="absolute top-3 left-3 bg-surface-container-high text-primary-container px-3 py-1 rounded-full font-label-sm text-label-sm font-bold shadow-sm backdrop-blur-sm bg-white/80">Mobil</div>
-                    </div>
-                    <div class="p-stack-md flex-grow flex flex-col">
-                        <h4 class="font-headline-sm text-headline-sm text-on-background mb-1">Honda HR-V</h4>
-                        <p class="text-body-sm font-body-sm text-on-surface-variant mb-4">5 Seats • Automatic • Petrol</p>
-                        <div class="mt-auto pt-4 border-t border-slate-100 flex justify-between items-center">
-                            <div>
-                                <span class="font-headline-sm text-headline-sm text-primary">Rp 600k</span>
-                                <span class="text-label-sm font-label-sm text-outline">/day</span>
-                            </div>
-                            <button class="text-primary font-label-md text-label-md border border-primary px-4 py-2 rounded-lg hover:bg-primary-container/5 transition-colors">Details</button>
-                        </div>
-                    </div>
+                @empty
+                <div class="col-span-3 text-center py-8 text-on-surface-variant">
+                    Belum ada armada kendaraan.
                 </div>
-                <!-- Vehicle 3 -->
-                <div class="bg-surface rounded-xl border border-slate-200 overflow-hidden shadow-sm card-hover transition-all duration-300 flex flex-col">
-                    <div class="h-48 bg-slate-100 relative group overflow-hidden">
-                        <img alt="Mitsubishi Xpander" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWYpnyTHAFFscMiS45dZiwO5PcWZ81WUlDnNBcnw5QwYA9LTSLvCN4cPYSkNgjs1SdK8xgo_2d_NjJzk5A7pL_7lJ7fEsrMQ4sg94HVy-pMMmHRhSUtNIx6ULxh4FwBum2COPGahCnhobcKNRjOo3GMIjmGZ6u3Q3jGSR4vIUiJTHlEmHvOJLK_G4pna0IjF-eDQrnytOfAgosKPXcJKL2JsyV6zuK_6R_ODiMQlH34thGDZ3XnhmyS30Nq2IW8oA4yOf5cUNlmF0"/>
-                        <div class="absolute top-3 left-3 bg-surface-container-high text-primary-container px-3 py-1 rounded-full font-label-sm text-label-sm font-bold shadow-sm backdrop-blur-sm bg-white/80">Mobil</div>
-                    </div>
-                    <div class="p-stack-md flex-grow flex flex-col">
-                        <h4 class="font-headline-sm text-headline-sm text-on-background mb-1">Mitsubishi Xpander</h4>
-                        <p class="text-body-sm font-body-sm text-on-surface-variant mb-4">7 Seats • Manual • Petrol</p>
-                        <div class="mt-auto pt-4 border-t border-slate-100 flex justify-between items-center">
-                            <div>
-                                <span class="font-headline-sm text-headline-sm text-primary">Rp 480k</span>
-                                <span class="text-label-sm font-label-sm text-outline">/day</span>
-                            </div>
-                            <button class="text-primary font-label-md text-label-md border border-primary px-4 py-2 rounded-lg hover:bg-primary-container/5 transition-colors">Details</button>
-                        </div>
-                    </div>
-                </div>
+                @endforelse
             </div>
         </section>
 
