@@ -69,7 +69,8 @@ export default {
                 "DEFAULT": "0.25rem",
                 "lg": "0.5rem",
                 "xl": "0.75rem",
-                "full": "9999px"
+                "full": "9999px",
+                "card": "20px"
             },
             spacing: {
                 "stack-sm": "0.5rem",

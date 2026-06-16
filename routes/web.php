@@ -46,6 +46,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/dashboard', function () {
         return "Ini adalah halaman Dashboard Admin (Akses Terlindungi)";
     })->name('dashboard');
+    Route::get('/tentang', function () {
+        return view('admin.tentang');
+    })->name('tentang');
 });
 
 require __DIR__ . '/auth.php';
