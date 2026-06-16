@@ -43,21 +43,10 @@ Route::middleware('auth')->group(function () {
 
 // Rute Admin
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard.index');
-    })->name('dashboard.index');
-    
-    Route::get('/dashboard/pesanan-aktif', function () {
-        return view('admin.dashboard.pesanan-aktif');
-    })->name('dashboard.pesanan-aktif');
-    
-    Route::get('/dashboard/umpan-balik', function () {
-        return view('admin.dashboard.umpan-balik');
-    })->name('dashboard.umpan-balik');
-    
-    Route::get('/dashboard/detail-ulasan', function () {
-        return view('admin.dashboard.detail-ulasan');
-    })->name('dashboard.detail-ulasan');
+    Route::get('/dashboard', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/dashboard/pesanan-aktif', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'pesananAktif'])->name('dashboard.pesanan-aktif');
+    Route::get('/dashboard/umpan-balik', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'umpanBalik'])->name('dashboard.umpan-balik');
+    Route::get('/dashboard/detail-ulasan/{id}', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'detailUlasan'])->name('dashboard.detail-ulasan');
 
     // Tentang
     Route::get('/tentang', function () {

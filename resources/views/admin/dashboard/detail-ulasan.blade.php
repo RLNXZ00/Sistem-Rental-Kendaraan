@@ -44,60 +44,42 @@
     <!-- Feedback List (Background) -->
     <div class="bg-surface rounded-xl border border-slate-200 shadow-sm overflow-hidden">
         <ul class="divide-y divide-slate-200">
+            @forelse($semuaUmpanBalik as $feedback)
             <li class="p-stack-md hover:bg-slate-50 transition-colors">
                 <div class="flex items-start gap-stack-md">
-                    <img alt="User avatar" class="w-12 h-12 rounded-full object-cover flex-shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJhjInkJ2FH8UhJiDm2xgJW_ZHomBRRPdPoeCa_koZ23wNFq2Ean6Wujnvd4kYCEOU1zPvG09CUDliuWSVRRkcAK4u9O-pGgQi05kCfy_Cadm-c-EgBJ1jqap2bbGvzfk5mNBqGNI6ti4gBZDITe14GYLB3PsFmUb81utsW6fQihPRcPu8N2zrQnANbPcM2_fE05ncLH84z4U9aKyjmq3qf6-QC87ape6nq5nS0ZcpOnZ7cwF2GT2lpt8VQv54s0d0OpymSzMJp-M"/>
+                    @php
+                        $initials = collect(explode(' ', $feedback->user->name))->map(fn($n) => substr($n, 0, 1))->take(2)->join('');
+                    @endphp
+                    <div class="w-12 h-12 rounded-full bg-slate-100 flex-shrink-0 flex items-center justify-center text-primary font-bold text-lg">{{ strtoupper($initials) }}</div>
                     <div class="flex-grow">
                         <div class="flex justify-between items-start mb-1">
                             <div>
-                                <h3 class="font-label-md text-label-md text-on-background">Siti Rahmawati</h3>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant">2 Hari yang lalu</p>
+                                <h3 class="font-label-md text-label-md text-on-background">{{ $feedback->user->name }}</h3>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant">{{ $feedback->created_at->diffForHumans() }}</p>
                             </div>
                             <div class="flex text-secondary-container">
-                                <span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
-                                <span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
-                                <span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
-                                <span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
-                                <span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+                                @for($i = 1; $i <= 5; $i++)
+                                    @if($i <= $feedback->rating)
+                                        <span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+                                    @else
+                                        <span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 0;">star</span>
+                                    @endif
+                                @endfor
                             </div>
                         </div>
                         <p class="font-body-md text-body-md text-on-surface mt-stack-sm">
-                            "Sangat puas dengan layanan AutoRide. Mobil Innova Reborn yang saya sewa dalam kondisi prima, bersih, dan wangi. Sopirnya juga sangat ramah dan hafal jalanan kota Bandung. Proses booking lewat aplikasi sangat mudah dan cepat. Pasti akan pakai AutoRide lagi untuk perjalanan dinas berikutnya."
+                            "{{ $feedback->komentar }}"
                         </p>
                         <div class="mt-stack-sm flex gap-stack-sm">
-                            <span class="px-2 py-1 bg-surface-container-high text-primary font-label-sm text-label-sm rounded-full">Sewa Mobil</span>
-                            <span class="px-2 py-1 bg-slate-100 text-on-surface-variant font-label-sm text-label-sm rounded-full">Innova Reborn</span>
+                            <span class="px-2 py-1 {{ $feedback->kendaraan->kategori == 'Mobil' ? 'bg-surface-container-high text-primary' : 'bg-secondary-fixed text-secondary' }} font-label-sm text-label-sm rounded-full">Sewa {{ $feedback->kendaraan->kategori }}</span>
+                            <span class="px-2 py-1 bg-slate-100 text-on-surface-variant font-label-sm text-label-sm rounded-full">{{ $feedback->kendaraan->nama }}</span>
                         </div>
                     </div>
                 </div>
             </li>
-            <li class="p-stack-md hover:bg-slate-50 transition-colors">
-                <div class="flex items-start gap-stack-md">
-                    <img alt="User avatar" class="w-12 h-12 rounded-full object-cover flex-shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBW0zE7BCWvM6dcBLL1ybIDWsasf6MOlhZG3jpYoaOCyZmKJNuoabKJb36ktVyJoC88CoWmi2As_E916WNd3UPhUQ0TGGxtdRc1W_42GGMptm0mwngqQy2mmw4kDjozoLYRV4TQfStc-8ylokVdvFko5gVrhhYobxc0b-ZLV-P4amS69dfkaWj2_lcJ73EuNqG6EgKmh3Jz1jQ29zUs9tyQXOr0EHXi4DuC-yZkrT3_589fWLMshp-QGxGJT0J6BHTNhi-mEw6yDLI"/>
-                    <div class="flex-grow">
-                        <div class="flex justify-between items-start mb-1">
-                            <div>
-                                <h3 class="font-label-md text-label-md text-on-background">Budi Santoso</h3>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant">5 Hari yang lalu</p>
-                            </div>
-                            <div class="flex text-secondary-container">
-                                <span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
-                                <span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
-                                <span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
-                                <span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
-                                <span class="material-symbols-outlined text-outline-variant">star</span>
-                            </div>
-                        </div>
-                        <p class="font-body-md text-body-md text-on-surface mt-stack-sm">
-                            "Secara keseluruhan pengalaman sewa motor memuaskan. Motor NMAX nya enak dipakai untuk keliling kota. Hanya saja saat serah terima agak sedikit telat sekitar 15 menit dari jadwal. Tapi CS nya responsif saat dihubungi. Terima kasih."
-                        </p>
-                        <div class="mt-stack-sm flex gap-stack-sm">
-                            <span class="px-2 py-1 bg-secondary-fixed text-secondary font-label-sm text-label-sm rounded-full">Sewa Motor</span>
-                            <span class="px-2 py-1 bg-slate-100 text-on-surface-variant font-label-sm text-label-sm rounded-full">Yamaha NMAX</span>
-                        </div>
-                    </div>
-                </div>
-            </li>
+            @empty
+            <li class="p-stack-md text-center text-outline">Belum ada umpan balik yang diberikan.</li>
+            @endforelse
         </ul>
     </div>
 </div>
@@ -110,25 +92,30 @@
         </a>
         <div class="p-margin-desktop">
             <div class="flex items-center gap-3 mb-stack-lg">
-                <img alt="User avatar" class="w-12 h-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJhjInkJ2FH8UhJiDm2xgJW_ZHomBRRPdPoeCa_koZ23wNFq2Ean6Wujnvd4kYCEOU1zPvG09CUDliuWSVRRkcAK4u9O-pGgQi05kCfy_Cadm-c-EgBJ1jqap2bbGvzfk5mNBqGNI6ti4gBZDITe14GYLB3PsFmUb81utsW6fQihPRcPu8N2zrQnANbPcM2_fE05ncLH84z4U9aKyjmq3qf6-QC87ape6nq5nS0ZcpOnZ7cwF2GT2lpt8VQv54s0d0OpymSzMJp-M"/>
+                @php
+                    $modalInitials = collect(explode(' ', $selectedUlasan->user->name))->map(fn($n) => substr($n, 0, 1))->take(2)->join('');
+                @endphp
+                <div class="w-12 h-12 rounded-full bg-slate-100 flex-shrink-0 flex items-center justify-center text-primary font-bold text-lg">{{ strtoupper($modalInitials) }}</div>
                 <div>
-                    <h3 class="font-label-md text-label-md text-on-background">Siti Rahmawati</h3>
-                    <p class="font-body-sm text-body-sm text-on-surface-variant">2 Hari yang lalu</p>
+                    <h3 class="font-label-md text-label-md text-on-background">{{ $selectedUlasan->user->name }}</h3>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">{{ $selectedUlasan->created_at->diffForHumans() }}</p>
                 </div>
             </div>
             <div class="flex text-secondary-container mb-2">
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                @for($i = 1; $i <= 5; $i++)
+                    @if($i <= $selectedUlasan->rating)
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                    @else
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">star</span>
+                    @endif
+                @endfor
             </div>
-            <h4 class="font-headline-sm text-headline-sm text-on-background mb-2">Pengalaman Sewa Innova Reborn</h4>
+            <h4 class="font-headline-sm text-headline-sm text-on-background mb-2">Pengalaman Sewa {{ $selectedUlasan->kendaraan->nama }}</h4>
             <p class="font-body-md text-body-md text-on-surface mb-stack-lg">
-                "Sangat puas dengan layanan AutoRide. Mobil Innova Reborn yang saya sewa dalam kondisi prima, bersih, dan wangi. Sopirnya juga sangat ramah dan hafal jalanan kota Bandung. Proses booking lewat aplikasi sangat mudah dan cepat. Pasti akan pakai AutoRide lagi untuk perjalanan dinas berikutnya."
+                "{{ $selectedUlasan->komentar }}"
             </p>
             <div class="flex items-center gap-2 mb-stack-lg">
-                <span class="px-3 py-1 bg-surface-container-high text-primary font-label-sm text-label-sm rounded-full">Unit: Toyota Innova Reborn</span>
+                <span class="px-3 py-1 bg-surface-container-high text-primary font-label-sm text-label-sm rounded-full">Unit: {{ $selectedUlasan->kendaraan->merek }} {{ $selectedUlasan->kendaraan->nama }}</span>
             </div>
             <div class="flex justify-end">
                 <a href="{{ route('admin.dashboard.umpan-balik') }}" class="px-6 py-2 bg-primary text-white font-label-md rounded-lg hover:bg-primary-container transition-colors inline-block">Tutup</a>
