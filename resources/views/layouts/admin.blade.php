@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>@yield('title', 'AutoRide Admin Dashboard')</title>
     
     <!-- Alpine JS -->
@@ -20,101 +20,102 @@
             theme: {
                 extend: {
                     "colors": {
-                        "primary-fixed": "#dce1ff",
-                        "tertiary-fixed": "#ffdbcb",
-                        "secondary": "#9d4300",
-                        "on-tertiary": "#ffffff",
-                        "tertiary-container": "#6e2c00",
-                        "primary": "#00236f",
-                        "surface-variant": "#d3e4fe",
-                        "slate-100": "#F1F5F9",
-                        "primary-container": "#1e3a8a",
-                        "secondary-fixed": "#ffdbca",
-                        "secondary-container": "#fd761a",
-                        "outline": "#757682",
-                        "surface-container-lowest": "#ffffff",
-                        "on-error-container": "#93000a",
-                        "error": "#EF4444",
-                        "on-primary": "#ffffff",
-                        "surface-tint": "#4059aa",
-                        "on-tertiary-fixed": "#341100",
-                        "navy-light": "#3B82F6",
-                        "tertiary-fixed-dim": "#ffb691",
-                        "primary-fixed-dim": "#b6c4ff",
-                        "error-container": "#ffdad6",
-                        "surface": "#FFFFFF",
-                        "inverse-on-surface": "#eaf1ff",
-                        "on-secondary-container": "#5c2400",
-                        "inverse-primary": "#b6c4ff",
-                        "on-secondary-fixed-variant": "#783200",
-                        "slate-200": "#E2E8F0",
-                        "surface-dim": "#cbdbf5",
-                        "surface-container-high": "#dce9ff",
-                        "slate-50": "#F8FAFC",
-                        "surface-container": "#e5eeff",
-                        "on-background": "#0b1c30",
-                        "inverse-surface": "#213145",
-                        "on-surface-variant": "#444651",
-                        "success": "#10B981",
-                        "on-error": "#ffffff",
-                        "tertiary": "#4b1c00",
-                        "surface-container-highest": "#d3e4fe",
-                        "surface-bright": "#f8f9ff",
-                        "on-primary-container": "#90a8ff",
-                        "on-primary-fixed-variant": "#264191",
                         "secondary-fixed-dim": "#ffb690",
-                        "surface-container-low": "#eff4ff",
-                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#dce1ff",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#cbdbf5",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#5c2400",
+                        "surface-tint": "#4059aa",
+                        "surface-variant": "#d3e4fe",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#213145",
+                        "slate-50": "#F8FAFC",
                         "on-tertiary-fixed-variant": "#773205",
-                        "background": "#F8FAFC",
+                        "tertiary-fixed-dim": "#ffb691",
+                        "inverse-primary": "#b6c4ff",
+                        "success": "#10B981",
                         "on-surface": "#0b1c30",
-                        "outline-variant": "#c5c5d3",
-                        "on-tertiary-container": "#f39461",
+                        "tertiary-fixed": "#ffdbcb",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed": "#341100",
+                        "surface-container-highest": "#d3e4fe",
+                        "error": "#EF4444",
+                        "primary": "#00236f",
+                        "on-background": "#0b1c30",
+                        "background": "#F8FAFC",
+                        "tertiary": "#4b1c00",
+                        "outline": "#757682",
+                        "primary-container": "#1e3a8a",
                         "on-secondary-fixed": "#341100",
-                        "on-primary-fixed": "#00164e"
+                        "slate-100": "#F1F5F9",
+                        "navy-light": "#3B82F6",
+                        "on-surface-variant": "#444651",
+                        "surface-container-high": "#dce9ff",
+                        "slate-200": "#E2E8F0",
+                        "tertiary-container": "#6e2c00",
+                        "secondary-fixed": "#ffdbca",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface-container": "#e5eeff",
+                        "surface-container-low": "#eff4ff",
+                        "surface-bright": "#f8f9ff",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "on-secondary-fixed-variant": "#783200",
+                        "secondary": "#9d4300",
+                        "on-tertiary-container": "#f39461",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#FFFFFF",
+                        "outline-variant": "#c5c5d3",
+                        "on-primary-container": "#90a8ff",
+                        "on-primary-fixed": "#00164e",
+                        "on-primary-fixed-variant": "#264191",
+                        "secondary-container": "#fd761a"
                     },
                     "borderRadius": {
                         "DEFAULT": "0.25rem",
                         "lg": "0.5rem",
                         "xl": "0.75rem",
-                        "full": "9999px"
+                        "full": "9999px",
+                        "card": "20px"
                     },
                     "spacing": {
-                        "margin-desktop": "2.5rem",
                         "stack-lg": "2rem",
+                        "margin-desktop": "2.5rem",
+                        "container-max": "1280px",
+                        "stack-sm": "0.5rem",
+                        "gutter": "1.5rem",
                         "stack-md": "1rem",
                         "section-gap": "5rem",
-                        "margin-mobile": "1rem",
-                        "gutter": "1.5rem",
-                        "stack-sm": "0.5rem",
-                        "container-max": "1280px"
+                        "margin-mobile": "1rem"
                     },
                     "fontFamily": {
-                        "body-sm": ["Inter"],
-                        "label-md": ["Inter"],
-                        "headline-xl": ["Montserrat"],
                         "body-md": ["Inter"],
+                        "label-md": ["Inter"],
                         "headline-sm": ["Montserrat"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-xl": ["Montserrat"],
                         "headline-md": ["Montserrat"],
                         "headline-lg": ["Montserrat"],
-                        "headline-lg-mobile": ["Montserrat"],
-                        "body-lg": ["Inter"],
-                        "label-sm": ["Inter"]
+                        "headline-lg-mobile": ["Montserrat"]
                     },
                     "fontSize": {
-                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
-                        "label-md": ["14px", { "lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "600" }],
-                        "headline-xl": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
                         "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "600" }],
                         "headline-sm": ["20px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "1", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-xl": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
                         "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
                         "headline-lg": ["32px", { "lineHeight": "1.25", "fontWeight": "700" }],
-                        "headline-lg-mobile": ["28px", { "lineHeight": "1.2", "fontWeight": "700" }],
-                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
-                        "label-sm": ["12px", { "lineHeight": "1", "fontWeight": "500" }]
+                        "headline-lg-mobile": ["28px", { "lineHeight": "1.2", "fontWeight": "700" }]
                     }
-                },
-            },
+                }
+            }
         }
     </script>
     <style>
@@ -125,21 +126,19 @@
             box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
         .material-symbols-outlined {
-          font-variation-settings:
-          'FILL' 0,
-          'wght' 400,
-          'GRAD' 0,
-          'opsz' 24
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
         }
         .material-symbols-outlined[data-weight="fill"] {
             font-variation-settings: 'FILL' 1;
         }
     </style>
-    @stack('styles')
 </head>
 <body class="bg-background text-on-background font-body-md min-h-screen flex antialiased relative">
     <!-- SideNavBar -->
-    <nav class="hidden md:flex bg-[#1E3A8A] text-white font-label-md text-label-md docked left-0 h-full w-64 border-r border-white/10 flat no shadows fixed flex flex-col p-stack-md top-0 z-50">
+    <nav class="hidden md:flex bg-[#1E3A8A] text-white font-label-md text-label-md fixed left-0 top-0 h-full w-64 border-r border-white/10 flex-col p-stack-md z-50">
         <div class="mb-stack-lg px-2">
             <div class="font-headline-sm text-headline-sm font-bold text-white">AutoRide Admin</div>
             <div class="text-label-sm text-slate-200">Velocity Drive System</div>
@@ -165,7 +164,8 @@
                 </a>
             </li>
             <li>
-                <a class="flex items-center gap-3 px-4 py-3 text-slate-200 hover:bg-white/10 hover:text-white rounded-lg transition-all" href="#">
+                <a class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.tentang') ? 'bg-white/10 text-white font-bold' : 'text-slate-200 hover:bg-white/10 hover:text-white' }} rounded-lg transition-all"
+                    href="{{ route('admin.tentang') }}">
                     <span class="material-symbols-outlined" data-icon="info">info</span>
                     Tentang
                 </a>

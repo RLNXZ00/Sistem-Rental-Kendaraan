@@ -59,6 +59,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         return view('admin.dashboard.detail-ulasan');
     })->name('dashboard.detail-ulasan');
 
+    // Tentang
+    Route::get('/tentang', function () {
+        return view('admin.tentang');
+    })->name('tentang');
+
     // Keamanan
     Route::get('/keamanan', [\App\Http\Controllers\Admin\AdminKeamananController::class, 'index'])->name('keamanan.index');
 
