@@ -175,7 +175,7 @@
 
             <form method="POST" action="{{ route('logout') }}" class="w-full mt-4">
                 @csrf
-                <button type="submit" class="w-full flex items-center justify-center gap-2 px-4 py-2 border border-white/20 text-white rounded-lg hover:bg-error hover:border-error transition-colors">
+                <button type="submit" class="w-full flex items-center justify-center gap-2 px-4 py-2 border border-white/20 text-white rounded-lg hover:text-error hover:border-error transition-colors bg-transparent">
                     <span class="material-symbols-outlined">logout</span>
                     Logout
                 </button>
@@ -188,11 +188,7 @@
         <!-- Global Header -->
         <header class="bg-surface border-b border-slate-200 px-margin-mobile md:px-margin-desktop py-4 flex items-center justify-end sticky top-0 z-40 shadow-sm">
             <div class="flex items-center gap-6">
-                <!-- Notification Bell -->
-                <button class="relative text-on-surface-variant hover:text-primary transition-colors">
-                    <span class="material-symbols-outlined">notifications</span>
-                    <span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
-                </button>
+                <span class="font-label-md text-label-md font-bold text-on-surface">Administrator</span>
                 
                 <!-- Profile Avatar -->
                 <div class="w-10 h-10 rounded-full bg-slate-200 overflow-hidden border border-slate-300">
