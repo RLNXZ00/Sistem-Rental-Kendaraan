@@ -43,18 +43,13 @@ Route::middleware('auth')->group(function () {
 
 // Rute Admin
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard.index');
     
     Route::get('/dashboard/pesanan-aktif', [\App\Http\Controllers\Admin\AdminPesananController::class, 'aktif'])->name('dashboard.pesanan-aktif');
     Route::post('/dashboard/pesanan/{id}/kembalikan', [\App\Http\Controllers\Admin\AdminPesananController::class, 'kembalikan'])->name('pesanan.kembalikan');
     
-    Route::get('/dashboard/umpan-balik', function () {
-        return view('admin.dashboard.umpan-balik');
-    })->name('dashboard.umpan-balik');
-    
-    Route::get('/dashboard/detail-ulasan', function () {
-        return view('admin.dashboard.detail-ulasan');
-    })->name('dashboard.detail-ulasan');
+    Route::get('/dashboard/umpan-balik', [\App\Http\Controllers\Admin\DashboardController::class, 'umpanBalik'])->name('dashboard.umpan-balik');
+    Route::get('/dashboard/detail-ulasan/{id}', [\App\Http\Controllers\Admin\DashboardController::class, 'detailUlasan'])->name('dashboard.detail-ulasan');
 
     // Tentang
     Route::get('/tentang', function () {
