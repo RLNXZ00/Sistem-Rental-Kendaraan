@@ -56,7 +56,7 @@ class PemesananController extends Controller
                         // Harga sewa per hari
                         $hargaSewa = $pesanan->kendaraan->harga_sewa;
                         // Denda: (Harga sewa harian + 10% harga sewa harian) * jumlah hari terlambat
-                        $dendaPerHari = $hargaSewa * 0.10;
+                        $dendaPerHari = $hargaSewa + ($hargaSewa * 0.10);
                         $totalDenda = $dendaPerHari * $terlambatHari;
 
                         // Update status dan denda
@@ -184,7 +184,7 @@ class PemesananController extends Controller
 
         // Hitung ulang variabel denda untuk ditampilkan di view
         $hargaSewa = $pesanan->kendaraan->harga_sewa;
-        $dendaPerHari = $hargaSewa * 0.10;
+        $dendaPerHari = $hargaSewa + ($hargaSewa * 0.10);
         $terlambatHari = $pesanan->denda > 0
             ? (int) round($pesanan->denda / $dendaPerHari)
             : 0;
