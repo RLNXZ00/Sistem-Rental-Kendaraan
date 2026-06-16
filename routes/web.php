@@ -41,11 +41,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/pemesanan/{id}/batal', [App\Http\Controllers\PemesananController::class, 'batalkan'])->name('pemesanan.batalkan');
 });
 
-// Rute Admin
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+// Rute Admin (Sementara tanpa middleware ketat untuk tes slicing UI)
+Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
         return "Ini adalah halaman Dashboard Admin (Akses Terlindungi)";
     })->name('dashboard');
+
+    Route::get('/keamanan', [\App\Http\Controllers\Admin\AdminKeamananController::class, 'index'])->name('keamanan.index');
 });
 
 require __DIR__ . '/auth.php';
