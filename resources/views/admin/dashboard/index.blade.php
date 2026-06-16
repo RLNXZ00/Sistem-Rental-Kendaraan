@@ -21,7 +21,7 @@
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-label-md font-label-md text-on-surface-variant mb-2">Total Pengguna</p>
-                        <h2 class="font-headline-lg text-headline-lg text-on-background">24,592</h2>
+                        <h2 class="font-headline-lg text-headline-lg text-on-background">{{ number_format($totalPengguna) }}</h2>
                     </div>
                     <div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center text-primary-container">
                         <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
@@ -36,7 +36,7 @@
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-label-md font-label-md text-on-surface-variant mb-2">Total Pemesanan</p>
-                        <h2 class="font-headline-lg text-headline-lg text-on-background">1,204</h2>
+                        <h2 class="font-headline-lg text-headline-lg text-on-background">{{ number_format($totalPemesanan) }}</h2>
                     </div>
                     <div class="w-12 h-12 rounded-full bg-secondary-container/10 flex items-center justify-center text-secondary-container">
                         <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">car_rental</span>
@@ -51,7 +51,7 @@
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-label-md font-label-md text-on-surface-variant mb-2">Jumlah Umpan Balik</p>
-                        <h2 class="font-headline-lg text-headline-lg text-on-background">342</h2>
+                        <h2 class="font-headline-lg text-headline-lg text-on-background">{{ number_format($jumlahUmpanBalik) }}</h2>
                     </div>
                     <div class="w-12 h-12 rounded-full bg-tertiary-container/10 flex items-center justify-center text-tertiary-container">
                         <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">forum</span>
@@ -196,7 +196,7 @@
                         <div>
                             <p class="text-label-sm text-outline uppercase tracking-wider mb-1">Kendaraan Sedang Dipesan</p>
                             <div class="flex items-baseline gap-2">
-                                <h3 class="font-headline-lg text-headline-lg text-[#1E3A8A]">42</h3>
+                                <h3 class="font-headline-lg text-headline-lg text-[#1E3A8A]">{{ $sedangDipesanCount }}</h3>
                                 <span class="text-body-sm text-on-surface-variant">unit aktif</span>
                             </div>
                             <div class="mt-2 text-label-sm text-on-surface-variant">
@@ -213,7 +213,7 @@
                     <div>
                         <p class="text-label-sm text-outline uppercase tracking-wider mb-1">Telah Dipesan (Menunggu)</p>
                         <div class="flex items-baseline gap-2">
-                            <h3 class="font-headline-lg text-headline-lg text-[#F97316]">15</h3>
+                            <h3 class="font-headline-lg text-headline-lg text-[#F97316]">{{ $menungguCount }}</h3>
                             <span class="text-body-sm text-on-surface-variant">menunggu pickup</span>
                         </div>
                         <div class="mt-2 text-label-sm text-on-surface-variant">
@@ -229,7 +229,7 @@
                     <div>
                         <p class="text-label-sm text-outline uppercase tracking-wider mb-1">Belum Dikembalikan</p>
                         <div class="flex items-baseline gap-2">
-                            <h3 class="font-headline-lg text-headline-lg text-error">8</h3>
+                            <h3 class="font-headline-lg text-headline-lg text-error">{{ $belumDikembalikanCount }}</h3>
                             <span class="text-body-sm text-on-surface-variant">melewati batas waktu</span>
                         </div>
                         <div class="mt-2 text-label-sm text-on-surface-variant">
@@ -247,10 +247,10 @@
         <section>
             <div class="flex justify-between items-center mb-stack-md">
                 <h3 class="font-headline-md text-headline-md text-primary">Pengguna yang Sedang Memesan</h3>
-                <div class="relative">
+                <form action="{{ route('admin.dashboard.index') }}" method="GET" class="relative">
                     <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
-                    <input class="pl-10 pr-4 py-2 border border-slate-200 rounded-lg text-body-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A8A] focus:border-transparent" placeholder="Cari pesanan..." type="text"/>
-                </div>
+                    <input name="search" value="{{ request('search') }}" class="pl-10 pr-4 py-2 border border-slate-200 rounded-lg text-body-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A8A] focus:border-transparent" placeholder="Cari pesanan..." type="text"/>
+                </form>
             </div>
             <div class="bg-surface rounded-xl border border-slate-200 overflow-hidden shadow-sm">
                 <div class="overflow-x-auto">
@@ -265,66 +265,47 @@
                             </tr>
                         </thead>
                         <tbody class="text-body-sm">
+                            @forelse($pesananAktif as $pesanan)
                             <tr class="border-b border-slate-100 hover:bg-slate-50">
-                                <td class="py-3 px-4 font-medium">#AR-8821</td>
+                                <td class="py-3 px-4 font-medium">#AR-{{ str_pad($pesanan->id, 4, '0', STR_PAD_LEFT) }}</td>
                                 <td class="py-3 px-4">
                                     <div class="flex items-center gap-2">
-                                        <div class="w-8 h-8 rounded-full bg-[#1E3A8A] text-white flex items-center justify-center text-xs font-bold">DP</div>
+                                        <div class="w-8 h-8 rounded-full bg-[#1E3A8A] text-white flex items-center justify-center text-xs font-bold">
+                                            {{ strtoupper(substr($pesanan->user->name, 0, 2)) }}
+                                        </div>
                                         <div>
-                                            <div class="font-medium text-on-background">Dimas Pratama</div>
-                                            <div class="text-xs text-outline">@dimas.p</div>
+                                            <div class="font-medium text-on-background">{{ $pesanan->user->name }}</div>
+                                            <div class="text-xs text-outline">{{ $pesanan->user->email }}</div>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="py-3 px-4">Toyota Avanza Veloz</td>
-                                <td class="py-3 px-4 text-on-background">Hari ini, 14:00</td>
+                                <td class="py-3 px-4">{{ $pesanan->kendaraan->nama_kendaraan ?? 'Kendaraan Dihapus' }}</td>
+                                <td class="py-3 px-4 {{ \Carbon\Carbon::parse($pesanan->tanggal_selesai)->isPast() ? 'text-error font-medium' : 'text-on-background' }}">
+                                    {{ \Carbon\Carbon::parse($pesanan->tanggal_selesai)->format('M d, H:i') }}
+                                    @if(\Carbon\Carbon::parse($pesanan->tanggal_selesai)->isPast())
+                                        (Terlambat)
+                                    @endif
+                                </td>
                                 <td class="py-3 px-4 text-right">
-                                    <button class="bg-[#1E3A8A] hover:bg-primary-container text-white px-3 py-1.5 rounded text-xs font-medium transition-colors">Tandai Dikembalikan</button>
+                                    <form action="{{ route('admin.dashboard.pesanan.tandai-dikembalikan', $pesanan->id) }}" method="POST" class="inline-block">
+                                        @csrf
+                                        <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menandai pesanan ini sebagai dikembalikan?')" class="{{ \Carbon\Carbon::parse($pesanan->tanggal_selesai)->isPast() ? 'bg-[#F97316] hover:bg-secondary' : 'bg-[#1E3A8A] hover:bg-primary-container' }} text-white px-3 py-1.5 rounded text-xs font-medium transition-colors">
+                                            Tandai Dikembalikan
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
-                            <tr class="border-b border-slate-100 hover:bg-slate-50">
-                                <td class="py-3 px-4 font-medium">#AR-8819</td>
-                                <td class="py-3 px-4">
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-8 h-8 rounded-full bg-[#1E3A8A] text-white flex items-center justify-center text-xs font-bold">SW</div>
-                                        <div>
-                                            <div class="font-medium text-on-background">Sarah Wijaya</div>
-                                            <div class="text-xs text-outline">@sarah_w</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-4">Honda HR-V</td>
-                                <td class="py-3 px-4 text-on-background">Hari ini, 16:30</td>
-                                <td class="py-3 px-4 text-right">
-                                    <button class="bg-[#1E3A8A] hover:bg-primary-container text-white px-3 py-1.5 rounded text-xs font-medium transition-colors">Tandai Dikembalikan</button>
-                                </td>
+                            @empty
+                            <tr>
+                                <td colspan="5" class="py-6 px-4 text-center text-on-surface-variant">Tidak ada pesanan aktif saat ini.</td>
                             </tr>
-                            <tr class="border-b border-slate-100 hover:bg-slate-50">
-                                <td class="py-3 px-4 font-medium">#AR-8815</td>
-                                <td class="py-3 px-4">
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-8 h-8 rounded-full bg-[#1E3A8A] text-white flex items-center justify-center text-xs font-bold">RH</div>
-                                        <div>
-                                            <div class="font-medium text-error">Rudy Hartono</div>
-                                            <div class="text-xs text-error/80">@rudy_hartono</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-4">Mitsubishi Xpander</td>
-                                <td class="py-3 px-4 text-error font-medium">Kemarin, 12:00 (Terlambat)</td>
-                                <td class="py-3 px-4 text-right">
-                                    <button class="bg-[#F97316] hover:bg-secondary text-white px-3 py-1.5 rounded text-xs font-medium transition-colors">Tandai Dikembalikan</button>
-                                </td>
-                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
                 <div class="p-4 border-t border-slate-200 flex justify-between items-center text-body-sm text-on-surface-variant">
-                    <span class="">Menampilkan 1-3 dari 42 pesanan aktif</span>
-                    <div class="flex gap-2">
-                        <button class="px-3 py-1 border border-slate-200 rounded hover:bg-slate-50 disabled:opacity-50" disabled="">Sebelumnya</button>
-                        <button class="px-3 py-1 border border-slate-200 rounded hover:bg-slate-50">Selanjutnya</button>
-                    </div>
+                    <span class="">Menampilkan {{ $pesananAktif->count() }} dari {{ $sedangDipesanCount + $menungguCount }} pesanan aktif</span>
+                    <a href="{{ route('admin.dashboard.pesanan-aktif') }}" class="text-primary hover:underline font-medium">Lihat Semua Pesanan</a>
                 </div>
             </div>
         </section>

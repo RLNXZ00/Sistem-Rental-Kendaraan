@@ -43,13 +43,10 @@ Route::middleware('auth')->group(function () {
 
 // Rute Admin
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard.index');
-    })->name('dashboard.index');
+    Route::get('/dashboard', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'index'])->name('dashboard.index');
     
-    Route::get('/dashboard/pesanan-aktif', function () {
-        return view('admin.dashboard.pesanan-aktif');
-    })->name('dashboard.pesanan-aktif');
+    Route::get('/dashboard/pesanan-aktif', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'pesananAktif'])->name('dashboard.pesanan-aktif');
+    Route::post('/dashboard/pesanan/{id}/tandai-dikembalikan', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'tandaiDikembalikan'])->name('dashboard.pesanan.tandai-dikembalikan');
     
     Route::get('/dashboard/umpan-balik', function () {
         return view('admin.dashboard.umpan-balik');
