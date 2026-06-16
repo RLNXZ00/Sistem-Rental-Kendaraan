@@ -66,6 +66,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     // Keamanan
     Route::get('/keamanan', [\App\Http\Controllers\Admin\AdminKeamananController::class, 'index'])->name('keamanan.index');
+    Route::post('/keamanan/reset-sandi', [\App\Http\Controllers\Admin\AdminKeamananController::class, 'prosesResetSandi'])->name('keamanan.reset-sandi');
+    Route::delete('/keamanan/hapus-akun/{id}', [\App\Http\Controllers\Admin\AdminKeamananController::class, 'hapusAkunPermanen'])->name('keamanan.hapus-akun');
+    Route::post('/keamanan/tolak-hapus/{id}', [\App\Http\Controllers\Admin\AdminKeamananController::class, 'tolakHapusAkun'])->name('keamanan.tolak-hapus');
 
     // Slicing UI Admin Armada
     Route::get('/armada', function () {
