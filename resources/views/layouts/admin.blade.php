@@ -188,8 +188,24 @@
 
     <!-- Main Content Wrapper -->
     <div class="flex-1 md:ml-64 flex flex-col min-h-screen relative w-full bg-background">
+        <!-- Global Header -->
+        <header class="bg-surface border-b border-slate-200 px-margin-mobile md:px-margin-desktop py-4 flex items-center justify-end sticky top-0 z-40 shadow-sm">
+            <div class="flex items-center gap-6">
+                <!-- Notification Bell -->
+                <button class="relative text-on-surface-variant hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
+                </button>
+                
+                <!-- Profile Avatar -->
+                <div class="w-10 h-10 rounded-full bg-slate-200 overflow-hidden border border-slate-300">
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=00236f&color=fff" alt="Admin Profile" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </header>
+
         <!-- Page Canvas -->
-        <main class="flex-1 p-margin-desktop">
+        <main class="flex-1 p-margin-mobile md:p-margin-desktop overflow-y-auto">
             {{ $slot ?? '' }}
             @yield('content')
         </main>

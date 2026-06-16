@@ -3,7 +3,7 @@
 @section('title', 'AutoRide Admin - Detail Ulasan')
 
 @section('content')
-<main class="flex-grow p-margin-mobile md:p-margin-desktop bg-background md:pl-72 w-full pt-stack-lg md:pt-margin-desktop overflow-y-auto">
+<div class="w-full pb-section-gap">
     <!-- Breadcrumb & Header -->
     <div class="mb-stack-lg">
         <nav aria-label="Breadcrumb" class="flex text-on-surface-variant font-body-sm mb-stack-sm">
@@ -100,7 +100,7 @@
             </li>
         </ul>
     </div>
-</main>
+</div>
 
 <!-- Modal Overlay -->
 <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">

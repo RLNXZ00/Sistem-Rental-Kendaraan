@@ -3,7 +3,7 @@
 @section('title', 'AutoRide Admin - Active Orders')
 
 @section('content')
-<main class="flex-1 lg:ml-64 p-margin-mobile lg:p-margin-desktop overflow-y-auto w-full pt-stack-lg md:pt-margin-desktop">
+<div class="w-full pb-section-gap">
     <!-- Breadcrumbs & Header -->
     <div class="mb-stack-lg flex flex-col gap-4 md:flex-row md:items-center justify-between">
         <div>
@@ -207,5 +207,5 @@
             </div>
         </div>
     </div>
-</main>
+</div>
 @endsection
