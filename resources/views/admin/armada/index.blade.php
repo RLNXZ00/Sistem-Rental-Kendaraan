@@ -8,10 +8,7 @@
                 <h2 class="font-headline-lg text-headline-lg font-bold text-on-background">Armada Management</h2>
                 <p class="font-body-md text-body-md text-on-surface-variant mt-1">Manage your vehicle fleet, track status, and update details.</p>
             </div>
-            <button class="border border-secondary-container text-secondary-container px-6 py-3 rounded-lg font-label-md text-label-md flex items-center gap-2 hover:bg-secondary-container/10 transition-all hover:-translate-y-1">
-                <span class="material-symbols-outlined">visibility</span>
-                Lihat Semua
-            </button>
+
             <button class="bg-secondary-container text-white px-6 py-3 rounded-lg font-label-md text-label-md flex items-center gap-2 hover:bg-[#E66A17] transition-all hover:-translate-y-1 shadow-md hover:shadow-lg" onclick="document.getElementById('add-vehicle-slideover').classList.remove('hidden')">
                 <span class="material-symbols-outlined">add</span>
                 Tambah Kendaraan Baru
