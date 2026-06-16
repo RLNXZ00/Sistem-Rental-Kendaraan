@@ -59,6 +59,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         return view('admin.dashboard.detail-ulasan');
     })->name('dashboard.detail-ulasan');
 
+    // Keamanan
+    Route::get('/keamanan', [\App\Http\Controllers\Admin\AdminKeamananController::class, 'index'])->name('keamanan.index');
+
     // Slicing UI Admin Armada
     Route::get('/armada', function () {
         return view('admin.armada.index');

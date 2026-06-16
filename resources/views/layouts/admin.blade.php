@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>@yield('title', 'AutoRide Admin Dashboard')</title>
+    
+    <!-- Alpine JS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Tailwind Config for Slicing -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet"/>
     <script id="tailwind-config">
         tailwind.config = {
@@ -137,6 +144,7 @@
             <div class="font-headline-sm text-headline-sm font-bold text-white">AutoRide Admin</div>
             <div class="text-label-sm text-slate-200">Velocity Drive System</div>
         </div>
+        
         <ul class="space-y-1 flex-grow">
             <li>
                 <a class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.dashboard.*') || request()->is('admin/dashboard') ? 'bg-white/10 text-white font-bold' : 'text-slate-200 hover:bg-white/10 hover:text-white' }} rounded-lg transition-all" href="{{ route('admin.dashboard.index') }}">
@@ -151,7 +159,7 @@
                 </a>
             </li>
             <li>
-                <a class="flex items-center gap-3 px-4 py-3 text-slate-200 hover:bg-white/10 hover:text-white rounded-lg transition-all" href="#">
+                <a class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.keamanan.*') ? 'bg-white/10 text-white font-bold' : 'text-slate-200 hover:bg-white/10 hover:text-white' }} rounded-lg transition-all" href="{{ route('admin.keamanan.index') ?? '#' }}">
                     <span class="material-symbols-outlined" data-icon="security">security</span>
                     Keamanan
                 </a>
@@ -178,10 +186,14 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="md:ml-64 min-h-screen relative w-full">
-        @yield('content')
-    </main>
+    <!-- Main Content Wrapper -->
+    <div class="flex-1 md:ml-64 flex flex-col min-h-screen relative w-full bg-background">
+        <!-- Page Canvas -->
+        <main class="flex-1 p-margin-desktop">
+            {{ $slot ?? '' }}
+            @yield('content')
+        </main>
+    </div>
 
     @stack('scripts')
 </body>
