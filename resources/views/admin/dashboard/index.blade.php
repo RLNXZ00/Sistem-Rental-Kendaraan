@@ -144,7 +144,7 @@
                             <p class="text-label-sm text-outline uppercase tracking-wider mb-1">Kendaraan Sedang Dipesan</p>
                             <div class="flex items-baseline gap-2">
                                 <h3 class="font-headline-lg text-headline-lg text-[#1E3A8A]">{{ $sedangDipesanCount }}</h3>
-                                <span class="text-body-sm text-on-surface-variant">unit aktif</span>
+                                <span class="text-body-sm text-on-surface-variant">Unit Aktif</span>
                             </div>
 
                         </div>
@@ -159,7 +159,7 @@
                         <p class="text-label-sm text-outline uppercase tracking-wider mb-1">Telah Dipesan (Menunggu)</p>
                         <div class="flex items-baseline gap-2">
                             <h3 class="font-headline-lg text-headline-lg text-[#F97316]">{{ $menungguCount }}</h3>
-                            <span class="text-body-sm text-on-surface-variant">menunggu pickup</span>
+                            <span class="text-body-sm text-on-surface-variant">Menunggu Pickup</span>
                         </div>
 
                     </div>
@@ -173,7 +173,7 @@
                         <p class="text-label-sm text-outline uppercase tracking-wider mb-1">Belum Dikembalikan</p>
                         <div class="flex items-baseline gap-2">
                             <h3 class="font-headline-lg text-headline-lg text-error">{{ $belumDikembalikanCount }}</h3>
-                            <span class="text-body-sm text-on-surface-variant">melewati batas waktu</span>
+                            <span class="text-body-sm text-on-surface-variant">Melewati Batas Waktu</span>
                         </div>
 
                     </div>
