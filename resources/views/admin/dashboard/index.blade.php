@@ -146,9 +146,7 @@
                                 <h3 class="font-headline-lg text-headline-lg text-[#1E3A8A]">{{ $sedangDipesanCount }}</h3>
                                 <span class="text-body-sm text-on-surface-variant">unit aktif</span>
                             </div>
-                            <div class="mt-2 text-label-sm text-on-surface-variant">
-                                <span class="font-medium">Termasuk:</span> @dimas.p, @sarah_w, @kevin99...
-                            </div>
+
                         </div>
                         <div class="w-12 h-12 rounded-full bg-[#1E3A8A]/10 flex items-center justify-center text-[#1E3A8A]">
                             <span class="material-symbols-outlined">directions_car</span>
@@ -163,9 +161,7 @@
                             <h3 class="font-headline-lg text-headline-lg text-[#F97316]">{{ $menungguCount }}</h3>
                             <span class="text-body-sm text-on-surface-variant">menunggu pickup</span>
                         </div>
-                        <div class="mt-2 text-label-sm text-on-surface-variant">
-                            <span class="font-medium">Termasuk:</span> @anton_k, @lina.m, @joko_s...
-                        </div>
+
                     </div>
                     <div class="w-12 h-12 rounded-full bg-[#F97316]/10 flex items-center justify-center text-[#F97316]">
                         <span class="material-symbols-outlined">schedule</span>
@@ -179,9 +175,7 @@
                             <h3 class="font-headline-lg text-headline-lg text-error">{{ $belumDikembalikanCount }}</h3>
                             <span class="text-body-sm text-on-surface-variant">melewati batas waktu</span>
                         </div>
-                        <div class="mt-2 text-label-sm text-on-surface-variant">
-                            <span class="font-medium">Perhatian:</span> @rudy_hartono (2 hari), @siska.p (1 hari)...
-                        </div>
+
                     </div>
                     <div class="w-12 h-12 rounded-full bg-error/10 flex items-center justify-center text-error">
                         <span class="material-symbols-outlined">warning</span>

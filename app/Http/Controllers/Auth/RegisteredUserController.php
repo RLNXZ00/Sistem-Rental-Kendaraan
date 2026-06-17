@@ -31,7 +31,7 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) {
+            'name' => ['required', 'string', 'max:255', 'regex:/[a-zA-Z]/', function ($attribute, $value, $fail) {
                 if (strtolower($value) === 'admin') {
                     $fail('Nama ini dicadangkan dan tidak dapat digunakan.');
                 }
@@ -41,15 +41,20 @@ class RegisteredUserController extends Controller
                     $fail('Alamat email ini dicadangkan untuk sistem.');
                 }
             }],
+            'no_hp' => ['required', 'string', 'regex:/^08[0-9]{10,13}$/'],
             'password' => ['required', 'confirmed', Rules\Password::min(8)
                 ->mixedCase()
                 ->numbers()
                 ->symbols()],
+        ], [
+            'name.regex' => 'Username harus mengandung huruf.',
+            'no_hp.regex' => 'Nomor HP harus diawali dengan 08 dan berjumlah 12-15 digit.'
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'no_hp' => $request->no_hp,
             'password' => Hash::make($request->password),
         ]);
 
@@ -57,6 +62,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('beranda', absolute: false))->with('success', 'Registrasi berhasil. Anda telah otomatis login.');
     }
 }
